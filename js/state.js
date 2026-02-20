@@ -23,8 +23,10 @@
     impactPointsRemaining: 0,
     impactPointsSpent: 0,
     BII: 0,
+    minCategory: 0,
     variance: 0,
     topGatePassed: false,
+    topGateLockReason: '',
     ratingBand: 'At Risk',
     finalNarrative: '',
     currentScreen: 'map'

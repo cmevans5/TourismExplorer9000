@@ -31,7 +31,7 @@ Each mission includes:
 - Every hotspot starts with `impactBudgetPerHotspot = 100` (configurable in `js/scoring.js`).
 - Selecting an option deducts `impactCost` from remaining hotspot budget.
 - Decisions that exceed remaining Impact Points are blocked.
-- BII and top-gate checks now include budget-aware constraints.
+- BII includes budget-awareness through reserve penalties.
 
 ## Scoring + Rating Summary
 
@@ -42,10 +42,28 @@ Scoring is centralized in `js/scoring.js`:
 - `classifyRating(BII, topGatePassed, constants)`
 
 Editable constants include:
-- `vMinCategory`, `vMaxVariance`
+- Top-tier gate controls: `vMinCategoryTop`, `vMaxVarianceTop`, `vNoNegativesTop`
 - BII model constants
 - Impact budget constants and reserve thresholds
 - Rating thresholds
+
+### Top Analyst gate (hard mode)
+
+`Top Analyst` is intentionally difficult and only available when **all** of the following are true:
+- Every category is at least `2` (configurable via `vMinCategoryTop`).
+- Category spread is tight (`variance <= 2`, configurable via `vMaxVarianceTop`).
+- No category is negative when `vNoNegativesTop = true`.
+- BII meets the top-tier threshold (`ratingThresholds.top`, default `92`).
+
+This gate ensures top-tier ratings represent balanced systems performance, not just a high score driven by one or two categories.
+
+### BII rebalance behavior
+
+The current BII formula now:
+- Applies a stronger penalty as variance rises.
+- Adds a direct minimum-category effect so weak links materially reduce score quality.
+
+Result: imbalanced portfolios still can score decently, but they are visibly downgraded versus balanced systems-thinking outcomes.
 
 ## Run Locally
 

@@ -19,7 +19,7 @@ This plan validates the next-iteration experience including:
 3. Category deltas update correctly after decision.
 4. Local storage reset clears session state.
 
-## New QA Cases (12)
+## New QA Cases (20)
 
 ### TC-11: Multi-Hotspot Map Rendering
 **Steps**
@@ -151,7 +151,99 @@ This plan validates the next-iteration experience including:
 - Narrative states resilient/strong system performance.
 - Analyst tier reflects top-level outcome.
 
+---
+
+### TC-23: Top Analyst Blocked When Any Category Is 1
+**Steps**
+1. Set categories to `3/2/2/2/1` in local state.
+2. Recompute metrics / open dashboard.
+
+**Expected**
+- Top Gate is `No`.
+- Rating cannot be `Top Analyst`.
+- Lock reason references minimum category requirement.
+
+---
+
+### TC-24: Top Analyst Blocked When Variance > 2
+**Steps**
+1. Set categories to `5/2/2/2/2` (variance 3).
+2. Recompute metrics / open dashboard.
+
+**Expected**
+- Top Gate is `No`.
+- Rating cannot be `Top Analyst`.
+- Lock reason references variance requirement.
+
+---
+
+### TC-25: Top Analyst Blocked by Negative Category (Feature Enabled)
+**Steps**
+1. Keep `vNoNegativesTop = true`.
+2. Set categories to `3/3/3/3/-1`.
+
+**Expected**
+- Top Gate is `No`.
+- Rating cannot be `Top Analyst`.
+- Lock reason references no-negative requirement.
+
+---
+
+### TC-26: Balanced 2/2/2/2/2 Can Reach Top Analyst
+**Steps**
+1. Set categories to `2/2/2/2/2` and ensure sufficient BII.
+2. Recompute metrics.
+
+**Expected**
+- Top Gate is `Yes`.
+- BII is high and can meet top threshold.
+- Rating becomes `Top Analyst` when threshold is met.
+
+---
+
+### TC-27: Slight Imbalance Produces Lower BII
+**Steps**
+1. Compare `2/2/2/2/2` with `3/2/2/2/1`.
+2. Recompute BII for both.
+
+**Expected**
+- Slight imbalance has noticeably lower BII.
+- Difference is visible in dashboard and final scoring.
+
+---
+
+### TC-28: High Imbalance Is Strongly Penalized
+**Steps**
+1. Set categories to `6/2/0/5/1`.
+2. Recompute metrics.
+
+**Expected**
+- Variance penalty significantly lowers BII.
+- Rating remains below top tier.
+- Dashboard shows high variance and low min category.
+
+---
+
+### TC-29: Outcome Feedback Shows Balance Check
+**Steps**
+1. Make any decision and view Outcome Feedback.
+
+**Expected**
+- Feedback includes `Balance Check` line with min category + variance.
+- Feedback includes top-tier requirement sentence.
+
+---
+
+### TC-30: Dashboard Explains Top Analyst Lock
+**Steps**
+1. Enter a state where top gate fails.
+2. Open dashboard modal.
+
+**Expected**
+- Dashboard shows min category and variance.
+- Dashboard displays a lock explanation message when Top Analyst is unavailable.
+
 ## Exit Criteria
-- All 12 new test cases pass.
+- All 20 new test cases pass.
 - No dead-end navigation between map → exploration → decision → feedback → map/complete.
 - Budget constraints and Pip hint variants behave deterministically.
