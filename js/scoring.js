@@ -1,14 +1,15 @@
 (function () {
   const SCORING_CONSTANTS = {
-    // Balance thresholds
-    vMinCategory: 0,
-    vMaxVariance: 8,
+    // Top-tier gate thresholds
+    vMinCategoryTop: 2,
+    vMaxVarianceTop: 2,
+    vNoNegativesTop: true,
 
     // BII model
     baseCenter: 50,
-    baseMultiplier: 5,
-    imbalanceGrace: 2,
-    imbalancePenaltyMultiplier: 4,
+    baseMultiplier: 4,
+    minCategoryMultiplier: 4,
+    variancePenaltyMultiplier: 6,
 
     // Impact Points (finite resource budget)
     impactBudgetPerHotspot: 100,
@@ -17,9 +18,10 @@
     minAverageRemainingPerHotspot: 10,
 
     ratingThresholds: {
-      bronze: 35,
-      silver: 55,
-      gold: 75
+      bronze: 40,
+      silver: 60,
+      gold: 80,
+      top: 92
     }
   };
 
@@ -49,34 +51,44 @@
   function computeBII(categories, budget, constants = SCORING_CONSTANTS) {
     const vals = valuesArray(categories);
     const sum = vals.reduce((acc, num) => acc + num, 0);
+    const minCategory = Math.min(...vals);
     const baseScore = clamp(constants.baseCenter + sum * constants.baseMultiplier, 0, 100);
     const variance = computeVariance(categories);
-    const imbalancePenalty = Math.max(0, (variance - constants.imbalanceGrace) * constants.imbalancePenaltyMultiplier);
+
+    // Balanced Impact Index (BII) rewards systems thinking:
+    // 1) Base score still values total portfolio gains.
+    // 2) A direct minimum-category term pulls score down when any one area lags.
+    // 3) A strong variance penalty makes visible score loss when outcomes are uneven.
+    //
+    // Approximate outcomes (budget penalty omitted):
+    // | Categories        | Variance | Min | Approx BII |
+    // | 2/2/2/2/2         | 0        | 2   | ~98        |
+    // | 3/2/2/2/1         | 2        | 1   | ~82        |
+    // | 6/2/0/5/1         | 6        | 0   | ~54        |
+    const minimumCategoryBonus = minCategory * constants.minCategoryMultiplier;
+    const imbalancePenalty = variance * constants.variancePenaltyMultiplier;
 
     const reserveShortfall = Math.max(0, constants.budgetReserveTarget - (budget.remainingImpactPoints || 0));
     const budgetPenalty = reserveShortfall * constants.reservePenaltyMultiplier;
 
-    const BII = clamp(baseScore - imbalancePenalty - budgetPenalty, 0, 100);
+    const BII = clamp(baseScore + minimumCategoryBonus - imbalancePenalty - budgetPenalty, 0, 100);
     return { BII, baseScore, imbalancePenalty, budgetPenalty, variance, sum };
   }
 
   function checkTopGate(categories, variance, budget, constants = SCORING_CONSTANTS) {
     const vals = valuesArray(categories);
-    const minCategory = Math.min(...vals);
-    const minPass = minCategory >= constants.vMinCategory;
-    const variancePass = variance <= constants.vMaxVariance;
+    const minPass = vals.every(value => value >= constants.vMinCategoryTop);
+    const variancePass = variance <= constants.vMaxVarianceTop;
+    const noNegativePass = !constants.vNoNegativesTop || vals.every(value => value >= 0);
 
-    const completedHotspots = Math.max(1, budget.completedHotspots || 1);
-    const avgRemaining = (budget.totalRemainingImpactPoints || 0) / completedHotspots;
-    const budgetPass = avgRemaining >= constants.minAverageRemainingPerHotspot;
-
-    return minPass && variancePass && budgetPass;
+    return minPass && variancePass && noNegativePass;
   }
 
   function classifyRating(BII, topGatePassed, constants = SCORING_CONSTANTS) {
     if (BII < constants.ratingThresholds.bronze) return 'At Risk';
     if (BII < constants.ratingThresholds.silver) return 'Bronze Analyst';
     if (BII < constants.ratingThresholds.gold) return 'Silver Analyst';
+    if (BII < constants.ratingThresholds.top) return 'Gold Analyst';
     return topGatePassed ? 'Top Analyst' : 'Gold Analyst (Gated)';
   }
 

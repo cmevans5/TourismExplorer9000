@@ -116,6 +116,8 @@
         <ul class="delta-list">${deltaItems}</ul>
         <p><strong>Impact Cost:</strong> ${feedback.impactCost}</p>
         <p><strong>Remaining Impact Points:</strong> ${state.impactPointsRemaining}</p>
+        <p><strong>Balance Check:</strong> Min category = ${state.minCategory}, variance = ${state.variance}</p>
+        <p><strong>Top Tier Requirements:</strong> Top Analyst requires all categories ≥ 2 and variance ≤ 2.</p>
         <p><strong>Poor outcome:</strong> ${feedback.poorOutcome ? 'Yes' : 'No'}</p>
         <button id="btnReturnMap" class="btn">Return to Map</button>
       </section>
@@ -154,7 +156,10 @@
       <hr />
       <p><strong>Balanced Impact Index (BII):</strong> ${state.BII}</p>
       <p><strong>Rating Band:</strong> ${state.ratingBand}</p>
+      <p><strong>Min Category:</strong> ${state.minCategory}</p>
+      <p><strong>Variance:</strong> ${state.variance}</p>
       <p><strong>Top Gate Passed:</strong> ${state.topGatePassed ? 'Yes' : 'No'}</p>
+      ${state.topGatePassed ? '' : `<p><strong>Top Analyst Lock:</strong> ${state.topGateLockReason}</p>`}
       <p><strong>Poor Streak:</strong> ${state.poorStreak}</p>
       <p><strong>Decisions Made:</strong> ${state.decisionCount}</p>
       <p><strong>Total Impact Spent:</strong> ${state.impactPointsSpent}</p>

@@ -76,7 +76,7 @@
       return `Your strategy produced a resilient tourism portfolio with strong ${hi} while keeping system trade-offs under control.`;
     }
 
-    if (state.variance > SCORING_CONSTANTS.vMaxVariance) {
+    if (state.variance > SCORING_CONSTANTS.vMaxVarianceTop) {
       return `Your strategy strengthened ${hi}, but large imbalances left ${lo} under-supported. The next cycle should rebalance system pressures.`;
     }
 
@@ -107,7 +107,9 @@
       SCORING_CONSTANTS
     );
 
+    const minCategory = Math.min(...Object.values(state.categories));
     state.BII = Math.round(result.BII);
+    state.minCategory = minCategory;
     state.variance = computeVariance(state.categories);
     state.topGatePassed = checkTopGate(
       state.categories,
@@ -119,6 +121,22 @@
       SCORING_CONSTANTS
     );
     state.ratingBand = classifyRating(state.BII, state.topGatePassed, SCORING_CONSTANTS);
+    if (state.topGatePassed) {
+      state.topGateLockReason = '';
+    } else {
+      const hasNegative = Object.values(state.categories).some(value => value < 0);
+      if (minCategory < SCORING_CONSTANTS.vMinCategoryTop) {
+        state.topGateLockReason = `Top Analyst is locked: every category must be at least ${SCORING_CONSTANTS.vMinCategoryTop}.`;
+      } else if (state.variance > SCORING_CONSTANTS.vMaxVarianceTop) {
+        state.topGateLockReason = `Top Analyst is locked: variance must be ${SCORING_CONSTANTS.vMaxVarianceTop} or lower.`;
+      } else if (SCORING_CONSTANTS.vNoNegativesTop && hasNegative) {
+        state.topGateLockReason = 'Top Analyst is locked: no category can be negative.';
+      } else if (state.BII < SCORING_CONSTANTS.ratingThresholds.top) {
+        state.topGateLockReason = `Top Analyst is locked: BII must be at least ${SCORING_CONSTANTS.ratingThresholds.top}.`;
+      } else {
+        state.topGateLockReason = 'Top Analyst is locked: one or more top-tier requirements are unmet.';
+      }
+    }
     state.finalNarrative = getFinalNarrative();
   }
 
@@ -150,7 +168,7 @@
       return PIP_HINTS.economicTooHigh;
     }
 
-    if (state.variance > SCORING_CONSTANTS.vMaxVariance) {
+    if (state.variance > SCORING_CONSTANTS.vMaxVarianceTop) {
       return PIP_HINTS.varianceHigh;
     }
 
