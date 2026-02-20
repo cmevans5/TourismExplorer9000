@@ -32,6 +32,7 @@
     hospitality: 'Hospitality',
     satisfaction: 'Visitor Satisfaction'
   };
+  const PRESENTATION_LABEL_REPEAT_THRESHOLD = 3;
 
   let state = loadState();
   let missions = [];
@@ -84,7 +85,16 @@
 
     const seedInput = `${state.runSeed}:${state.casesCompletedThisRun}:${(state.completedMissionIds || []).join(',')}`;
     const offer = generateOfferSet(missions, state, SCORING_CONSTANTS, RUN_CONFIG, createRunRng(seedInput));
-    state.offerSetMissionIds = offer.offerMissionIds;
+    const orderRng = createRunRng(`${state.runSeed}:${state.casesCompletedThisRun}:offer-order`);
+    const shuffledOfferMissionIds = (offer.offerMissionIds || []).slice();
+    for (let i = shuffledOfferMissionIds.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(orderRng() * (i + 1));
+      const tmp = shuffledOfferMissionIds[i];
+      shuffledOfferMissionIds[i] = shuffledOfferMissionIds[j];
+      shuffledOfferMissionIds[j] = tmp;
+    }
+
+    state.offerSetMissionIds = shuffledOfferMissionIds;
     state.offerSetRolesById = offer.rolesById;
     state.offerSetReasonsById = offer.reasonsById;
     state.diagnosis = buildDiagnosis(state, SCORING_CONSTANTS, offer);
@@ -127,6 +137,9 @@
       };
       state.missionSpendById = {};
       state.decisionShuffleByMissionId = {};
+      state.decisionLabelSelectionCounts = {};
+      state.patternGamingNudgeShownThisRun = false;
+      state.showPatternGamingNudge = false;
     }
 
     computeAndStoreMetrics();
@@ -294,7 +307,63 @@
     if (gains.length) {
       return `${issueType} move reinforced ${gains.join(', ')} without immediate category losses.`;
     }
-    return `${issueType} move created system strain in ${losses.join(', ')}; stabilize in the next offer set.`;
+    if (losses.length) {
+      return `${issueType} move created system strain in ${losses.join(', ')}; stabilize in the next offer set.`;
+    }
+    return `${issueType} held categories steady this turn while preserving flexibility for the next step.`;
+  }
+
+  function buildTradeoffSpotlight(issueType, deltas) {
+    const entries = Object.entries(deltas || {});
+    if (!entries.length) {
+      return `${issueType} was resolved with limited measurable movement, so monitor stakeholder sentiment before the next case.`;
+    }
+
+    const positive = entries.filter(([, value]) => value > 0).sort((a, b) => b[1] - a[1])[0];
+    const negative = entries.filter(([, value]) => value < 0).sort((a, b) => a[1] - b[1])[0];
+
+    if (positive && negative) {
+      return `${issueType} improved ${CATEGORY_LABELS[positive[0]]} most, but strained ${CATEGORY_LABELS[negative[0]]}, highlighting a tourism trade-off between service gains and system sustainability.`;
+    }
+    if (positive) {
+      return `${issueType} most strongly boosted ${CATEGORY_LABELS[positive[0]]}, with no major downside visible this case across core tourism stakeholders.`;
+    }
+    if (negative) {
+      return `${issueType} most strongly reduced ${CATEGORY_LABELS[negative[0]]}, so prioritize a balancing choice for inclusion and destination quality next.`;
+    }
+    return `${issueType} delivered a neutral profile this case, so use the next mission to improve sustainability and stakeholder balance.`;
+  }
+
+  function trackPatternGamingNudge(displayLabel) {
+    state.decisionLabelSelectionCounts = state.decisionLabelSelectionCounts || {};
+    const nextCount = (state.decisionLabelSelectionCounts[displayLabel] || 0) + 1;
+    state.decisionLabelSelectionCounts[displayLabel] = nextCount;
+
+    if (!state.patternGamingNudgeShownThisRun && nextCount >= PRESENTATION_LABEL_REPEAT_THRESHOLD) {
+      state.patternGamingNudgeShownThisRun = true;
+      state.showPatternGamingNudge = true;
+    }
+  }
+
+  function requireLearningNote(option, mission) {
+    const note = String(option?.learningNote || '').trim();
+    if (note) return note;
+    return `Learning note unavailable for ${mission?.name || 'this mission'}; review category deltas to capture the trade-off.`;
+  }
+
+  function validateMissionLearningNotes() {
+    const missing = [];
+    missions.forEach(mission => {
+      (mission.options || []).forEach(option => {
+        if (!String(option.learningNote || '').trim()) {
+          missing.push(`${mission.id}:${option.id}`);
+        }
+      });
+    });
+
+    if (missing.length) {
+      console.warn('Missing learningNote entries detected:', missing);
+    }
   }
 
   function getDecisionOptionsForMission(mission) {
@@ -364,6 +433,7 @@
 
     state.lastDecisionDeltas = deltas;
     state.decisionCount += 1;
+    trackPatternGamingNudge(displayLabel);
     if (option.originalKey === 'B') state.correctCount += 1;
 
     const poorOutcome = evaluatePoorOutcome(deltas);
@@ -379,8 +449,9 @@
         deltas,
         poorOutcome,
         impactCost: optionCost,
-        learningNote: option.learningNote || 'Learning note unavailable for this option.',
-        systemInsight: buildSystemInsight(mission.issueType || 'Mission', deltas)
+        learningNote: requireLearningNote(option, mission),
+        systemInsight: buildSystemInsight(mission.issueType || 'Mission', deltas),
+        tradeoffSpotlight: buildTradeoffSpotlight(mission.issueType || 'Mission', deltas)
       },
       state
     );
@@ -480,6 +551,10 @@
 
     if (state.currentScreen === 'map') {
       mainEl.innerHTML = UI.renderMap(state, getOfferedMissions(), SCORING_CONSTANTS, RUN_CONFIG);
+      if (state.showPatternGamingNudge) {
+        state.showPatternGamingNudge = false;
+        saveState(state);
+      }
     } else if (state.currentScreen === 'explore') {
       mainEl.innerHTML = UI.renderExploration(currentMission(), state, RUN_CONFIG);
     } else if (state.currentScreen === 'decision') {
@@ -508,6 +583,7 @@
           acc[m.id] = m;
           return acc;
         }, {});
+        validateMissionLearningNotes();
         initializeRun(false);
         saveState(state);
       })

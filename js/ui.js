@@ -22,7 +22,10 @@
   }
 
   function stripOptionKeyPrefix(text) {
-    return String(text || '').replace(/^\s*[A-C][\)\.]\s*/i, '').trim();
+    return String(text || '')
+      .replace(/^(\s*[A-C][\)\.]\s*)+/i, '')
+      .replace(/^(\s*[A-C]\s*[:.-]\s*)+/i, '')
+      .trim();
   }
 
   function renderRunProgress(state, runLength) {
@@ -50,6 +53,10 @@
       ? '<p class="tag warn">Pip has an update based on your current gate status.</p>'
       : '';
 
+    const antiCheeseNudge = state.showPatternGamingNudge
+      ? '<p class="tag warn">Options are shuffled each case—choose based on trade-offs, not the letter.</p>'
+      : '';
+
     return `
       <section class="card">
         <h2>City Map Hub</h2>
@@ -58,6 +65,7 @@
         <p>Select one of this step's four offered missions, then return for the next offer set.</p>
         <p><strong>Missions Complete:</strong> ${state.casesCompletedThisRun}/${runConfig.RUN_LENGTH}</p>
         ${pipIndicator}
+        ${antiCheeseNudge}
         <div class="inline-actions">
           <button id="btnAskPipWhy" class="btn secondary">Ask Pip why these cases?</button>
         </div>
@@ -144,12 +152,13 @@
         <p>${feedback.text}</p>
         <p><strong>Learning note:</strong> ${feedback.learningNote}</p>
         <p><strong>System insight:</strong> ${feedback.systemInsight}</p>
+        <p><strong>Trade-off Spotlight:</strong> ${feedback.tradeoffSpotlight}</p>
         <ul class="delta-list">${deltaItems}</ul>
         <p><strong>Impact Cost:</strong> ${feedback.impactCost}</p>
         <p><strong>Remaining Impact Points:</strong> ${state.impactPointsRemaining}</p>
         <p><strong>Balance Check:</strong> Min category = ${state.minCategory}, variance = ${state.variance}</p>
         <p><strong>Poor outcome:</strong> ${feedback.poorOutcome ? 'Yes' : 'No'}</p>
-        ${state.topGatePassed ? '' : `<p><strong>Top Analyst blocked because:</strong> ${state.topGateLockReason}</p>`}
+        ${state.topGateLockReason ? `<p>Top Analyst currently blocked because: ${state.topGateLockReason}.</p>` : ''}
         <button id="btnReturnMap" class="btn">Return to Map</button>
       </section>
     `;
