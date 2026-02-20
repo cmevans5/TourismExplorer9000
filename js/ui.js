@@ -21,6 +21,10 @@
     return role ? `${role.charAt(0).toUpperCase()}${role.slice(1)}` : 'Wildcard';
   }
 
+  function stripOptionKeyPrefix(text) {
+    return String(text || '').replace(/^\s*[A-C][\)\.]\s*/i, '').trim();
+  }
+
   function renderRunProgress(state, runLength) {
     const caseNumber = Math.min(state.casesCompletedThisRun + 1, runLength);
     return `<p class="sampling-progress"><strong>Tourism Sampling:</strong> Case ${caseNumber}/${runLength}</p>`;
@@ -99,9 +103,10 @@
       .map(opt => {
         const optionCost = opt.cost ?? opt.impactCost;
         const afford = state.impactPointsRemaining >= optionCost;
+        const displayTitle = stripOptionKeyPrefix(opt.title);
         return `
           <button class="btn choice ${afford ? '' : 'blocked'}" data-option-id="${opt.displayLabel}" aria-label="Select option ${opt.displayLabel}" ${afford ? '' : 'disabled'}>
-            <strong>${opt.displayLabel}. ${opt.title}</strong><br />
+            <strong>${opt.displayLabel}) ${displayTitle}</strong><br />
             <span class="small">${opt.description}</span><br />
             <span class="small">Impact Cost: ${optionCost} (${afford ? `${state.impactPointsRemaining} remaining` : 'Insufficient budget'})</span>
           </button>

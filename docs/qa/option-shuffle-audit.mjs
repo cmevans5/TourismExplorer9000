@@ -37,6 +37,14 @@ function shuffledOptionOrder(runSeed, missionId) {
   return ids;
 }
 
+function stripOptionKeyPrefix(text) {
+  return String(text || '').replace(/^\s*[A-C][\)\.]\s*/i, '').trim();
+}
+
+function buildDisplayLabel(displayLabel, optionTitle) {
+  return `${displayLabel}) ${stripOptionKeyPrefix(optionTitle)}`;
+}
+
 const missions = JSON.parse(fs.readFileSync('data/missions.json', 'utf8')).missions;
 
 const missionIds = missions.map(m => m.id);
@@ -52,5 +60,15 @@ const seedA = 11111;
 const seedB = 99999;
 const changed = missionIds.filter(missionId => shuffledOptionOrder(seedA, missionId).join('') !== shuffledOptionOrder(seedB, missionId).join(''));
 assert.ok(changed.length > 0, 'At least one mission shuffle should differ across run seeds');
+
+for (const mission of missions) {
+  ['A', 'B', 'C'].forEach((displayLabel, idx) => {
+    const option = mission.options[idx];
+    const renderedLabel = buildDisplayLabel(displayLabel, option.title);
+    assert.match(renderedLabel, new RegExp(`^${displayLabel}\\)\\s`), `${mission.id} option ${displayLabel} must start with exactly "${displayLabel})"`);
+    const allLabelTokens = renderedLabel.match(/\b[A-C]\)/g) || [];
+    assert.equal(allLabelTokens.length, 1, `${mission.id} option ${displayLabel} should include only one A)/B)/C) token`);
+  });
+}
 
 console.log(`option-shuffle-audit: PASS (${changed.length}/${missionIds.length} missions changed across seeds)`);
