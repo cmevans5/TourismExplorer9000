@@ -8,6 +8,7 @@ Each run now uses per-step adaptive offers:
 - Exactly **8 completed cases per run** (`RUN_LENGTH = 8`).
 - The map shows exactly **4 missions per step**.
 - Each offer set contains **2 Recommended + 1 Challenge + 1 Wildcard**.
+- The 4 cards are **display-shuffled each step** (seeded by `runSeed + casesCompletedThisRun`) while preserving role assignments and rationale per card.
 - After every completed case, the next 4-mission offer set is regenerated from updated state signals.
 - Completed missions are never offered again in the same run.
 
@@ -16,7 +17,7 @@ Offer generation uses deterministic seeded PRNG (Mulberry32) in `js/adaptation.j
 
 - `RANDOMNESS_SEED_MODE = "run"` (default) creates a new seed per new run.
 - `RANDOMNESS_WEIGHT = 0.2` allows near-top candidates to rotate in while preserving constraints.
-- Within a run, replaying the same seed + decision path yields the same offer sets.
+- Within a run, replaying the same seed + decision path yields the same offer sets and card display order for each step.
 - Across new runs, seed changes produce different offer sequences.
 
 ## Pip coaching + remediation
@@ -25,13 +26,15 @@ Pip acts as explainer and remediation coach:
 - **Ask Pip why these cases?** explains current needs (lowest category, variance, pitfall flags).
 - Pip shows role-based mission reasoning from the current 4-mission offer set.
 - After two consecutive poor outcomes, Pip suggests 2 stabilizing missions and offers **Highlight these on map** (no auto-routing).
+- Anti-cheese nudge: after repeatedly selecting the same presentation label (A/B/C) across cases, Pip shows a one-time reminder on Map: **"Options are shuffled each case—choose based on trade-offs, not the letter."**
 
 ## Outcome feedback improvements
 
 Outcome Feedback now includes:
-- option-specific `learningNote`
-- rule-based `systemInsight`
-- `Top Analyst blocked because: ...` when gate conditions are not met.
+- option-specific `learningNote` (always rendered with fallback text if missing)
+- rule-based `systemInsight` (always returns a non-empty sentence)
+- one-line `Trade-off Spotlight` sentence summarizing the largest upside/downside category trade-off
+- `Top Analyst currently blocked because: ...` when gate conditions are not met.
 
 ## Run lifecycle + persistence
 
@@ -77,4 +80,5 @@ Run validation checks:
 python3 -m json.tool data/missions.json
 node --check js/app.js js/ui.js js/state.js js/scoring.js js/adaptation.js
 node docs/qa/offer-set-audit.mjs
+node docs/qa/anti-cheese-learning-audit.mjs
 ```
