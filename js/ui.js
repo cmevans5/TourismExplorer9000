@@ -7,35 +7,47 @@
     satisfaction: 'Visitor Satisfaction'
   };
 
-  function renderMap(state, mission) {
-    const lockText = state.hotspotPlayedCount >= 2
-      ? '<span class="tag bad">Completed / Locked</span>'
-      : state.hotspotPlayedCount === 1
-        ? '<span class="tag warn">Replay Available (1)</span>'
-        : '<span class="tag good">Available</span>';
+  function renderMap(state, missions, constants) {
+    const missionCards = missions.map(mission => {
+      const completed = state.completedMissionIds.includes(mission.id);
+      const status = completed
+        ? '<span class="tag good">Completed</span>'
+        : '<span class="tag warn">Available</span>';
 
-    const intro = mission
-      ? `<p><strong>Role:</strong> Newly hired Tourism Analyst for Tampa Areas of Economic Interest.</p>`
-      : '<p>Loading mission data...</p>';
+      return `
+        <article class="map-hotspot">
+          <h3>${mission.name} — ${mission.area}</h3>
+          <p>${mission.description}</p>
+          <p>${status}</p>
+          <button
+            class="btn"
+            data-mission-id="${mission.id}"
+            ${completed ? 'disabled' : ''}
+            aria-label="${completed ? `${mission.name} completed` : `Enter ${mission.name}`}">
+            ${completed ? 'Completed' : 'Enter Hotspot'}
+          </button>
+        </article>
+      `;
+    }).join('');
 
     return `
       <section class="card">
         <h2>City Map Hub</h2>
-        ${intro}
+        <p><strong>Role:</strong> Newly hired Tourism Analyst for Tampa Areas of Economic Interest.</p>
         <p>Select a hotspot, evaluate evidence, and decide how to allocate constrained impact resources.</p>
+        <p><strong>Missions Complete:</strong> ${state.completedMissionIds.length}/${missions.length}</p>
       </section>
-      <section class="map-hotspot" aria-label="Tampa map hotspot">
-        <h3>${mission ? mission.name : 'Hotspot'} — ${mission ? mission.area : ''}</h3>
-        <p>${mission ? mission.description : ''}</p>
-        <p>${lockText}</p>
-        <button id="btnEnterHotspot" class="btn" ${state.hotspotPlayedCount >= 2 ? 'disabled' : ''}>
-          ${state.hotspotPlayedCount === 1 ? 'Replay Hotspot' : 'Enter Hotspot'}
-        </button>
+      <section class="card">
+        <h2>Impact Budget</h2>
+        <p>You receive <strong>${constants.impactBudgetPerHotspot} Impact Points</strong> per hotspot. Decisions that exceed the remaining budget are blocked.</p>
+      </section>
+      <section class="grid map-grid" aria-label="Tampa map hotspots">
+        ${missionCards}
       </section>
     `;
   }
 
-  function renderExploration(mission) {
+  function renderExploration(mission, state) {
     const points = mission.exploration.dataPoints
       .map(point => `<li>${point}</li>`)
       .join('');
@@ -43,6 +55,7 @@
     return `
       <section class="card">
         <h2>Exploration: ${mission.name}</h2>
+        <p><strong>Impact Points Remaining:</strong> ${state.impactPointsRemaining}</p>
         <div class="grid two">
           <div>
             <p>${mission.exploration.brief}</p>
@@ -51,7 +64,7 @@
             </ul>
           </div>
           <div class="media-placeholder" aria-label="Placeholder media panel">
-            Placeholder media panel (image/video)
+            ${mission.exploration.mediaLabel || 'Placeholder media panel (image/video)'}
           </div>
         </div>
         <button id="btnToDecision" class="btn">Proceed to Decision</button>
@@ -59,20 +72,25 @@
     `;
   }
 
-  function renderDecision(mission) {
+  function renderDecision(mission, state) {
     const optionButtons = mission.options
-      .map(opt => `
-        <button class="btn choice" data-option-id="${opt.id}" aria-label="Select option ${opt.id}">
-          <strong>${opt.title}</strong><br />
-          <span class="small">${opt.description}</span>
-        </button>
-      `)
+      .map(opt => {
+        const afford = state.impactPointsRemaining >= opt.impactCost;
+        return `
+          <button class="btn choice ${afford ? '' : 'blocked'}" data-option-id="${opt.id}" aria-label="Select option ${opt.id}" ${afford ? '' : 'disabled'}>
+            <strong>${opt.title}</strong><br />
+            <span class="small">${opt.description}</span><br />
+            <span class="small">Impact Cost: ${opt.impactCost} (${afford ? `${state.impactPointsRemaining} remaining` : 'Insufficient budget'})</span>
+          </button>
+        `;
+      })
       .join('');
 
     return `
       <section class="card">
         <h2>Decision Point</h2>
         <p>Choose one strategy. Each choice improves some outcomes while creating trade-offs.</p>
+        <p><strong>Impact Points Remaining:</strong> ${state.impactPointsRemaining}</p>
         <div class="grid">
           ${optionButtons}
         </div>
@@ -86,7 +104,7 @@
     return `${delta}`;
   }
 
-  function renderFeedback(feedback) {
+  function renderFeedback(feedback, state) {
     const deltaItems = Object.entries(feedback.deltas)
       .map(([key, value]) => `<li>${CATEGORY_LABELS[key]}: <strong>${deltaText(value)}</strong></li>`)
       .join('');
@@ -96,25 +114,28 @@
         <h2>Outcome Feedback</h2>
         <p>${feedback.text}</p>
         <ul class="delta-list">${deltaItems}</ul>
+        <p><strong>Impact Cost:</strong> ${feedback.impactCost}</p>
+        <p><strong>Remaining Impact Points:</strong> ${state.impactPointsRemaining}</p>
         <p><strong>Poor outcome:</strong> ${feedback.poorOutcome ? 'Yes' : 'No'}</p>
         <button id="btnReturnMap" class="btn">Return to Map</button>
       </section>
     `;
   }
 
-  function renderEndScreen(state) {
-    const gateText = state.topGatePassed
-      ? 'Top-rating gate passed: all category minimum and variance constraints met.'
-      : 'Top-rating gate not passed: rebalance low categories and reduce variance spread.';
+  function renderGameComplete(state) {
+    const totals = Object.entries(state.categories)
+      .map(([key, value]) => `<li>${CATEGORY_LABELS[key]}: <strong>${value}</strong></li>`)
+      .join('');
 
     return `
       <section class="card">
-        <h2>Mission Complete</h2>
-        <p>You have completed the vertical slice (play + one replay).</p>
-        <p class="end-rating">Final rating: ${state.ratingBand}</p>
-        <p><strong>Balanced Impact Index (BII):</strong> ${state.BII}</p>
+        <h2>Game Complete</h2>
+        <p>All hotspots have been completed. Final tourism systems report is now available.</p>
+        <p class="end-rating">Analyst Tier: ${state.ratingBand}</p>
+        <p><strong>Final BII:</strong> ${state.BII}</p>
         <p><strong>Variance:</strong> ${state.variance}</p>
-        <p>${gateText}</p>
+        <p><strong>Narrative Summary:</strong> ${state.finalNarrative}</p>
+        <ul>${totals}</ul>
         <button id="btnBackMap" class="btn secondary">Review Map</button>
       </section>
     `;
@@ -136,6 +157,7 @@
       <p><strong>Top Gate Passed:</strong> ${state.topGatePassed ? 'Yes' : 'No'}</p>
       <p><strong>Poor Streak:</strong> ${state.poorStreak}</p>
       <p><strong>Decisions Made:</strong> ${state.decisionCount}</p>
+      <p><strong>Total Impact Spent:</strong> ${state.impactPointsSpent}</p>
     `;
   }
 
@@ -144,7 +166,7 @@
     renderExploration,
     renderDecision,
     renderFeedback,
-    renderEndScreen,
+    renderGameComplete,
     renderDashboard
   };
 })();
