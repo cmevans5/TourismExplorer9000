@@ -1,45 +1,66 @@
-# Tourism Explorer 9000 — Mission Pool QA Plan
+# Tourism Explorer 9000 — Tourism Sampling QA Plan
 
 ## Scope
-Validate the expanded adaptive mission database and ensure Top Analyst remains achievable but rare.
+Validate adaptive Tourism Sampling, seeded controlled randomness, and Pip remediation/coaching behavior.
 
-## Automated QA entrypoint
+## Manual + automated checklist
+
+### TC-01: Run length end condition
+**Check**: completing exactly 8 cases routes immediately to Game Complete.
+
+### TC-02: Sample set size
+**Check**: `sampledMissionIds.length === 8` for each run.
+
+### TC-03: Run persistence
+**Check**: refresh keeps the same `runId`, `runSeed`, and sampled mission list until Start New Run.
+
+### TC-04: Start New Run reset
+**Check**: Start New Run resets `casesCompletedThisRun`, `completedMissionIds`, and creates a fresh sampled set.
+
+### TC-05: Map shows sampled-only missions
+**Check**: Map renders only missions in `sampledMissionIds` and hides non-sampled missions.
+
+### TC-06: Sampling variety guard (hub)
+**Check**: sampled sequence has no 3 adjacent missions from the same hub.
+
+### TC-07: Sampling variety guard (issue tag)
+**Check**: back-to-back identical issueType is avoided when alternatives are available.
+
+### TC-08: Pip “why these cases” explanation
+**Check**: Ask Pip button opens panel with weakest category mention and Tourism Sampling principle.
+
+### TC-09: Variance-aware Pip explanation
+**Check**: if variance is above threshold, Pip explicitly references spread/imbalance.
+
+### TC-10: “Why am I seeing this?” toggle accessibility
+**Check**: toggle is collapsed by default, keyboard-focusable, announces `aria-expanded`, and can be opened/closed by keyboard.
+
+### TC-11: Pip remediation source constraint
+**Check**: remediation mission IDs are selected from current sampled missions.
+
+### TC-12: Pip “Take me there” routing
+**Check**: button routes directly to top remediation mission in current sample.
+
+### TC-13: Forced Pip trigger retained
+**Check**: two consecutive poor outcomes still force Pip coaching flow.
+
+### TC-14: Proactive Pip indicator
+**Check**: when Top Analyst is gated and at least 2 cases are completed, map shows a subtle Pip update indicator.
+
+### TC-15: Determinism within run / variation across runs
+**Check**: for fixed seed, sampled output is deterministic; different seeds produce different sampled sets.
+
+## Automated QA scripts
+
 Run:
 
 ```bash
-node docs/qa/mission-pool-audit.mjs
+node docs/qa/tourism-sampling-audit.mjs
 ```
 
-This script executes the structural and balancing assertions in TC-01 through TC-10.
-
-## Test Cases
-
-### TC-01: Mission pool size
-**Check**: mission count is between 15 and 20.
-
-### TC-02: Mission identity uniqueness
-**Check**: every mission has a unique `id`.
-
-### TC-03: Hub coverage distribution
-**Check**: 6–8 hubs are present and each hub has 2–3 cases.
-
-### TC-04: Required mission schema fields
-**Check**: each mission includes `hub`, `issueType`, `pedagogy`, `exploration.bullets`, `mediaLabel`, and `options A/B/C`.
-
-### TC-05: Option payload completeness
-**Check**: every option includes `cost`, full `deltas` for all five categories, and `feedback`.
-
-### TC-06: Adaptive remediation tagging
-**Check**: at least one mission is tagged for remediation (`pedagogy.tags` includes `remediation`).
-
-### TC-07: Consequence follow-up tagging
-**Check**: at least one mission is tagged `consequence-followup` for same-hub progression hooks.
-
-### TC-08: Variety guard support
-**Check**: mission ordering does not contain the same hub three times in a row.
-
-### TC-09: Achievable Top Analyst path over ~9 decisions
-**Check**: brute-force on a 9-case sample confirms at least one path where all categories `>=2`, variance `<=2`, and top threshold is met.
-
-### TC-10: Near-miss gating behavior
-**Check**: at least one intentionally near-balanced 9-case route fails Top Analyst due to gate requirements.
+The script verifies:
+- run sample length equals `RUN_LENGTH`
+- hub variety constraints
+- deterministic per seed
+- variation across different seeds
+- diagnosis contract includes a recommended focus and 1–2 remediation missions

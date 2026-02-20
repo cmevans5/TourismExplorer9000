@@ -3,7 +3,7 @@
   const dashboardPanel = document.getElementById('dashboardPanel');
   const dashboardContent = document.getElementById('dashboardContent');
   const pipOverlay = document.getElementById('pipOverlay');
-  const pipHintText = document.getElementById('pipHintText');
+  const pipPanelContent = document.getElementById('pipPanelContent');
 
   const {
     SCORING_CONSTANTS,
@@ -14,6 +14,13 @@
     classifyRating
   } = window.TE9000Scoring;
   const { saveState, loadState, clearState } = window.TE9000State;
+  const {
+    RUN_CONFIG,
+    sampleMissionsForRun,
+    buildDiagnosis,
+    createRunId,
+    buildSamplingExplanation
+  } = window.TE9000Adaptation;
   const UI = window.TE9000UI;
 
   const CATEGORY_LABELS = {
@@ -24,45 +31,21 @@
     satisfaction: 'Visitor Satisfaction'
   };
 
-  const PIP_HINTS = {
-    sustainabilityLow: 'Sustainability is trailing. Add low-emission transport, waste reduction, and climate-aware design to stabilize long-term outcomes.',
-    economicTooHigh: 'Economic gains are outpacing other categories. Reinvest some momentum into culture, sustainability, and resident-facing hospitality to avoid backlash.',
-    varianceHigh: 'Your system is too imbalanced. Use the next move to strengthen your weakest category and reduce spread across all outcomes.',
-    weakestCategory: 'Target your weakest category next and pair every gain with protection for long-term community trust.'
-  };
-
   let state = loadState();
   let missions = [];
+  let lastFocusedEl = null;
 
-  function loadMissionData() {
-    return fetch('data/missions.json')
-      .then(resp => {
-        if (!resp.ok) throw new Error('Could not load missions.json');
-        return resp.json();
-      })
-      .then(data => {
-        missions = data.missions || [];
-        state.missionOrder = missions.map(m => m.id);
-        state.missionById = missions.reduce((acc, m) => {
-          acc[m.id] = m;
-          return acc;
-        }, {});
-        if (!state.selectedMissionId && missions[0]) {
-          state.selectedMissionId = missions[0].id;
-        }
-        saveState(state);
-      })
-      .catch(err => {
-        mainEl.innerHTML = `<section class="card"><h2>Load Error</h2><p>${err.message}</p><p class="small">Tip: run from a local server, not file://.</p></section>`;
-      });
+  function getSampledMissions() {
+    const ids = new Set(state.sampledMissionIds || []);
+    return missions.filter(mission => ids.has(mission.id));
   }
 
   function currentMission() {
     return state.selectedMissionId ? state.missionById[state.selectedMissionId] : null;
   }
 
-  function allMissionsCompleted() {
-    return missions.length > 0 && state.completedMissionIds.length >= missions.length;
+  function runCompleted() {
+    return state.casesCompletedThisRun >= RUN_CONFIG.RUN_LENGTH;
   }
 
   function getFinalNarrative() {
@@ -81,6 +64,28 @@
     }
 
     return `Your strategy improved ${hi}, but ${lo} lagged behind. Reallocate future Impact Points toward cross-category resilience.`;
+  }
+
+  function ensureRunSample(forceNew) {
+    if (!missions.length) return;
+    const hasValidSample = (state.sampledMissionIds || []).length === RUN_CONFIG.RUN_LENGTH
+      && state.sampledMissionIds.every(id => state.missionById[id]);
+
+    if (!hasValidSample || forceNew) {
+      const sampled = sampleMissionsForRun(missions, state, SCORING_CONSTANTS, RUN_CONFIG);
+      state.sampledMissionIds = sampled.sampledMissionIds;
+      state.runSeed = sampled.runSeed;
+      state.runId = createRunId(sampled.runSeed);
+      state.completedMissionIds = [];
+      state.casesCompletedThisRun = 0;
+      state.selectedMissionId = null;
+      state.lastMissionId = null;
+      state.lastMissionTags = [];
+      state.poorStreak = 0;
+      state.pipEnabled = false;
+      state.pipForceOpen = false;
+      state.pipVoluntaryIndicator = false;
+    }
   }
 
   function navigate(screen) {
@@ -138,6 +143,8 @@
       }
     }
     state.finalNarrative = getFinalNarrative();
+    state.diagnosis = buildDiagnosis(state, getSampledMissions(), SCORING_CONSTANTS);
+    state.pipVoluntaryIndicator = !state.topGatePassed && state.casesCompletedThisRun >= 2;
   }
 
   function evaluatePoorOutcome(deltas) {
@@ -147,6 +154,7 @@
 
   function selectMission(missionId) {
     if (state.completedMissionIds.includes(missionId)) return;
+    if (!state.sampledMissionIds.includes(missionId)) return;
     state.selectedMissionId = missionId;
     state.impactPointsRemaining = SCORING_CONSTANTS.impactBudgetPerHotspot;
     state.currentScreen = 'explore';
@@ -154,31 +162,85 @@
     render();
   }
 
-  function choosePipHint() {
-    const categories = state.categories;
-    const entries = Object.entries(categories).sort((a, b) => a[1] - b[1]);
-    const lowest = entries[0][0];
-
-    if (lowest === 'sustainability') {
-      return PIP_HINTS.sustainabilityLow;
-    }
-
-    const avgOther = (categories.sustainability + categories.culture + categories.hospitality + categories.satisfaction) / 4;
-    if (categories.economic - avgOther >= 4) {
-      return PIP_HINTS.economicTooHigh;
-    }
-
-    if (state.variance > SCORING_CONSTANTS.vMaxVarianceTop) {
-      return PIP_HINTS.varianceHigh;
-    }
-
-    return `${PIP_HINTS.weakestCategory} Lowest now: ${CATEGORY_LABELS[lowest]}.`;
+  function getPipExplanation() {
+    return buildSamplingExplanation(state, state.diagnosis || {
+      lowestCategories: ['economic'],
+      minValue: 0,
+      variance: 0,
+      flags: []
+    });
   }
 
-  function showPip() {
-    pipHintText.textContent = choosePipHint();
+  function handleDialogKeydown(event) {
+    if (event.key === 'Escape') {
+      closePipOverlay();
+      return;
+    }
+    if (event.key !== 'Tab') return;
+
+    const focusables = pipOverlay.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    if (!focusables.length) return;
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  }
+
+  function openPipOverlay(forceOpen = false) {
+    state.pipForceOpen = forceOpen;
+    const explanation = getPipExplanation();
+    pipPanelContent.innerHTML = UI.renderPipPanel(state, explanation);
     pipOverlay.classList.remove('hidden');
-    document.getElementById('btnPipClose').focus();
+    lastFocusedEl = document.activeElement;
+    pipOverlay.addEventListener('keydown', handleDialogKeydown);
+    const firstFocus = document.getElementById('btnPipWhyToggle') || document.getElementById('btnPipClose');
+    if (firstFocus) firstFocus.focus();
+    bindPipPanelEvents();
+  }
+
+  function closePipOverlay() {
+    pipOverlay.classList.add('hidden');
+    pipOverlay.removeEventListener('keydown', handleDialogKeydown);
+    state.pipEnabled = false;
+    state.pipForceOpen = false;
+    saveState(state);
+    if (lastFocusedEl) lastFocusedEl.focus();
+    if (runCompleted()) {
+      navigate('complete');
+    } else {
+      navigate('map');
+    }
+  }
+
+  function bindPipPanelEvents() {
+    const closeBtn = document.getElementById('btnPipClose');
+    if (closeBtn) closeBtn.addEventListener('click', closePipOverlay);
+
+    const toggle = document.getElementById('btnPipWhyToggle');
+    if (toggle) {
+      toggle.addEventListener('click', () => {
+        state.pipWhyExpanded = !state.pipWhyExpanded;
+        saveState(state);
+        openPipOverlay(state.pipForceOpen);
+      });
+    }
+
+    const takeMeThere = document.getElementById('btnTakeMeThere');
+    if (takeMeThere) {
+      takeMeThere.addEventListener('click', () => {
+        const topMission = state.diagnosis?.remediationMissions?.[0];
+        if (topMission) {
+          pipOverlay.classList.add('hidden');
+          selectMission(topMission);
+        }
+      });
+    }
   }
 
   function applyDecision(optionId) {
@@ -243,23 +305,42 @@
         state.hotspotPlayedCount += 1;
         if (!state.completedMissionIds.includes(mission.id)) {
           state.completedMissionIds.push(mission.id);
+          state.casesCompletedThisRun += 1;
+          state.lastMissionId = mission.id;
+          state.lastMissionTags = mission.pedagogy?.tags || [];
         }
         state.selectedMissionId = null;
+        computeAndStoreMetrics();
         saveState(state);
 
         if (state.pipEnabled) {
-          showPip();
+          openPipOverlay(true);
           return;
         }
 
-        navigate(allMissionsCompleted() ? 'complete' : 'map');
+        navigate(runCompleted() ? 'complete' : 'map');
       });
     }
   }
 
+  function startNewRun() {
+    const ok = window.confirm('Start a new Tourism Sampling run? This resets current run progress and re-samples missions.');
+    if (!ok) return;
+    state = clearState();
+    state.missionOrder = missions.map(m => m.id);
+    state.missionById = missions.reduce((acc, m) => {
+      acc[m.id] = m;
+      return acc;
+    }, {});
+    ensureRunSample(true);
+    computeAndStoreMetrics();
+    saveState(state);
+    navigate('map');
+  }
+
   function bindGlobalEvents() {
     document.getElementById('btnDashboard').addEventListener('click', () => {
-      dashboardContent.innerHTML = UI.renderDashboard(state);
+      dashboardContent.innerHTML = UI.renderDashboard(state, RUN_CONFIG);
       dashboardPanel.classList.remove('hidden');
       document.getElementById('btnDashboardClose').focus();
     });
@@ -268,28 +349,8 @@
       dashboardPanel.classList.add('hidden');
     });
 
-    document.getElementById('btnPipClose').addEventListener('click', () => {
-      pipOverlay.classList.add('hidden');
-      state.pipEnabled = false;
-      saveState(state);
-      navigate(allMissionsCompleted() ? 'complete' : 'map');
-    });
-
-    document.getElementById('btnReset').addEventListener('click', () => {
-      const ok = window.confirm('Reset all progress for Tourism Explorer 9000?');
-      if (!ok) return;
-      state = clearState();
-      if (missions.length) {
-        state.missionOrder = missions.map(m => m.id);
-        state.missionById = missions.reduce((acc, m) => {
-          acc[m.id] = m;
-          return acc;
-        }, {});
-      }
-      saveState(state);
-      computeAndStoreMetrics();
-      navigate('map');
-    });
+    document.getElementById('btnReset').textContent = 'Start New Run';
+    document.getElementById('btnReset').addEventListener('click', startNewRun);
   }
 
   function bindScreenEvents() {
@@ -297,6 +358,8 @@
       mainEl.querySelectorAll('[data-mission-id]').forEach(btn => {
         btn.addEventListener('click', () => selectMission(btn.getAttribute('data-mission-id')));
       });
+      const askPip = document.getElementById('btnAskPipWhy');
+      if (askPip) askPip.addEventListener('click', () => openPipOverlay(false));
     }
 
     if (state.currentScreen === 'explore') {
@@ -323,27 +386,52 @@
     }
 
     if (state.currentScreen === 'map') {
-      mainEl.innerHTML = UI.renderMap(state, missions, SCORING_CONSTANTS);
+      mainEl.innerHTML = UI.renderMap(state, getSampledMissions(), SCORING_CONSTANTS, RUN_CONFIG);
     } else if (state.currentScreen === 'explore') {
-      mainEl.innerHTML = UI.renderExploration(currentMission(), state);
+      mainEl.innerHTML = UI.renderExploration(currentMission(), state, RUN_CONFIG);
     } else if (state.currentScreen === 'decision') {
-      mainEl.innerHTML = UI.renderDecision(currentMission(), state);
+      mainEl.innerHTML = UI.renderDecision(currentMission(), state, RUN_CONFIG);
     } else if (state.currentScreen === 'complete') {
       mainEl.innerHTML = UI.renderGameComplete(state);
     } else {
       state.currentScreen = 'map';
-      mainEl.innerHTML = UI.renderMap(state, missions, SCORING_CONSTANTS);
+      mainEl.innerHTML = UI.renderMap(state, getSampledMissions(), SCORING_CONSTANTS, RUN_CONFIG);
     }
 
     bindScreenEvents();
     mainEl.focus();
   }
 
+  function loadMissionData() {
+    return fetch('data/missions.json')
+      .then(resp => {
+        if (!resp.ok) throw new Error('Could not load missions.json');
+        return resp.json();
+      })
+      .then(data => {
+        missions = data.missions || [];
+        state.missionOrder = missions.map(m => m.id);
+        state.missionById = missions.reduce((acc, m) => {
+          acc[m.id] = m;
+          return acc;
+        }, {});
+        ensureRunSample(false);
+        if (!state.selectedMissionId && state.sampledMissionIds[0]) {
+          state.selectedMissionId = state.sampledMissionIds[0];
+          state.selectedMissionId = null;
+        }
+        computeAndStoreMetrics();
+        saveState(state);
+      })
+      .catch(err => {
+        mainEl.innerHTML = `<section class="card"><h2>Load Error</h2><p>${err.message}</p><p class="small">Tip: run from a local server, not file://.</p></section>`;
+      });
+  }
+
   async function start() {
-    computeAndStoreMetrics();
     bindGlobalEvents();
     await loadMissionData();
-    if (allMissionsCompleted()) {
+    if (runCompleted()) {
       state.currentScreen = 'complete';
     }
     render();
