@@ -14,15 +14,20 @@
     poorStreak: 0,
     pipEnabled: false,
     hotspotPlayedCount: 0,
-    hotspotCompleted: false,
+    completedMissionIds: [],
+    selectedMissionId: null,
+    missionById: {},
+    missionOrder: [],
+    missionSpendById: {},
     lastDecisionDeltas: null,
+    impactPointsRemaining: 0,
+    impactPointsSpent: 0,
     BII: 0,
     variance: 0,
     topGatePassed: false,
     ratingBand: 'At Risk',
-    currentScreen: 'map',
-    missionId: null,
-    missionData: null
+    finalNarrative: '',
+    currentScreen: 'map'
   };
 
   function clone(obj) {

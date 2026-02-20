@@ -7,6 +7,7 @@
       "description": "The Riverwalk is experiencing rising visitor volume, mobility bottlenecks, and mixed sentiment from local vendors regarding crowd behavior and pricing pressure.",
       "exploration": {
         "brief": "As a newly hired Tourism Analyst, you are reviewing the Riverwalk's weekend performance and local stakeholder input. Your recommendation should improve outcomes across visitor experience, local inclusion, and long-term city resilience.",
+        "mediaLabel": "Riverwalk flow map and vendor sentiment dashboard",
         "dataPoints": [
           "Foot traffic increased 18% in the last quarter.",
           "Local small businesses report uneven customer distribution.",
@@ -18,6 +19,7 @@
           "id": "A",
           "title": "A) Expand event-driven programming",
           "description": "Increase headline events and premium hospitality pop-ups to drive immediate spending.",
+          "impactCost": 40,
           "deltas": {
             "economic": 2,
             "sustainability": -1,
@@ -31,6 +33,7 @@
           "id": "B",
           "title": "B) Prioritize green mobility and community co-design",
           "description": "Invest in transit wayfinding, shade, waste reduction, and local cultural programming partnerships.",
+          "impactCost": 30,
           "deltas": {
             "economic": -1,
             "sustainability": 2,
@@ -44,6 +47,7 @@
           "id": "C",
           "title": "C) Launch premium visitor convenience package",
           "description": "Offer concierge amenities and express services for visitors, funded by selective reallocations.",
+          "impactCost": 45,
           "deltas": {
             "economic": 0,
             "sustainability": -1,
@@ -52,6 +56,124 @@
             "satisfaction": 2
           },
           "feedback": "Visitor convenience rose, but concerns emerged about local inclusivity and ecological pressure."
+        }
+      ]
+    },
+    {
+      "id": "ybor-cultural-district",
+      "name": "Ybor City Cultural District",
+      "area": "Historic Ybor",
+      "description": "Nightlife growth is accelerating while heritage groups worry about cultural dilution and resident displacement.",
+      "exploration": {
+        "brief": "Your team is asked to create a district strategy that keeps Ybor's identity vibrant while handling late-night surges in demand.",
+        "mediaLabel": "Historic district heatmap and event permit timeline",
+        "dataPoints": [
+          "Weekend nightlife revenue rose 22% year-over-year.",
+          "Local artists report reduced access to affordable venues.",
+          "Noise complaints increased near mixed-use residential blocks."
+        ]
+      },
+      "options": [
+        {
+          "id": "A",
+          "title": "A) Fast-track nightlife expansion licenses",
+          "description": "Approve additional entertainment permits to amplify visitor draw and private investment.",
+          "impactCost": 50,
+          "deltas": {
+            "economic": 3,
+            "sustainability": -2,
+            "culture": -1,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "Revenue accelerated, but legacy community trust dropped as nightlife pressure displaced local programming."
+        },
+        {
+          "id": "B",
+          "title": "B) Co-fund heritage nights and mobility controls",
+          "description": "Pair curated cultural events with transit controls, safety staffing, and resident listening sessions.",
+          "impactCost": 35,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 2,
+            "culture": 3,
+            "hospitality": 1,
+            "satisfaction": 0
+          },
+          "feedback": "The district retained stronger identity signals and lower friction, even with slightly slower short-term growth."
+        },
+        {
+          "id": "C",
+          "title": "C) Introduce premium festival corridor",
+          "description": "Designate a paid-access entertainment corridor with upgraded concierge services.",
+          "impactCost": 45,
+          "deltas": {
+            "economic": 2,
+            "sustainability": -1,
+            "culture": -2,
+            "hospitality": 2,
+            "satisfaction": 1
+          },
+          "feedback": "Visitor service quality improved, but concerns rose about exclusion and cultural authenticity loss."
+        }
+      ]
+    },
+    {
+      "id": "busch-gardens-strategy",
+      "name": "Busch Gardens Visitor Strategy",
+      "area": "North Tampa",
+      "description": "Attendance is climbing, yet queue pressure, transport emissions, and repeat-visitor fatigue are reducing perceived value.",
+      "exploration": {
+        "brief": "Leaders need a tactical strategy that supports recurring tourism spend while preserving ecological and community outcomes.",
+        "mediaLabel": "Ride capacity dashboard and transport emissions panel",
+        "dataPoints": [
+          "Average queue time climbed by 15 minutes during peak weekends.",
+          "Shuttle adoption remains below target at 28%.",
+          "Guest surveys cite strong attractions but weak sustainability visibility."
+        ]
+      },
+      "options": [
+        {
+          "id": "A",
+          "title": "A) Build high-throughput premium pass lanes",
+          "description": "Scale premium queue lanes and upsell fast-track bundles to maximize park revenue.",
+          "impactCost": 55,
+          "deltas": {
+            "economic": 3,
+            "sustainability": -2,
+            "culture": -1,
+            "hospitality": 2,
+            "satisfaction": 1
+          },
+          "feedback": "Top-line performance improved quickly, but public perception weakened around fairness and environmental pressure."
+        },
+        {
+          "id": "B",
+          "title": "B) Launch eco-shuttle + local maker marketplace",
+          "description": "Bundle low-emission transport incentives with rotating local vendor activations.",
+          "impactCost": 40,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 3,
+            "culture": 2,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "Operational flow and destination identity both improved, with broad gains across environmental and guest trust metrics."
+        },
+        {
+          "id": "C",
+          "title": "C) Focus on social-media thrill campaigns",
+          "description": "Invest in viral campaigns and night events to raise attendance among new audiences.",
+          "impactCost": 35,
+          "deltas": {
+            "economic": 2,
+            "sustainability": -1,
+            "culture": 0,
+            "hospitality": 1,
+            "satisfaction": 2
+          },
+          "feedback": "Attendance rose and guest excitement increased, though system strain and environmental concerns remained unresolved."
         }
       ]
     }
