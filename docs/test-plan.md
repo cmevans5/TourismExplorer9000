@@ -1,69 +1,64 @@
-# Tourism Explorer 9000 — Tourism Sampling QA Plan
+# Tourism Explorer 9000 — Per-step Offer Set QA Plan
 
 ## Scope
-Validate adaptive Tourism Sampling, seeded controlled randomness, and Pip remediation/coaching behavior.
+Validate adaptive per-step offer generation (4 missions each step), deterministic seeded behavior, Pip explanation/remediation, and feedback completeness.
 
 ## Manual + automated checklist
 
 ### TC-01: Run length end condition
 **Check**: completing exactly 8 cases routes immediately to Game Complete.
 
-### TC-02: Sample set size
-**Check**: `sampledMissionIds.length === 8` for each run.
+### TC-02: Offer set size and composition
+**Check**: every map render shows exactly 4 cards and role labels count as 2 Recommended, 1 Challenge, 1 Wildcard.
 
-### TC-03: Run persistence
-**Check**: refresh keeps the same `runId`, `runSeed`, and sampled mission list until Start New Run.
+### TC-03: Offer set refresh cadence
+**Check**: after each completed case + Return to Map, a new 4-mission offer set is generated.
 
-### TC-04: Start New Run reset
-**Check**: Start New Run resets `casesCompletedThisRun`, `completedMissionIds`, and creates a fresh sampled set.
+### TC-04: No repeats of completed missions
+**Check**: any mission in `completedMissionIds` is never offered again in the same run.
 
-### TC-05: Map shows sampled-only missions
-**Check**: Map renders only missions in `sampledMissionIds` and hides non-sampled missions.
+### TC-05: Determinism within fixed seed
+**Check**: same `runSeed` and same sequence of decisions reproduces the same per-step offer sets.
 
-### TC-06: Sampling variety guard (hub)
-**Check**: sampled sequence has no 3 adjacent missions from the same hub.
+### TC-06: Variation across new runs
+**Check**: Start New Run produces a different `runSeed` and different step-1 offer set.
 
-### TC-07: Sampling variety guard (issue tag)
-**Check**: back-to-back identical issueType is avoided when alternatives are available.
+### TC-07: Hub variety constraint
+**Check**: no single offer set contains 3 missions from the same hub (when alternatives exist).
 
-### TC-08: Pip “why these cases” explanation
-**Check**: Ask Pip button opens panel with weakest category mention and Tourism Sampling principle.
+### TC-08: Last-hub repetition avoidance
+**Check**: generator avoids re-offering the same hub as `lastChosenHub` where viable.
 
-### TC-09: Variance-aware Pip explanation
-**Check**: if variance is above threshold, Pip explicitly references spread/imbalance.
+### TC-09: issueType variety constraint
+**Check**: offer set maintains issueType diversity and avoids over-concentration when alternatives exist.
 
-### TC-10: “Why am I seeing this?” toggle accessibility
-**Check**: toggle is collapsed by default, keyboard-focusable, announces `aria-expanded`, and can be opened/closed by keyboard.
+### TC-10: Pip “why these cases” alignment
+**Check**: Pip summary references current lowest category/variance/flags and per-mission reasons from the current offer set.
 
-### TC-11: Pip remediation source constraint
-**Check**: remediation mission IDs are selected from current sampled missions.
+### TC-11: Pip remediation after two poor outcomes
+**Check**: forced Pip state suggests 2 stabilizing missions and “Highlight these on map” emphasizes them without auto-routing.
 
-### TC-12: Pip “Take me there” routing
-**Check**: button routes directly to top remediation mission in current sample.
+### TC-12: Outcome feedback learning note
+**Check**: choosing any option shows non-empty `learningNote` in Outcome Feedback.
 
-### TC-13: Forced Pip trigger retained
-**Check**: two consecutive poor outcomes still force Pip coaching flow.
+### TC-13: Outcome feedback system insight
+**Check**: choosing any option shows non-empty `systemInsight` sentence based on issueType + delta trade-offs.
 
-### TC-14: Proactive Pip indicator
-**Check**: when Top Analyst is gated and at least 2 cases are completed, map shows a subtle Pip update indicator.
-
-### TC-15: Determinism within run / variation across runs
-**Check**: for fixed seed, sampled output is deterministic; different seeds produce different sampled sets.
-
-### TC-16: Embedded scroll behavior on Map
-**Check**: with 6+ mission cards visible, mouse-wheel/trackpad scrolling moves the mission grid inside `#mainContent` while the page itself remains fixed and no horizontal scrollbar appears.
+### TC-14: Top Analyst lock messaging
+**Check**: when gate is locked, Outcome Feedback shows `Top Analyst blocked because: ...`.
 
 ## Automated QA scripts
 
 Run:
 
 ```bash
-node docs/qa/tourism-sampling-audit.mjs
+node docs/qa/offer-set-audit.mjs
 ```
 
 The script verifies:
-- run sample length equals `RUN_LENGTH`
-- hub variety constraints
-- deterministic per seed
+- offer set size is always 4
+- role composition is exactly 2/1/1
+- completed missions are excluded
+- hub concentration guard (< 3 same-hub in one set)
+- deterministic output for same seed+state
 - variation across different seeds
-- diagnosis contract includes a recommended focus and 1–2 remediation missions

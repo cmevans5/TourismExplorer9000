@@ -99,6 +99,11 @@ h2 { margin-top: 0; }
   border-radius: 10px;
 }
 
+.map-hotspot.highlighted {
+  border-color: var(--focus);
+  box-shadow: 0 0 0 2px rgba(255, 216, 102, 0.35);
+}
+
 .tag {
   display: inline-block;
   padding: 0.2rem 0.5rem;

@@ -5,13 +5,14 @@
     CHALLENGE_COUNT: 1,
     WILDCARD_COUNT: 1,
     RANDOMNESS_SEED_MODE: 'run',
-    RANDOMNESS_WEIGHT: 0.25
+    RANDOMNESS_WEIGHT: 0.2
   };
 
   function hashString(value) {
     let h = 2166136261;
-    for (let i = 0; i < value.length; i += 1) {
-      h ^= value.charCodeAt(i);
+    const text = String(value);
+    for (let i = 0; i < text.length; i += 1) {
+      h ^= text.charCodeAt(i);
       h = Math.imul(h, 16777619);
     }
     return h >>> 0;
@@ -40,6 +41,10 @@
     };
   }
 
+  function createRunRng(runSeed) {
+    return mulberry32(hashString(runSeed));
+  }
+
   function buildMissionInsights(mission) {
     const totals = { economic: 0, sustainability: 0, culture: 0, hospitality: 0, satisfaction: 0 };
     (mission.options || []).forEach(option => {
@@ -62,10 +67,13 @@
     const max = Math.max(...values);
     if (max - min > constants.vMaxVarianceTop) flags.push('HighVariance');
 
-    const avgOther = (state.categories.economic + state.categories.sustainability + state.categories.hospitality + state.categories.satisfaction) / 4;
-    if (state.categories.culture + 1 < avgOther) flags.push('NeglectCulture');
+    const avgOtherForCulture = (state.categories.economic + state.categories.sustainability + state.categories.hospitality + state.categories.satisfaction) / 4;
+    if (state.categories.culture + 1 < avgOtherForCulture) flags.push('NeglectCulture');
 
-    if (state.categories.economic - avgOther >= 4) flags.push('EconomicOverIndex');
+    const avgOtherForSustain = (state.categories.economic + state.categories.culture + state.categories.hospitality + state.categories.satisfaction) / 4;
+    if (state.categories.sustainability + 1 < avgOtherForSustain) flags.push('NeglectSustain');
+
+    if (state.categories.economic - avgOtherForCulture >= 4) flags.push('EconomicOverIndex');
 
     const decisions = Math.max(1, state.decisionCount || 0);
     const spendPerDecision = (state.impactPointsSpent || 0) / decisions;
@@ -74,177 +82,225 @@
     return flags;
   }
 
-  function buildDiagnosis(state, sampledMissions, constants) {
+  function deriveNeeds(state, constants) {
     const entries = Object.entries(state.categories).sort((a, b) => a[1] - b[1]);
     const minValue = entries[0][1];
     const maxValue = entries[entries.length - 1][1];
     const lowestCategories = entries.filter(([, value]) => value === minValue).map(([key]) => key);
-    const flags = computePitfallFlags(state, constants);
-    const variance = maxValue - minValue;
-
-    let recommendedFocus = 'Balance';
-    if (lowestCategories.length === 1 && variance > 1) {
-      recommendedFocus = lowestCategories[0];
-    }
-
-    const highestCategory = entries[entries.length - 1][0];
-    const remediationMissions = pickRemediationMissions({
-      recommendedFocus,
-      lowestCategories,
-      highestCategory,
-      sampledMissions,
-      completedMissionIds: state.completedMissionIds,
-      variance
-    });
 
     return {
+      lowestCategory: lowestCategories[0],
       lowestCategories,
-      minValue,
-      variance,
-      flags,
-      recommendedFocus,
-      remediationMissions
+      secondaryNeed: entries[1][0],
+      highestCategory: entries[entries.length - 1][0],
+      variance: maxValue - minValue,
+      flags: computePitfallFlags(state, constants),
+      minValue
     };
   }
 
-  function pickRemediationMissions({ recommendedFocus, lowestCategories, highestCategory, sampledMissions, completedMissionIds, variance }) {
-    const remaining = sampledMissions.filter(mission => !completedMissionIds.includes(mission.id));
-
-    const scored = remaining.map(mission => {
-      const tags = mission.pedagogy?.tags || [];
-      const reinforces = mission.pedagogy?.reinforces || [];
-      const avg = buildMissionInsights(mission);
-      let score = 0;
-      if (tags.includes('remediation')) score += 4;
-      if (recommendedFocus !== 'Balance' && reinforces.includes(recommendedFocus)) score += 5;
-      lowestCategories.forEach(cat => {
-        if (reinforces.includes(cat)) score += 2;
-      });
-      if (variance > 2 && avg[highestCategory] <= 0) score += 2;
-      if (variance > 2 && lowestCategories.some(cat => (avg[cat] || 0) > 0)) score += 3;
-      return { id: mission.id, score };
-    }).sort((a, b) => b.score - a.score);
-
-    return scored.slice(0, 2).map(item => item.id);
+  function roleLabel(role) {
+    return role.charAt(0).toUpperCase() + role.slice(1);
   }
 
-  function rankMissionForState(mission, state, constants) {
-    const diagnosis = buildDiagnosis(state, [mission], constants);
+  function evaluateMissionForNeed(mission, needs) {
     const reinforces = mission.pedagogy?.reinforces || [];
-    const tags = mission.pedagogy?.tags || [];
-    let score = 0;
+    const avg = buildMissionInsights(mission);
+    const difficulty = mission.pedagogy?.difficulty || 'medium';
 
-    if ((mission.prerequisites?.minDecisions || 0) > state.decisionCount) score -= 5;
-    diagnosis.lowestCategories.forEach(cat => {
-      if (reinforces.includes(cat)) score += 4;
-    });
-    if (diagnosis.variance > constants.vMaxVarianceTop && tags.includes('variance-control')) score += 3;
-    if (tags.includes('remediation')) score += 2;
-    if ((mission.pedagogy?.difficulty || '') === 'hard') score -= 1;
-    score += Math.max(0, 3 - Math.abs(state.completedMissionIds.length - (mission.prerequisites?.minDecisions || 0)));
-    return score;
-  }
+    let recommendedScore = 0;
+    let challengeScore = 0;
+    let wildcardScore = 0;
+    const reasons = [];
 
-  function violatesVariety(selected, candidate) {
-    const len = selected.length;
-    if (len >= 2) {
-      const prev1 = selected[len - 1];
-      const prev2 = selected[len - 2];
-      if (prev1.hub === candidate.hub && prev2.hub === candidate.hub) return true;
-    }
-    if (len >= 1) {
-      const prev = selected[len - 1];
-      if (prev.issueType === candidate.issueType) return true;
-    }
-    return false;
-  }
-
-  function weightedPick(candidates, rng, randomnessWeight) {
-    if (!candidates.length) return null;
-    const width = Math.max(1, Math.min(candidates.length, 1 + Math.round(randomnessWeight * 8)));
-    const topWindow = candidates.slice(0, width);
-    const idx = Math.floor(rng() * topWindow.length);
-    return topWindow[idx];
-  }
-
-  function sampleMissionsForRun(missions, state, constants, config = RUN_CONFIG, explicitSeed) {
-    const seed = explicitSeed ?? getRunSeed(config.RANDOMNESS_SEED_MODE);
-    const rng = mulberry32(Number(seed) || hashString(String(seed)));
-
-    const withScores = missions.map(mission => ({
-      mission,
-      score: rankMissionForState(mission, state, constants)
-    })).sort((a, b) => b.score - a.score);
-
-    const selected = [];
-    const selectedIds = new Set();
-
-    function addMission(candidate) {
-      if (!candidate || selectedIds.has(candidate.id)) return false;
-      if (violatesVariety(selected, candidate)) return false;
-      selected.push(candidate);
-      selectedIds.add(candidate.id);
-      return true;
-    }
-
-    withScores.slice(0, config.RECOMMENDED_COUNT).forEach(({ mission }) => {
-      if (!addMission(mission)) {
-        const fallback = missions.find(m => !selectedIds.has(m.id));
-        if (fallback) addMission(fallback);
+    needs.lowestCategories.forEach(category => {
+      if (reinforces.includes(category)) {
+        recommendedScore += 6;
+        challengeScore += 2;
+        reasons.push(`Supports low ${category} outcomes.`);
+      }
+      if ((avg[category] || 0) > 0) {
+        recommendedScore += 3;
+        reasons.push(`Average options can lift ${category}.`);
       }
     });
 
-    const challengePool = withScores.filter(({ mission }) => (mission.pedagogy?.difficulty || '') === 'hard' && !selectedIds.has(mission.id));
-    for (let i = 0; i < config.CHALLENGE_COUNT; i += 1) {
-      const picked = weightedPick(challengePool, rng, config.RANDOMNESS_WEIGHT);
-      if (picked) addMission(picked.mission);
+    if (needs.flags.includes('HighVariance') && (avg[needs.highestCategory] || 0) <= 0) {
+      recommendedScore += 4;
+      reasons.push('Helps reduce current variance pressure.');
     }
 
-    const wildcardPool = withScores.filter(({ mission, score }) => !selectedIds.has(mission.id) && score >= -2);
-    for (let i = 0; i < config.WILDCARD_COUNT; i += 1) {
-      const picked = weightedPick(wildcardPool, rng, 1);
-      if (picked) addMission(picked.mission);
+    if (reinforces.includes(needs.secondaryNeed)) {
+      challengeScore += 4;
+      reasons.push(`Builds transfer on secondary need (${needs.secondaryNeed}).`);
     }
 
-    while (selected.length < config.RUN_LENGTH) {
-      const remaining = withScores.filter(({ mission }) => !selectedIds.has(mission.id));
-      const valid = remaining.filter(({ mission }) => !violatesVariety(selected, mission));
-      const pool = valid.length ? valid : remaining;
-      const picked = weightedPick(pool, rng, config.RANDOMNESS_WEIGHT);
-      if (!picked) break;
-      addMission(picked.mission);
+    if (difficulty === 'hard') {
+      challengeScore += 4;
+      reasons.push('Higher difficulty challenge for transfer practice.');
+    }
+
+    wildcardScore += 2;
+    if ((avg[needs.lowestCategory] || 0) >= 0) {
+      wildcardScore += 2;
+      reasons.push('Wildcard should not deepen your weakest category.');
+    } else {
+      wildcardScore -= 3;
     }
 
     return {
-      sampledMissionIds: selected.slice(0, config.RUN_LENGTH).map(mission => mission.id),
-      runSeed: seed
+      recommendedScore,
+      challengeScore,
+      wildcardScore,
+      reasons: reasons.slice(0, 3)
     };
   }
 
-  function buildSamplingExplanation(state, diagnosis) {
-    const weakest = diagnosis.lowestCategories.join(', ');
-    const bullets = [
-      `Weakest category right now: ${weakest} (${diagnosis.minValue}).`,
-      'Tourism Sampling only serves a subset of cases each run so you rehearse realistic uncertainty and replay different combinations next time.'
-    ];
+  function applySelectionConstraints(selectedMissions, candidate, state) {
+    const hubCounts = selectedMissions.reduce((acc, mission) => {
+      acc[mission.hub] = (acc[mission.hub] || 0) + 1;
+      return acc;
+    }, {});
 
-    if (diagnosis.variance > 2) {
-      bullets.push(`Your variance is ${diagnosis.variance}, so the run includes balancing cases to reduce spread.`);
+    if ((hubCounts[candidate.hub] || 0) >= 2) {
+      return { valid: false, reason: 'hub-cap' };
     }
 
-    if (diagnosis.flags.length) {
-      bullets.push(`Pitfalls detected: ${diagnosis.flags.join(', ')}.`);
+    if (state.lastChosenHub && candidate.hub === state.lastChosenHub) {
+      const alternatives = selectedMissions.some(mission => mission.hub !== state.lastChosenHub);
+      if (alternatives) return { valid: false, reason: 'repeat-last-hub' };
     }
 
-    const logic = [
-      `Selected ${RUN_CONFIG.RECOMMENDED_COUNT} recommendation-focused cases aligned to your weakest areas.`,
-      `Included ${RUN_CONFIG.CHALLENGE_COUNT} challenge case and ${RUN_CONFIG.WILDCARD_COUNT} wildcard for replayability.`,
-      'Guardrails avoid same-hub triple streaks and repeated issue tags back-to-back when possible.'
-    ];
+    const issueCounts = selectedMissions.reduce((acc, mission) => {
+      acc[mission.issueType] = (acc[mission.issueType] || 0) + 1;
+      return acc;
+    }, {});
+
+    if ((issueCounts[candidate.issueType] || 0) >= 2) {
+      return { valid: false, reason: 'issue-variety' };
+    }
+
+    return { valid: true };
+  }
+
+  function pickWithRandomness(scoredCandidates, rng, randomnessWeight) {
+    if (!scoredCandidates.length) return null;
+    const top = scoredCandidates[0];
+    const nearTop = scoredCandidates.filter(item => item.score >= top.score - 2);
+    if (nearTop.length > 1 && rng() < randomnessWeight) {
+      return nearTop[Math.floor(rng() * nearTop.length)];
+    }
+    return top;
+  }
+
+  function selectMissionForRole(role, pools, selectedMissions, selectedIds, state, rng, randomnessWeight) {
+    const ranked = pools
+      .filter(item => !selectedIds.has(item.mission.id))
+      .sort((a, b) => b[`${role}Score`] - a[`${role}Score`]);
+
+    const strict = ranked.filter(item => applySelectionConstraints(selectedMissions, item.mission, state).valid);
+    const relaxed = strict.length ? strict : ranked;
+    const picked = pickWithRandomness(relaxed.map(item => ({ ...item, score: item[`${role}Score`] })), rng, randomnessWeight);
+    return picked ? picked.mission : null;
+  }
+
+  function generateOfferSet(missions, state, constants, runConfig = RUN_CONFIG, rng) {
+    const completed = new Set(state.completedMissionIds || []);
+    const available = missions.filter(mission => !completed.has(mission.id));
+    const needs = deriveNeeds(state, constants);
+    const localRng = rng || createRunRng(`${state.runSeed || 'default'}:${state.casesCompletedThisRun || 0}`);
+
+    const scored = available.map(mission => {
+      const evaluated = evaluateMissionForNeed(mission, needs);
+      return {
+        mission,
+        ...evaluated
+      };
+    });
+
+    const selected = [];
+    const selectedIds = new Set();
+    const rolesById = {};
+    const reasonsById = {};
+
+    function addMission(mission, role) {
+      if (!mission || selectedIds.has(mission.id)) return;
+      selected.push(mission);
+      selectedIds.add(mission.id);
+      rolesById[mission.id] = role;
+      const missionEval = scored.find(item => item.mission.id === mission.id);
+      reasonsById[mission.id] = missionEval?.reasons?.length
+        ? missionEval.reasons
+        : [`${roleLabel(role)} mission selected to maintain adaptive variety.`];
+    }
+
+    for (let i = 0; i < runConfig.RECOMMENDED_COUNT; i += 1) {
+      addMission(selectMissionForRole('recommended', scored, selected, selectedIds, state, localRng, runConfig.RANDOMNESS_WEIGHT), 'recommended');
+    }
+    addMission(selectMissionForRole('challenge', scored, selected, selectedIds, state, localRng, runConfig.RANDOMNESS_WEIGHT), 'challenge');
+    addMission(selectMissionForRole('wildcard', scored, selected, selectedIds, state, localRng, runConfig.RANDOMNESS_WEIGHT), 'wildcard');
+
+    while (selected.length < 4) {
+      const fallback = available.find(mission => !selectedIds.has(mission.id));
+      if (!fallback) break;
+      addMission(fallback, 'wildcard');
+    }
 
     return {
-      bullets,
-      logic
+      offerMissionIds: selected.slice(0, 4).map(mission => mission.id),
+      rolesById,
+      reasonsById,
+      needs
+    };
+  }
+
+  function pickRemediationMissions(state, offerSet) {
+    const ids = offerSet.offerMissionIds || [];
+    const recommended = ids.filter(id => offerSet.rolesById[id] === 'recommended');
+    if (recommended.length >= 2) return recommended.slice(0, 2);
+
+    const challenge = ids.find(id => offerSet.rolesById[id] === 'challenge');
+    if (challenge) recommended.push(challenge);
+    return recommended.slice(0, 2);
+  }
+
+  function buildDiagnosis(state, constants, offerSet) {
+    const needs = deriveNeeds(state, constants);
+    return {
+      ...needs,
+      recommendedFocus: needs.lowestCategory || 'Balance',
+      remediationMissions: offerSet ? pickRemediationMissions(state, offerSet) : []
+    };
+  }
+
+  function buildOfferSetExplanation(state, offerSet, missionsById) {
+    const needs = offerSet.needs || {
+      lowestCategory: 'economic',
+      lowestCategories: ['economic'],
+      variance: 0,
+      flags: []
+    };
+
+    const summaryBullets = [
+      `Lowest category right now: ${needs.lowestCategories.join(', ')} (${needs.minValue ?? state.minCategory ?? 0}).`,
+      `Current variance is ${needs.variance}.`,
+      `Pitfall flags: ${needs.flags.length ? needs.flags.join(', ') : 'none detected'}.`
+    ];
+
+    const perMissionBullets = {};
+    (offerSet.offerMissionIds || []).forEach(missionId => {
+      const mission = missionsById[missionId];
+      const role = offerSet.rolesById[missionId] || 'wildcard';
+      const reasons = offerSet.reasonsById[missionId] || [];
+      perMissionBullets[missionId] = [
+        `${roleLabel(role)}: ${mission?.name || missionId}.`,
+        ...reasons
+      ];
+    });
+
+    return {
+      summaryBullets,
+      perMissionBullets
     };
   }
 
@@ -253,9 +309,11 @@
     getRunSeed,
     createRunId,
     mulberry32,
-    sampleMissionsForRun,
+    createRunRng,
+    generateOfferSet,
+    buildOfferSetExplanation,
     buildDiagnosis,
-    buildSamplingExplanation,
-    computePitfallFlags
+    computePitfallFlags,
+    deriveNeeds
   };
 })();

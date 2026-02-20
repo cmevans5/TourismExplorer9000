@@ -7,8 +7,18 @@
     satisfaction: 'Visitor Satisfaction'
   };
 
+  const ROLE_CLASS = {
+    recommended: 'good',
+    challenge: 'warn',
+    wildcard: 'bad'
+  };
+
   function toCategoryLabel(key) {
     return CATEGORY_LABELS[key] || key;
+  }
+
+  function roleLabel(role) {
+    return role ? `${role.charAt(0).toUpperCase()}${role.slice(1)}` : 'Wildcard';
   }
 
   function renderRunProgress(state, runLength) {
@@ -17,24 +27,17 @@
   }
 
   function renderMap(state, missions, constants, runConfig) {
-    const missionCards = missions.map(mission => {
-      const completed = state.completedMissionIds.includes(mission.id);
-      const status = completed
-        ? '<span class="tag good">Completed</span>'
-        : '<span class="tag warn">Available</span>';
+    const highlightIds = new Set(state.highlightMissionIds || []);
+    const missionCards = missions.slice(0, 4).map(mission => {
+      const role = state.offerSetRolesById?.[mission.id] || 'wildcard';
+      const roleTag = `<span class="tag ${ROLE_CLASS[role] || 'warn'}">${roleLabel(role)}</span>`;
 
       return `
-        <article class="map-hotspot">
+        <article class="map-hotspot ${highlightIds.has(mission.id) ? 'highlighted' : ''}">
           <h3>${mission.name} — ${mission.hub || mission.area || 'City Hub'}</h3>
           <p>${mission.description}</p>
-          <p>${status}</p>
-          <button
-            class="btn"
-            data-mission-id="${mission.id}"
-            ${completed ? 'disabled' : ''}
-            aria-label="${completed ? `${mission.name} completed` : `Enter ${mission.name}`}">
-            ${completed ? 'Completed' : 'Enter Hotspot'}
-          </button>
+          <p>${roleTag}</p>
+          <button class="btn" data-mission-id="${mission.id}" aria-label="Enter ${mission.name}">Enter Hotspot</button>
         </article>
       `;
     }).join('');
@@ -48,7 +51,7 @@
         <h2>City Map Hub</h2>
         ${renderRunProgress(state, runConfig.RUN_LENGTH)}
         <p><strong>Role:</strong> Newly hired Tourism Analyst for Tampa Areas of Economic Interest.</p>
-        <p>Select a hotspot, evaluate evidence, and decide how to allocate constrained impact resources.</p>
+        <p>Select one of this step's four offered missions, then return for the next offer set.</p>
         <p><strong>Missions Complete:</strong> ${state.casesCompletedThisRun}/${runConfig.RUN_LENGTH}</p>
         ${pipIndicator}
         <div class="inline-actions">
@@ -134,11 +137,14 @@
       <section class="card" tabindex="-1">
         <h2>Outcome Feedback</h2>
         <p>${feedback.text}</p>
+        <p><strong>Learning note:</strong> ${feedback.learningNote}</p>
+        <p><strong>System insight:</strong> ${feedback.systemInsight}</p>
         <ul class="delta-list">${deltaItems}</ul>
         <p><strong>Impact Cost:</strong> ${feedback.impactCost}</p>
         <p><strong>Remaining Impact Points:</strong> ${state.impactPointsRemaining}</p>
         <p><strong>Balance Check:</strong> Min category = ${state.minCategory}, variance = ${state.variance}</p>
         <p><strong>Poor outcome:</strong> ${feedback.poorOutcome ? 'Yes' : 'No'}</p>
+        ${state.topGatePassed ? '' : `<p><strong>Top Analyst blocked because:</strong> ${state.topGateLockReason}</p>`}
         <button id="btnReturnMap" class="btn">Return to Map</button>
       </section>
     `;
@@ -148,56 +154,66 @@
     const diagnosis = state.diagnosis;
     if (!diagnosis) return '<p class="small">Pip is collecting more decisions before giving a diagnosis.</p>';
 
-    const lowest = diagnosis.lowestCategories.map(toCategoryLabel).join(', ');
-    const flags = diagnosis.flags.length ? diagnosis.flags.join(', ') : 'None currently detected';
-    const focus = diagnosis.recommendedFocus === 'Balance' ? 'Balance all categories' : toCategoryLabel(diagnosis.recommendedFocus);
+    const lowest = (diagnosis.lowestCategories || []).map(toCategoryLabel).join(', ');
+    const flags = diagnosis.flags?.length ? diagnosis.flags.join(', ') : 'None currently detected';
 
     return `
       <section class="card">
-        <h3>Diagnosis</h3>
-        <p><strong>Lowest categories:</strong> ${lowest} (${diagnosis.minValue})</p>
+        <h3>Current Needs</h3>
+        <p><strong>Lowest categories:</strong> ${lowest} (${diagnosis.minValue ?? state.minCategory})</p>
         <p><strong>Variance:</strong> ${diagnosis.variance}</p>
         <p><strong>Pitfall flags:</strong> ${flags}</p>
-        <p><strong>Recommended focus:</strong> ${focus}</p>
       </section>
     `;
   }
 
-  function renderRemediationPlan(state) {
+  function renderRemediationPlan(state, missionsById) {
     const diagnosis = state.diagnosis;
-    if (!diagnosis || !diagnosis.remediationMissions.length) {
-      return '<section class="card"><h3>Remediation Plan</h3><p>No remediation mission available. Continue the current route.</p></section>';
-    }
+    const missionIds = diagnosis?.remediationMissions || [];
+    if (!state.pipForceOpen || !missionIds.length) return '';
 
-    const missionItems = diagnosis.remediationMissions.map((missionId, index) => `
-      <li>
-        ${missionId}
-        ${index === 0 ? '<button id="btnTakeMeThere" class="btn secondary">Take me there</button>' : ''}
-      </li>
-    `).join('');
+    const names = missionIds
+      .map(id => missionsById[id]?.name || id)
+      .map(name => `<li>${name}</li>`)
+      .join('');
 
     return `
       <section class="card">
-        <h3>Remediation Plan</h3>
-        <p>Pip recommends these missions from your current sampled set:</p>
-        <ul>${missionItems}</ul>
+        <h3>Stabilize Next</h3>
+        <p>After two poor outcomes, Pip suggests these stabilizing missions.</p>
+        <ul>${names}</ul>
+        <button id="btnHighlightMissions" class="btn secondary">Highlight these on map</button>
       </section>
     `;
   }
 
-  function renderPipPanel(state, explanation) {
-    const whyBullets = (explanation?.bullets || []).map(item => `<li>${item}</li>`).join('');
-    const logicBullets = (explanation?.logic || []).map(item => `<li>${item}</li>`).join('');
+  function renderPipPanel(state, explanation, missionsById) {
+    const summaryBullets = (explanation?.summaryBullets || []).map(item => `<li>${item}</li>`).join('');
+    const missionBlocks = (state.offerSetMissionIds || []).map(id => {
+      const mission = missionsById[id];
+      const role = roleLabel(state.offerSetRolesById?.[id] || 'wildcard');
+      const bullets = (explanation?.perMissionBullets?.[id] || state.offerSetReasonsById?.[id] || [])
+        .map(item => `<li>${item}</li>`)
+        .join('');
+      return `
+        <section class="card">
+          <h4>${mission?.name || id}</h4>
+          <p><strong>${role}</strong></p>
+          <ul>${bullets}</ul>
+        </section>
+      `;
+    }).join('');
 
     return `
       <p><strong>Pattern detected:</strong> ${state.pipForceOpen ? 'two consecutive poor outcomes.' : 'adaptive coaching update available.'}</p>
-      <ul>${whyBullets}</ul>
+      <h3>Recommended because...</h3>
+      <ul>${summaryBullets}</ul>
       <button id="btnPipWhyToggle" class="btn secondary" aria-expanded="${state.pipWhyExpanded ? 'true' : 'false'}" aria-controls="pipWhyDetails">Why am I seeing this?</button>
       <div id="pipWhyDetails" ${state.pipWhyExpanded ? '' : 'hidden'}>
-        <ul>${logicBullets}</ul>
+        ${missionBlocks}
       </div>
       ${renderDiagnosis(state)}
-      ${renderRemediationPlan(state)}
+      ${renderRemediationPlan(state, missionsById)}
       <button id="btnPipClose" class="btn">Continue</button>
     `;
   }
@@ -210,7 +226,7 @@
     return `
       <section class="card">
         <h2>Game Complete</h2>
-        <p>You completed this Tourism Sampling run. Start a new run to get a new 8-case sample.</p>
+        <p>You completed 8 cases in this run. Start a new run to get a fresh sequence of offer sets.</p>
         <p class="end-rating">Analyst Tier: ${state.ratingBand}</p>
         <p><strong>Final BII:</strong> ${state.BII}</p>
         <p><strong>Variance:</strong> ${state.variance}</p>
