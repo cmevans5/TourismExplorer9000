@@ -188,8 +188,10 @@
     const option = mission.options.find(o => o.id === optionId);
     if (!option) return;
 
-    if (!canAffordDecision(state.impactPointsRemaining, option.impactCost)) {
-      window.alert(`Not enough Impact Points for this decision. Remaining: ${state.impactPointsRemaining}, needed: ${option.impactCost}.`);
+    const optionCost = option.cost ?? option.impactCost;
+
+    if (!canAffordDecision(state.impactPointsRemaining, optionCost)) {
+      window.alert(`Not enough Impact Points for this decision. Remaining: ${state.impactPointsRemaining}, needed: ${optionCost}.`);
       return;
     }
 
@@ -205,10 +207,10 @@
       state.categories[key] += deltas[key];
     });
 
-    state.impactPointsRemaining -= option.impactCost;
-    state.impactPointsSpent += option.impactCost;
+    state.impactPointsRemaining -= optionCost;
+    state.impactPointsSpent += optionCost;
     state.missionSpendById = state.missionSpendById || {};
-    state.missionSpendById[mission.id] = option.impactCost;
+    state.missionSpendById[mission.id] = optionCost;
 
     state.lastDecisionDeltas = deltas;
     state.decisionCount += 1;
@@ -226,7 +228,7 @@
         text: option.feedback,
         deltas,
         poorOutcome,
-        impactCost: option.impactCost
+        impactCost: optionCost
       },
       state
     );
