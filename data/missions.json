@@ -1,143 +1,200 @@
 {
   "missions": [
     {
-      "id": "tampa-riverwalk",
-      "name": "Tampa Riverwalk",
-      "area": "Downtown Tampa",
-      "description": "The Riverwalk is experiencing rising visitor volume, mobility bottlenecks, and mixed sentiment from local vendors regarding crowd behavior and pricing pressure.",
+      "id": "riverwalk-mobility-surge",
+      "name": "Riverwalk Weekend Mobility Surge",
+      "hub": "Riverwalk",
+      "issueType": "Mobility",
+      "description": "Pedestrian congestion and curb conflicts are slowing visitor circulation and frustrating nearby residents.",
+      "pedagogy": {
+        "tags": [
+          "remediation",
+          "variance-control",
+          "mobility"
+        ],
+        "reinforces": [
+          "sustainability",
+          "hospitality"
+        ],
+        "commonPitfalls": [
+          "over-index-on-revenue"
+        ],
+        "difficulty": "easy"
+      },
+      "prerequisites": {
+        "minDecisions": 0
+      },
       "exploration": {
-        "brief": "As a newly hired Tourism Analyst, you are reviewing the Riverwalk's weekend performance and local stakeholder input. Your recommendation should improve outcomes across visitor experience, local inclusion, and long-term city resilience.",
-        "mediaLabel": "Riverwalk flow map and vendor sentiment dashboard",
-        "dataPoints": [
-          "Foot traffic increased 18% in the last quarter.",
-          "Local small businesses report uneven customer distribution.",
-          "Visitor sentiment is high for events, but complaints mention congestion and litter."
+        "brief": "You are advising on immediate crowd flow controls before peak season weekends.",
+        "mediaLabel": "Pedestrian heatmap + curb turnover snapshot",
+        "bullets": [
+          "Pedestrian dwell time rose 24% near two choke points.",
+          "Ride-share dwell violations increased at sunset.",
+          "Resident complaints cite blocked sidewalks."
         ]
       },
       "options": [
         {
           "id": "A",
-          "title": "A) Expand event-driven programming",
-          "description": "Increase headline events and premium hospitality pop-ups to drive immediate spending.",
-          "impactCost": 40,
+          "title": "A) Expand paid valet and event loading zones",
+          "description": "Prioritize premium curb usage to reduce queueing for high-spend guests.",
+          "cost": 40,
           "deltas": {
             "economic": 2,
             "sustainability": -1,
             "culture": 0,
-            "hospitality": 2,
-            "satisfaction": 0
-          },
-          "feedback": "Short-term spending and service visibility improved, but environmental strain intensified with higher peak crowding."
-        },
-        {
-          "id": "B",
-          "title": "B) Prioritize green mobility and community co-design",
-          "description": "Invest in transit wayfinding, shade, waste reduction, and local cultural programming partnerships.",
-          "impactCost": 30,
-          "deltas": {
-            "economic": -1,
-            "sustainability": 2,
-            "culture": 2,
             "hospitality": 1,
             "satisfaction": 0
           },
-          "feedback": "Community trust and environmental outcomes improved, though immediate revenue growth softened in the short term."
+          "feedback": "Spending climbs, but congestion and emissions rise in adjacent blocks."
+        },
+        {
+          "id": "B",
+          "title": "B) Balanced systems package",
+          "description": "Fund a cross-agency package that prioritizes weakest indicators first.",
+          "cost": 30,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 1,
+            "culture": 1,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "Performance improves across the board, though headline growth is moderate."
         },
         {
           "id": "C",
-          "title": "C) Launch premium visitor convenience package",
-          "description": "Offer concierge amenities and express services for visitors, funded by selective reallocations.",
-          "impactCost": 45,
+          "title": "C) Launch concierge shortcut lanes",
+          "description": "Offer paid fast-lanes through the busiest sections.",
+          "cost": 35,
           "deltas": {
-            "economic": 0,
+            "economic": 1,
             "sustainability": -1,
             "culture": -1,
             "hospitality": 0,
             "satisfaction": 2
           },
-          "feedback": "Visitor convenience rose, but concerns emerged about local inclusivity and ecological pressure."
+          "feedback": "Some guests are happier, but equity concerns and crowding persist."
         }
       ]
     },
     {
-      "id": "ybor-cultural-district",
-      "name": "Ybor City Cultural District",
-      "area": "Historic Ybor",
-      "description": "Nightlife growth is accelerating while heritage groups worry about cultural dilution and resident displacement.",
+      "id": "ybor-nightlife-balance",
+      "name": "Ybor Nightlife Identity Balance",
+      "hub": "Ybor",
+      "issueType": "CulturalInclusion",
+      "description": "Entertainment growth is outpacing heritage programming, creating backlash from residents and artists.",
+      "pedagogy": {
+        "tags": [
+          "variety",
+          "culture",
+          "consequence-followup"
+        ],
+        "reinforces": [
+          "culture",
+          "sustainability"
+        ],
+        "commonPitfalls": [
+          "license-overexpansion"
+        ],
+        "difficulty": "medium"
+      },
+      "prerequisites": {
+        "minDecisions": 0
+      },
       "exploration": {
-        "brief": "Your team is asked to create a district strategy that keeps Ybor's identity vibrant while handling late-night surges in demand.",
-        "mediaLabel": "Historic district heatmap and event permit timeline",
-        "dataPoints": [
-          "Weekend nightlife revenue rose 22% year-over-year.",
-          "Local artists report reduced access to affordable venues.",
-          "Noise complaints increased near mixed-use residential blocks."
+        "brief": "Officials need a policy that protects district identity while managing demand spikes.",
+        "mediaLabel": "Permit queue + heritage venue utilization",
+        "bullets": [
+          "Night permits rose 21% YoY.",
+          "Heritage venues report lower weekend bookings.",
+          "Resident association requested a noise mitigation plan."
         ]
       },
       "options": [
         {
           "id": "A",
-          "title": "A) Fast-track nightlife expansion licenses",
-          "description": "Approve additional entertainment permits to amplify visitor draw and private investment.",
-          "impactCost": 50,
+          "title": "A) Fast-track additional nightlife licenses",
+          "description": "Approve more high-volume venues ahead of festival season.",
+          "cost": 50,
           "deltas": {
             "economic": 3,
             "sustainability": -2,
-            "culture": -1,
+            "culture": -2,
             "hospitality": 1,
             "satisfaction": 1
           },
-          "feedback": "Revenue accelerated, but legacy community trust dropped as nightlife pressure displaced local programming."
+          "feedback": "Top-line growth improves, but trust in district stewardship falls."
         },
         {
           "id": "B",
-          "title": "B) Co-fund heritage nights and mobility controls",
-          "description": "Pair curated cultural events with transit controls, safety staffing, and resident listening sessions.",
-          "impactCost": 35,
+          "title": "B) Fund heritage-night bundles + mobility controls",
+          "description": "Co-fund heritage events and coordinated transit/noise controls.",
+          "cost": 35,
           "deltas": {
             "economic": 1,
-            "sustainability": 2,
+            "sustainability": 1,
             "culture": 3,
             "hospitality": 1,
             "satisfaction": 0
           },
-          "feedback": "The district retained stronger identity signals and lower friction, even with slightly slower short-term growth."
+          "feedback": "Identity indicators recover while visitor friction drops."
         },
         {
           "id": "C",
-          "title": "C) Introduce premium festival corridor",
-          "description": "Designate a paid-access entertainment corridor with upgraded concierge services.",
-          "impactCost": 45,
+          "title": "C) Build paid VIP festival corridor",
+          "description": "Concentrate demand in a paid premium corridor.",
+          "cost": 45,
           "deltas": {
             "economic": 2,
             "sustainability": -1,
-            "culture": -2,
+            "culture": -1,
             "hospitality": 2,
             "satisfaction": 1
           },
-          "feedback": "Visitor service quality improved, but concerns rose about exclusion and cultural authenticity loss."
+          "feedback": "Service quality rises for some guests, but exclusion concerns rise."
         }
       ]
     },
     {
-      "id": "busch-gardens-strategy",
-      "name": "Busch Gardens Visitor Strategy",
-      "area": "North Tampa",
-      "description": "Attendance is climbing, yet queue pressure, transport emissions, and repeat-visitor fatigue are reducing perceived value.",
+      "id": "busch-queue-emissions",
+      "name": "Busch Gardens Queue + Emissions Trade-off",
+      "hub": "BuschGardens",
+      "issueType": "Sustainability",
+      "description": "Peak queues are up and diesel shuttle usage is drawing criticism from repeat visitors.",
+      "pedagogy": {
+        "tags": [
+          "remediation",
+          "sustainability",
+          "high-impact"
+        ],
+        "reinforces": [
+          "sustainability",
+          "hospitality"
+        ],
+        "commonPitfalls": [
+          "premium-only-lanes"
+        ],
+        "difficulty": "medium"
+      },
+      "prerequisites": {
+        "minDecisions": 0
+      },
       "exploration": {
-        "brief": "Leaders need a tactical strategy that supports recurring tourism spend while preserving ecological and community outcomes.",
-        "mediaLabel": "Ride capacity dashboard and transport emissions panel",
-        "dataPoints": [
-          "Average queue time climbed by 15 minutes during peak weekends.",
-          "Shuttle adoption remains below target at 28%.",
-          "Guest surveys cite strong attractions but weak sustainability visibility."
+        "brief": "Leadership wants a plan that preserves spend while lowering operational strain.",
+        "mediaLabel": "Queue heatmap + shuttle emissions monitor",
+        "bullets": [
+          "Average queue time increased by 14 minutes.",
+          "Diesel shuttle share is still 68%.",
+          "Repeat guests cite \u201csame experience, higher stress.\u201d"
         ]
       },
       "options": [
         {
           "id": "A",
-          "title": "A) Build high-throughput premium pass lanes",
-          "description": "Scale premium queue lanes and upsell fast-track bundles to maximize park revenue.",
-          "impactCost": 55,
+          "title": "A) Scale premium fast-pass lanes",
+          "description": "Convert additional capacity to paid fast-pass products.",
+          "cost": 55,
           "deltas": {
             "economic": 3,
             "sustainability": -2,
@@ -145,27 +202,27 @@
             "hospitality": 2,
             "satisfaction": 1
           },
-          "feedback": "Top-line performance improved quickly, but public perception weakened around fairness and environmental pressure."
+          "feedback": "Revenue improves quickly, but fairness and emissions optics worsen."
         },
         {
           "id": "B",
-          "title": "B) Launch eco-shuttle + local maker marketplace",
-          "description": "Bundle low-emission transport incentives with rotating local vendor activations.",
-          "impactCost": 40,
+          "title": "B) Electrify shuttle loops + local maker pop-ups",
+          "description": "Bundle low-emission transport and local co-branded activations.",
+          "cost": 40,
           "deltas": {
-            "economic": 1,
+            "economic": 0,
             "sustainability": 3,
             "culture": 2,
             "hospitality": 1,
             "satisfaction": 1
           },
-          "feedback": "Operational flow and destination identity both improved, with broad gains across environmental and guest trust metrics."
+          "feedback": "Flow and trust metrics improve with broad portfolio gains."
         },
         {
           "id": "C",
-          "title": "C) Focus on social-media thrill campaigns",
-          "description": "Invest in viral campaigns and night events to raise attendance among new audiences.",
-          "impactCost": 35,
+          "title": "C) Run thrill-campaign attendance push",
+          "description": "Drive more attendance through social campaigns and late events.",
+          "cost": 35,
           "deltas": {
             "economic": 2,
             "sustainability": -1,
@@ -173,7 +230,1178 @@
             "hospitality": 1,
             "satisfaction": 2
           },
-          "feedback": "Attendance rose and guest excitement increased, though system strain and environmental concerns remained unresolved."
+          "feedback": "Excitement rises, but core bottlenecks remain."
+        }
+      ]
+    },
+    {
+      "id": "port-cruise-dispersal",
+      "name": "Port Tampa Cruise Dispersal Planning",
+      "hub": "PortTampa",
+      "issueType": "Mobility",
+      "description": "Disembarkation surges overwhelm local streets and reduce time-in-destination quality.",
+      "pedagogy": {
+        "tags": [
+          "mobility",
+          "consequence-followup",
+          "same-hub"
+        ],
+        "reinforces": [
+          "sustainability",
+          "satisfaction"
+        ],
+        "commonPitfalls": [
+          "single-exit-routing"
+        ],
+        "difficulty": "medium"
+      },
+      "prerequisites": {
+        "minDecisions": 0
+      },
+      "exploration": {
+        "brief": "You need a dispersal plan that protects nearby neighborhoods and downtown throughput.",
+        "mediaLabel": "Cruise arrival forecast + corridor travel-time map",
+        "bullets": [
+          "Two ships overlap on 14 days next month.",
+          "Coach idle times exceed target by 19%.",
+          "Neighborhood board requested quieter rerouting."
+        ]
+      },
+      "options": [
+        {
+          "id": "A",
+          "title": "A) Prioritize rapid coach dispatch lanes",
+          "description": "Allocate most curb space to outbound coaches.",
+          "cost": 40,
+          "deltas": {
+            "economic": 2,
+            "sustainability": -1,
+            "culture": 0,
+            "hospitality": 1,
+            "satisfaction": 0
+          },
+          "feedback": "Turnover improves, but street-level friction increases."
+        },
+        {
+          "id": "B",
+          "title": "B) Balanced systems package",
+          "description": "Fund a cross-agency package that prioritizes weakest indicators first.",
+          "cost": 30,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 1,
+            "culture": 1,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "Performance improves across the board, though headline growth is moderate."
+        },
+        {
+          "id": "C",
+          "title": "C) Add premium direct-transfer product",
+          "description": "Sell direct transfers with dedicated loading zones.",
+          "cost": 35,
+          "deltas": {
+            "economic": 2,
+            "sustainability": -1,
+            "culture": -1,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "Premium users benefit, but local impacts remain uneven."
+        }
+      ]
+    },
+    {
+      "id": "convention-pricing-pressure",
+      "name": "Convention District Pricing Pressure",
+      "hub": "ConventionDistrict",
+      "issueType": "Pricing",
+      "description": "Large events are driving hotel and dining spikes, straining resident and worker sentiment.",
+      "pedagogy": {
+        "tags": [
+          "pricing",
+          "remediation",
+          "variety"
+        ],
+        "reinforces": [
+          "economic",
+          "culture"
+        ],
+        "commonPitfalls": [
+          "unbounded-surge-pricing"
+        ],
+        "difficulty": "medium"
+      },
+      "prerequisites": {
+        "minDecisions": 0
+      },
+      "exploration": {
+        "brief": "You need a demand strategy that protects reputation while preserving event revenue.",
+        "mediaLabel": "ADR trendline + local sentiment pulse",
+        "bullets": [
+          "Event-week ADR up 27%.",
+          "Worker lunch affordability index fell 11%.",
+          "Delegate satisfaction stable but resident sentiment declined."
+        ]
+      },
+      "options": [
+        {
+          "id": "A",
+          "title": "A) Allow unrestricted surge pricing",
+          "description": "Leave pricing fully market-driven during event peaks.",
+          "cost": 40,
+          "deltas": {
+            "economic": 2,
+            "sustainability": -1,
+            "culture": -1,
+            "hospitality": 1,
+            "satisfaction": 0
+          },
+          "feedback": "Revenue grows, but social license weakens."
+        },
+        {
+          "id": "B",
+          "title": "B) Balanced systems package",
+          "description": "Fund a cross-agency package that prioritizes weakest indicators first.",
+          "cost": 30,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 1,
+            "culture": 1,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "Performance improves across the board, though headline growth is moderate."
+        },
+        {
+          "id": "C",
+          "title": "C) Bundle premium concierge district passes",
+          "description": "Launch paid district convenience bundles.",
+          "cost": 35,
+          "deltas": {
+            "economic": 1,
+            "sustainability": -1,
+            "culture": 0,
+            "hospitality": 2,
+            "satisfaction": 1
+          },
+          "feedback": "Guest convenience improves while affordability concerns remain."
+        }
+      ]
+    },
+    {
+      "id": "channelside-cruise-retail-mix",
+      "name": "Channelside Cruise-Day Retail Mix",
+      "hub": "Channelside",
+      "issueType": "Hospitality",
+      "description": "Cruise-day demand is high, but local operators say spend bypasses neighborhood businesses.",
+      "pedagogy": {
+        "tags": [
+          "hospitality",
+          "consequence-followup",
+          "same-hub"
+        ],
+        "reinforces": [
+          "economic",
+          "culture"
+        ],
+        "commonPitfalls": [
+          "chain-overreliance"
+        ],
+        "difficulty": "easy"
+      },
+      "prerequisites": {
+        "minDecisions": 0
+      },
+      "exploration": {
+        "brief": "You are designing a mix strategy that improves guest convenience and local capture.",
+        "mediaLabel": "Point-of-sale mix + footfall distribution map",
+        "bullets": [
+          "Chain operators captured 72% of cruise-day sales.",
+          "Local eateries saw short dwell times.",
+          "Guest ratings request clearer local recommendations."
+        ]
+      },
+      "options": [
+        {
+          "id": "A",
+          "title": "A) Incentivize national chain expansion",
+          "description": "Prioritize national operators for rapid scale.",
+          "cost": 40,
+          "deltas": {
+            "economic": 2,
+            "sustainability": -1,
+            "culture": -2,
+            "hospitality": 1,
+            "satisfaction": 0
+          },
+          "feedback": "Sales rise, but neighborhood authenticity weakens."
+        },
+        {
+          "id": "B",
+          "title": "B) Launch local-first concierge routing",
+          "description": "Use digital routing and staffing to steer guests to local clusters.",
+          "cost": 30,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 1,
+            "culture": 2,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "Local capture and guest discovery both improve."
+        },
+        {
+          "id": "C",
+          "title": "C) Create premium express dining corridor",
+          "description": "Focus on high-speed premium dining near terminals.",
+          "cost": 35,
+          "deltas": {
+            "economic": 2,
+            "sustainability": -1,
+            "culture": -1,
+            "hospitality": 2,
+            "satisfaction": 1
+          },
+          "feedback": "Convenience improves, but inclusion outcomes remain uneven."
+        }
+      ]
+    },
+    {
+      "id": "airport-corridor-wayfinding",
+      "name": "Airport Corridor First-Impression Wayfinding",
+      "hub": "AirportCorridor",
+      "issueType": "VisitorSatisfaction",
+      "description": "Visitors entering from the airport report confusion about transfer options and district links.",
+      "pedagogy": {
+        "tags": [
+          "visitor-satisfaction",
+          "remediation",
+          "variety"
+        ],
+        "reinforces": [
+          "satisfaction",
+          "hospitality"
+        ],
+        "commonPitfalls": [
+          "one-language-design"
+        ],
+        "difficulty": "easy"
+      },
+      "prerequisites": {
+        "minDecisions": 0
+      },
+      "exploration": {
+        "brief": "A quick-win package is needed before a major convention weekend.",
+        "mediaLabel": "Arrival survey panel + transfer conversion funnel",
+        "bullets": [
+          "First-hour dissatisfaction rose to 19%.",
+          "Transfer uptake to downtown attractions is below target.",
+          "Multilingual signage requests increased."
+        ]
+      },
+      "options": [
+        {
+          "id": "A",
+          "title": "A) Prioritize ad inventory over wayfinding",
+          "description": "Use arrivals space primarily for sponsorship placements.",
+          "cost": 30,
+          "deltas": {
+            "economic": 2,
+            "sustainability": 0,
+            "culture": -1,
+            "hospitality": 0,
+            "satisfaction": -1
+          },
+          "feedback": "Ad revenue improves but wayfinding friction rises."
+        },
+        {
+          "id": "B",
+          "title": "B) Balanced systems package",
+          "description": "Fund a cross-agency package that prioritizes weakest indicators first.",
+          "cost": 30,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 1,
+            "culture": 1,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "Performance improves across the board, though headline growth is moderate."
+        },
+        {
+          "id": "C",
+          "title": "C) Launch premium meet-and-greet service",
+          "description": "Expand concierge arrivals service for paid tiers.",
+          "cost": 35,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 0,
+            "culture": -1,
+            "hospitality": 2,
+            "satisfaction": 1
+          },
+          "feedback": "Premium experience improves while broad usability gaps remain."
+        }
+      ]
+    },
+    {
+      "id": "southshore-eco-access",
+      "name": "South Shore Eco-Access Capacity",
+      "hub": "SouthShore",
+      "issueType": "Sustainability",
+      "description": "Nature-forward tourism demand is rising faster than trail and shoreline carrying capacity.",
+      "pedagogy": {
+        "tags": [
+          "sustainability",
+          "remediation",
+          "high-impact"
+        ],
+        "reinforces": [
+          "sustainability",
+          "culture"
+        ],
+        "commonPitfalls": [
+          "capacity-overrun"
+        ],
+        "difficulty": "hard"
+      },
+      "prerequisites": {
+        "minDecisions": 0
+      },
+      "exploration": {
+        "brief": "Parks and tourism teams need a joint access policy for the next season.",
+        "mediaLabel": "Trail erosion monitor + booking demand forecast",
+        "bullets": [
+          "Sensitive trail segments exceed use thresholds on weekends.",
+          "Guided eco-tour bookings are up 31%.",
+          "Community groups request stronger stewardship messaging."
+        ]
+      },
+      "options": [
+        {
+          "id": "A",
+          "title": "A) Expand open-access marketing immediately",
+          "description": "Drive additional demand without new safeguards.",
+          "cost": 35,
+          "deltas": {
+            "economic": 2,
+            "sustainability": -2,
+            "culture": 0,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "Bookings rise, but ecological degradation risk increases."
+        },
+        {
+          "id": "B",
+          "title": "B) Introduce timed entry + local stewardship guides",
+          "description": "Control flows with timed entry and certified local guide rotations.",
+          "cost": 30,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 3,
+            "culture": 1,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "Use pressure stabilizes while destination quality improves."
+        },
+        {
+          "id": "C",
+          "title": "C) Sell premium unrestricted eco-passes",
+          "description": "Offer paid unrestricted access with add-on amenities.",
+          "cost": 40,
+          "deltas": {
+            "economic": 2,
+            "sustainability": -1,
+            "culture": -1,
+            "hospitality": 2,
+            "satisfaction": 1
+          },
+          "feedback": "Revenue improves, but equity and carrying-capacity concerns persist."
+        }
+      ]
+    },
+    {
+      "id": "riverwalk-vendor-equity",
+      "name": "Riverwalk Vendor Equity Friction",
+      "hub": "Riverwalk",
+      "issueType": "CulturalInclusion",
+      "description": "Longtime local vendors report being pushed into low-traffic zones during event weekends.",
+      "pedagogy": {
+        "tags": [
+          "consequence-followup",
+          "same-hub",
+          "equity"
+        ],
+        "reinforces": [
+          "culture",
+          "economic"
+        ],
+        "commonPitfalls": [
+          "premiumization"
+        ],
+        "difficulty": "medium"
+      },
+      "prerequisites": {
+        "minDecisions": 1
+      },
+      "exploration": {
+        "brief": "The district office wants a policy that protects local identity without collapsing concession revenue.",
+        "mediaLabel": "Vendor placement map + permit revenue trend",
+        "bullets": [
+          "Independent vendors lost 12% average weekend sales.",
+          "Two national pop-ups requested premium frontage.",
+          "Visitor surveys request \u201cmore local flavor.\u201d"
+        ]
+      },
+      "options": [
+        {
+          "id": "A",
+          "title": "A) Auction frontage to highest bidder",
+          "description": "Use dynamic pricing for all high-traffic stalls.",
+          "cost": 45,
+          "deltas": {
+            "economic": 2,
+            "sustainability": -1,
+            "culture": -2,
+            "hospitality": 1,
+            "satisfaction": 0
+          },
+          "feedback": "Revenue rises quickly but local trust drops."
+        },
+        {
+          "id": "B",
+          "title": "B) Create protected local-vendor blocks",
+          "description": "Reserve anchor frontage for certified local businesses and rotate co-ops.",
+          "cost": 30,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 1,
+            "culture": 2,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "Footfall stabilizes and district identity strengthens."
+        },
+        {
+          "id": "C",
+          "title": "C) Introduce mixed premium + lottery permits",
+          "description": "Blend premium permits with a limited local lottery.",
+          "cost": 35,
+          "deltas": {
+            "economic": 2,
+            "sustainability": -1,
+            "culture": -1,
+            "hospitality": 2,
+            "satisfaction": 1
+          },
+          "feedback": "Visitors see more options, but equity outcomes stay uneven."
+        }
+      ]
+    },
+    {
+      "id": "ybor-late-night-mobility",
+      "name": "Ybor Late-Night Mobility Spillover",
+      "hub": "Ybor",
+      "issueType": "Mobility",
+      "description": "Ride-share queues and parking spillover are creating block-by-block gridlock after midnight.",
+      "pedagogy": {
+        "tags": [
+          "remediation",
+          "mobility",
+          "variance-control"
+        ],
+        "reinforces": [
+          "sustainability",
+          "satisfaction"
+        ],
+        "commonPitfalls": [
+          "single-mode-fix"
+        ],
+        "difficulty": "easy"
+      },
+      "prerequisites": {
+        "minDecisions": 1
+      },
+      "exploration": {
+        "brief": "You are selecting a mobility intervention for weekends over the next quarter.",
+        "mediaLabel": "Curb occupancy chart + transit reliability panel",
+        "bullets": [
+          "Ride-share dwell violations up 29%.",
+          "Transit headways are inconsistent after 11pm.",
+          "Residents report circling traffic on side streets."
+        ]
+      },
+      "options": [
+        {
+          "id": "A",
+          "title": "A) Expand paid parking inventory",
+          "description": "Convert public curb space into dynamic paid parking.",
+          "cost": 40,
+          "deltas": {
+            "economic": 2,
+            "sustainability": -1,
+            "culture": -1,
+            "hospitality": 1,
+            "satisfaction": 0
+          },
+          "feedback": "Parking turnover improves but neighborhood traffic worsens."
+        },
+        {
+          "id": "B",
+          "title": "B) Balanced systems package",
+          "description": "Fund a cross-agency package that prioritizes weakest indicators first.",
+          "cost": 30,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 1,
+            "culture": 1,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "Performance improves across the board, though headline growth is moderate."
+        },
+        {
+          "id": "C",
+          "title": "C) Subsidize premium shuttle-only service",
+          "description": "Offer high-frequency shuttles targeted to premium ticket holders.",
+          "cost": 35,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 0,
+            "culture": -1,
+            "hospitality": 2,
+            "satisfaction": 1
+          },
+          "feedback": "Queueing improves for some guests, but equity concerns remain."
+        }
+      ]
+    },
+    {
+      "id": "busch-workforce-inclusion",
+      "name": "Busch Workforce Inclusion Capacity",
+      "hub": "BuschGardens",
+      "issueType": "CulturalInclusion",
+      "description": "Seasonal hiring is rising but local workforce partners say advancement pathways are weak.",
+      "pedagogy": {
+        "tags": [
+          "consequence-followup",
+          "culture",
+          "hospitality"
+        ],
+        "reinforces": [
+          "culture",
+          "hospitality"
+        ],
+        "commonPitfalls": [
+          "short-term-staffing"
+        ],
+        "difficulty": "medium"
+      },
+      "prerequisites": {
+        "minDecisions": 2
+      },
+      "exploration": {
+        "brief": "Your recommendation should improve guest operations and local inclusion outcomes.",
+        "mediaLabel": "Staff retention dashboard + partner org feedback",
+        "bullets": [
+          "Seasonal turnover rose to 33%.",
+          "Partner orgs want apprenticeship slots.",
+          "Guest ratings highlight inconsistent service warmth."
+        ]
+      },
+      "options": [
+        {
+          "id": "A",
+          "title": "A) Outsource surge staffing to national vendor",
+          "description": "Fill gaps rapidly with a national contractor.",
+          "cost": 45,
+          "deltas": {
+            "economic": 2,
+            "sustainability": -1,
+            "culture": -1,
+            "hospitality": 1,
+            "satisfaction": 0
+          },
+          "feedback": "Coverage improves but community equity signals weaken."
+        },
+        {
+          "id": "B",
+          "title": "B) Launch local apprenticeship + mentor tracks",
+          "description": "Create paid local apprenticeships with frontline mentor incentives.",
+          "cost": 30,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 1,
+            "culture": 2,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "Service consistency and local trust improve together."
+        },
+        {
+          "id": "C",
+          "title": "C) Add guest-facing incentive bonuses only",
+          "description": "Focus incentives only on guest throughput metrics.",
+          "cost": 35,
+          "deltas": {
+            "economic": 2,
+            "sustainability": 0,
+            "culture": -1,
+            "hospitality": 2,
+            "satisfaction": 1
+          },
+          "feedback": "Speed improves, but workforce inclusion remains shallow."
+        }
+      ]
+    },
+    {
+      "id": "port-waterfront-resilience",
+      "name": "Port Waterfront Heat + Resilience Retrofit",
+      "hub": "PortTampa",
+      "issueType": "Sustainability",
+      "description": "Heat exposure and stormwater pooling are reducing comfort and operating reliability.",
+      "pedagogy": {
+        "tags": [
+          "remediation",
+          "sustainability",
+          "variance-control"
+        ],
+        "reinforces": [
+          "sustainability",
+          "hospitality"
+        ],
+        "commonPitfalls": [
+          "defer-resilience"
+        ],
+        "difficulty": "hard"
+      },
+      "prerequisites": {
+        "minDecisions": 2
+      },
+      "exploration": {
+        "brief": "Capital planning asks for an intervention that supports both visitors and workers.",
+        "mediaLabel": "Surface temperature scan + drainage incident log",
+        "bullets": [
+          "Surface temp peaks exceed adjacent districts by 6\u00b0F.",
+          "Stormwater pooling caused three dock delays.",
+          "Workers request more shaded rest points."
+        ]
+      },
+      "options": [
+        {
+          "id": "A",
+          "title": "A) Delay retrofit and prioritize terminal retail",
+          "description": "Redirect funds toward short-term retail build-out.",
+          "cost": 45,
+          "deltas": {
+            "economic": 2,
+            "sustainability": -2,
+            "culture": 0,
+            "hospitality": 1,
+            "satisfaction": 0
+          },
+          "feedback": "Short-term revenue improves but climate risk worsens."
+        },
+        {
+          "id": "B",
+          "title": "B) Install shade, permeable paving, and cooling hubs",
+          "description": "Phase in resilience assets with worker co-design sessions.",
+          "cost": 35,
+          "deltas": {
+            "economic": 0,
+            "sustainability": 3,
+            "culture": 1,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "Operational reliability and comfort improve across groups."
+        },
+        {
+          "id": "C",
+          "title": "C) Pilot paid climate-controlled waiting lounges",
+          "description": "Focus on premium thermal comfort offerings.",
+          "cost": 30,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 0,
+            "culture": -1,
+            "hospitality": 2,
+            "satisfaction": 1
+          },
+          "feedback": "Guest comfort rises for some segments but equity concerns persist."
+        }
+      ]
+    },
+    {
+      "id": "convention-safety-flow",
+      "name": "Convention Crowd Safety + Wayfinding",
+      "hub": "ConventionDistrict",
+      "issueType": "Safety",
+      "description": "Concurrent events create wayfinding confusion and pinch points at exits.",
+      "pedagogy": {
+        "tags": [
+          "safety",
+          "mobility",
+          "consequence-followup"
+        ],
+        "reinforces": [
+          "hospitality",
+          "satisfaction"
+        ],
+        "commonPitfalls": [
+          "signage-only-fix"
+        ],
+        "difficulty": "medium"
+      },
+      "prerequisites": {
+        "minDecisions": 2
+      },
+      "exploration": {
+        "brief": "Operations requests a plan before two major conferences overlap next month.",
+        "mediaLabel": "Ingress/egress camera counts + incident heatmap",
+        "bullets": [
+          "Exit dwell times exceed safety target by 22%.",
+          "Contractors report signage conflicts across halls.",
+          "Attendee comments cite \u201cunclear routes.\u201d"
+        ]
+      },
+      "options": [
+        {
+          "id": "A",
+          "title": "A) Deploy temporary barriers only",
+          "description": "Add barriers to force one-way crowd movement.",
+          "cost": 30,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 0,
+            "culture": -1,
+            "hospitality": 0,
+            "satisfaction": 0
+          },
+          "feedback": "Throughput stabilizes, but attendee experience feels restrictive."
+        },
+        {
+          "id": "B",
+          "title": "B) Balanced systems package",
+          "description": "Fund a cross-agency package that prioritizes weakest indicators first.",
+          "cost": 30,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 1,
+            "culture": 1,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "Performance improves across the board, though headline growth is moderate."
+        },
+        {
+          "id": "C",
+          "title": "C) Premium fast-track exits for VIP badges",
+          "description": "Route premium delegates through dedicated lanes.",
+          "cost": 35,
+          "deltas": {
+            "economic": 2,
+            "sustainability": 0,
+            "culture": -1,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "Some flow gains occur, but fairness concerns grow."
+        }
+      ]
+    },
+    {
+      "id": "channelside-night-transit",
+      "name": "Channelside Night Transit Reliability",
+      "hub": "Channelside",
+      "issueType": "Mobility",
+      "description": "Late evening service gaps leave guests waiting and raise safety complaints.",
+      "pedagogy": {
+        "tags": [
+          "remediation",
+          "mobility",
+          "safety"
+        ],
+        "reinforces": [
+          "sustainability",
+          "satisfaction"
+        ],
+        "commonPitfalls": [
+          "ignore-worker-needs"
+        ],
+        "difficulty": "medium"
+      },
+      "prerequisites": {
+        "minDecisions": 2
+      },
+      "exploration": {
+        "brief": "Transit partners want a joint funding recommendation for the next budget cycle.",
+        "mediaLabel": "Headway variance chart + guest wait-time logs",
+        "bullets": [
+          "Post-10pm average waits exceed 18 minutes.",
+          "Missed connections are concentrated near event close times.",
+          "Service workers report unreliable return trips."
+        ]
+      },
+      "options": [
+        {
+          "id": "A",
+          "title": "A) Subsidize event-only premium shuttles",
+          "description": "Run high-frequency premium service only on big event nights.",
+          "cost": 35,
+          "deltas": {
+            "economic": 2,
+            "sustainability": -1,
+            "culture": 0,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "Event riders benefit, but baseline reliability remains weak."
+        },
+        {
+          "id": "B",
+          "title": "B) Balanced systems package",
+          "description": "Fund a cross-agency package that prioritizes weakest indicators first.",
+          "cost": 30,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 1,
+            "culture": 1,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "Performance improves across the board, though headline growth is moderate."
+        },
+        {
+          "id": "C",
+          "title": "C) Shift service to app-demand only",
+          "description": "Replace fixed routes with app-triggered dispatch.",
+          "cost": 30,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 0,
+            "culture": -1,
+            "hospitality": 1,
+            "satisfaction": 0
+          },
+          "feedback": "Operating costs drop, but access equity concerns increase."
+        }
+      ]
+    },
+    {
+      "id": "airport-corridor-pricing-transparency",
+      "name": "Airport Corridor Transfer Pricing Transparency",
+      "hub": "AirportCorridor",
+      "issueType": "Pricing",
+      "description": "Visitors complain that transfer and bundle pricing is hard to compare across providers.",
+      "pedagogy": {
+        "tags": [
+          "pricing",
+          "visitor-satisfaction",
+          "consequence-followup"
+        ],
+        "reinforces": [
+          "satisfaction",
+          "economic"
+        ],
+        "commonPitfalls": [
+          "hidden-fees"
+        ],
+        "difficulty": "hard"
+      },
+      "prerequisites": {
+        "minDecisions": 1
+      },
+      "exploration": {
+        "brief": "Your team must recommend a transparency standard that still supports operator margins.",
+        "mediaLabel": "Transfer price matrix + complaint taxonomy",
+        "bullets": [
+          "Price complaints rose 26% in one quarter.",
+          "Operators use inconsistent fee disclosures.",
+          "Repeat visitors ask for standardized comparisons."
+        ]
+      },
+      "options": [
+        {
+          "id": "A",
+          "title": "A) Allow provider-defined fee disclosures",
+          "description": "Keep current disclosure rules flexible.",
+          "cost": 30,
+          "deltas": {
+            "economic": 2,
+            "sustainability": 0,
+            "culture": -1,
+            "hospitality": 0,
+            "satisfaction": -1
+          },
+          "feedback": "Margins stay strong but trust erodes."
+        },
+        {
+          "id": "B",
+          "title": "B) Balanced systems package",
+          "description": "Fund a cross-agency package that prioritizes weakest indicators first.",
+          "cost": 30,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 1,
+            "culture": 1,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "Performance improves across the board, though headline growth is moderate."
+        },
+        {
+          "id": "C",
+          "title": "C) Create premium \u201call-in\u201d transfer products",
+          "description": "Market simplified premium bundles only.",
+          "cost": 35,
+          "deltas": {
+            "economic": 2,
+            "sustainability": 0,
+            "culture": -1,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "High-end conversion rises, but broad clarity issues persist."
+        }
+      ]
+    },
+    {
+      "id": "southshore-community-benefits",
+      "name": "South Shore Community Benefit Agreements",
+      "hub": "SouthShore",
+      "issueType": "CulturalInclusion",
+      "description": "Residents support tourism growth only if local employment and vendor benefits are explicit.",
+      "pedagogy": {
+        "tags": [
+          "culture",
+          "consequence-followup",
+          "same-hub"
+        ],
+        "reinforces": [
+          "culture",
+          "economic"
+        ],
+        "commonPitfalls": [
+          "symbolic-engagement"
+        ],
+        "difficulty": "medium"
+      },
+      "prerequisites": {
+        "minDecisions": 2
+      },
+      "exploration": {
+        "brief": "You are drafting the district\u2019s tourism benefit agreement framework.",
+        "mediaLabel": "Community workshop notes + labor participation trends",
+        "bullets": [
+          "Local vendor participation is uneven across operators.",
+          "Youth workforce groups request paid pathways.",
+          "Resident trust improved where benefits were codified."
+        ]
+      },
+      "options": [
+        {
+          "id": "A",
+          "title": "A) Adopt voluntary benefit pledges only",
+          "description": "Allow operators to self-report community benefit actions.",
+          "cost": 30,
+          "deltas": {
+            "economic": 2,
+            "sustainability": 0,
+            "culture": -1,
+            "hospitality": 0,
+            "satisfaction": 0
+          },
+          "feedback": "Administrative burden stays low, but accountability is weak."
+        },
+        {
+          "id": "B",
+          "title": "B) Require measurable local benefit commitments",
+          "description": "Tie permits to local hiring, vendor share, and reporting milestones.",
+          "cost": 30,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 1,
+            "culture": 2,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "Trust and inclusion improve with manageable operational impact."
+        },
+        {
+          "id": "C",
+          "title": "C) Offer premium offsets in place of commitments",
+          "description": "Allow fee-based offsets instead of local commitments.",
+          "cost": 35,
+          "deltas": {
+            "economic": 2,
+            "sustainability": 0,
+            "culture": -1,
+            "hospitality": 1,
+            "satisfaction": 0
+          },
+          "feedback": "Revenue predictability improves, but social license remains fragile."
+        }
+      ]
+    },
+    {
+      "id": "riverwalk-night-safety",
+      "name": "Riverwalk Night Safety Operations",
+      "hub": "Riverwalk",
+      "issueType": "Safety",
+      "description": "Late-night incidents increased near entertainment nodes as staffing lags demand.",
+      "pedagogy": {
+        "tags": [
+          "remediation",
+          "safety",
+          "hospitality"
+        ],
+        "reinforces": [
+          "hospitality",
+          "satisfaction"
+        ],
+        "commonPitfalls": [
+          "underfund-safety"
+        ],
+        "difficulty": "medium"
+      },
+      "prerequisites": {
+        "minDecisions": 2,
+        "requiresFlag": "riverwalk-mobility-surge"
+      },
+      "exploration": {
+        "brief": "You need to reduce incidents while preserving a welcoming nighttime experience.",
+        "mediaLabel": "Incident timeline + patrol coverage map",
+        "bullets": [
+          "Minor incidents are up 18% after 10pm.",
+          "Lighting audits flagged three underlit segments.",
+          "Operators report delayed response coordination."
+        ]
+      },
+      "options": [
+        {
+          "id": "A",
+          "title": "A) Deploy private rapid-response teams",
+          "description": "Contract private teams focused on high-volume corners.",
+          "cost": 40,
+          "deltas": {
+            "economic": 1,
+            "sustainability": -1,
+            "culture": -1,
+            "hospitality": 2,
+            "satisfaction": 0
+          },
+          "feedback": "Response times improve, but community confidence is mixed."
+        },
+        {
+          "id": "B",
+          "title": "B) Balanced systems package",
+          "description": "Fund a cross-agency package that prioritizes weakest indicators first.",
+          "cost": 30,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 1,
+            "culture": 1,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "Performance improves across the board, though headline growth is moderate."
+        },
+        {
+          "id": "C",
+          "title": "C) Add surveillance-first enforcement",
+          "description": "Expand camera enforcement with minimal on-ground engagement.",
+          "cost": 30,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 0,
+            "culture": -1,
+            "hospitality": 0,
+            "satisfaction": 1
+          },
+          "feedback": "Deterrence improves slightly, but perceived warmth declines."
+        }
+      ]
+    },
+    {
+      "id": "busch-pricing-fatigue",
+      "name": "Busch Dynamic Pricing Fatigue",
+      "hub": "BuschGardens",
+      "issueType": "Pricing",
+      "description": "Visitors accept dynamic pricing, but complaints rise when perceived value is unclear.",
+      "pedagogy": {
+        "tags": [
+          "pricing",
+          "satisfaction",
+          "variety"
+        ],
+        "reinforces": [
+          "economic",
+          "satisfaction"
+        ],
+        "commonPitfalls": [
+          "opaque-pricing"
+        ],
+        "difficulty": "hard"
+      },
+      "prerequisites": {
+        "minDecisions": 3
+      },
+      "exploration": {
+        "brief": "Management is asking for a pricing strategy revision before holiday demand ramps up.",
+        "mediaLabel": "Ticket mix dashboard + value perception survey",
+        "bullets": [
+          "Bundled upgrade attachment rate fell 9%.",
+          "Refund requests increased for peak days.",
+          "Family segments report weak transparency."
+        ]
+      },
+      "options": [
+        {
+          "id": "A",
+          "title": "A) Push aggressive peak-day upsells",
+          "description": "Maximize yield with tighter surge multipliers.",
+          "cost": 45,
+          "deltas": {
+            "economic": 3,
+            "sustainability": -1,
+            "culture": -1,
+            "hospitality": 0,
+            "satisfaction": -1
+          },
+          "feedback": "Revenue rises, but sentiment and fairness scores slide."
+        },
+        {
+          "id": "B",
+          "title": "B) Balanced systems package",
+          "description": "Fund a cross-agency package that prioritizes weakest indicators first.",
+          "cost": 30,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 1,
+            "culture": 1,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "Performance improves across the board, though headline growth is moderate."
+        },
+        {
+          "id": "C",
+          "title": "C) Offer premium-only \u201cfrictionless day\u201d bundles",
+          "description": "Simplify options around premium bundles.",
+          "cost": 35,
+          "deltas": {
+            "economic": 2,
+            "sustainability": 0,
+            "culture": -1,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "Conversion improves for high spenders, but broad affordability concerns persist."
         }
       ]
     }

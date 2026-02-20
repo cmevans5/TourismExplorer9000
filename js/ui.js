@@ -16,7 +16,7 @@
 
       return `
         <article class="map-hotspot">
-          <h3>${mission.name} — ${mission.area}</h3>
+          <h3>${mission.name} — ${mission.hub || mission.area || 'City Hub'}</h3>
           <p>${mission.description}</p>
           <p>${status}</p>
           <button
@@ -48,7 +48,7 @@
   }
 
   function renderExploration(mission, state) {
-    const points = mission.exploration.dataPoints
+    const points = (mission.exploration.bullets || mission.exploration.dataPoints || [])
       .map(point => `<li>${point}</li>`)
       .join('');
 
@@ -75,12 +75,13 @@
   function renderDecision(mission, state) {
     const optionButtons = mission.options
       .map(opt => {
-        const afford = state.impactPointsRemaining >= opt.impactCost;
+        const optionCost = opt.cost ?? opt.impactCost;
+        const afford = state.impactPointsRemaining >= optionCost;
         return `
           <button class="btn choice ${afford ? '' : 'blocked'}" data-option-id="${opt.id}" aria-label="Select option ${opt.id}" ${afford ? '' : 'disabled'}>
             <strong>${opt.title}</strong><br />
             <span class="small">${opt.description}</span><br />
-            <span class="small">Impact Cost: ${opt.impactCost} (${afford ? `${state.impactPointsRemaining} remaining` : 'Insufficient budget'})</span>
+            <span class="small">Impact Cost: ${optionCost} (${afford ? `${state.impactPointsRemaining} remaining` : 'Insufficient budget'})</span>
           </button>
         `;
       })
