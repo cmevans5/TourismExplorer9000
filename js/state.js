@@ -34,6 +34,7 @@
     missionById: {},
     missionOrder: [],
     missionSpendById: {},
+    decisionShuffleByMissionId: {},
     lastDecisionDeltas: null,
     impactPointsRemaining: 0,
     impactPointsSpent: 0,

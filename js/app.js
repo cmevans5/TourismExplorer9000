@@ -126,6 +126,7 @@
         satisfaction: 0
       };
       state.missionSpendById = {};
+      state.decisionShuffleByMissionId = {};
     }
 
     computeAndStoreMetrics();
@@ -296,11 +297,45 @@
     return `${issueType} move created system strain in ${losses.join(', ')}; stabilize in the next offer set.`;
   }
 
-  function applyDecision(optionId) {
+  function getDecisionOptionsForMission(mission) {
+    if (!mission) return [];
+
+    state.decisionShuffleByMissionId = state.decisionShuffleByMissionId || {};
+    let storedOrder = state.decisionShuffleByMissionId[mission.id];
+
+    if (!Array.isArray(storedOrder) || storedOrder.length !== 3) {
+      const seededRng = createRunRng(`${state.runSeed}:${mission.id}:decision-options`);
+      const shuffledIds = (mission.options || []).map(opt => opt.id);
+      for (let i = shuffledIds.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(seededRng() * (i + 1));
+        const tmp = shuffledIds[i];
+        shuffledIds[i] = shuffledIds[j];
+        shuffledIds[j] = tmp;
+      }
+      storedOrder = shuffledIds;
+      state.decisionShuffleByMissionId[mission.id] = storedOrder;
+      saveState(state);
+    }
+
+    return storedOrder
+      .map((optionId, idx) => {
+        const option = (mission.options || []).find(opt => opt.id === optionId);
+        if (!option) return null;
+        return {
+          ...option,
+          originalKey: option.id,
+          displayLabel: String.fromCharCode(65 + idx)
+        };
+      })
+      .filter(Boolean);
+  }
+
+  function applyDecision(displayLabel) {
     const mission = currentMission();
     if (!mission) return;
 
-    const option = mission.options.find(o => o.id === optionId);
+    const displayOptions = getDecisionOptionsForMission(mission);
+    const option = displayOptions.find(o => o.displayLabel === displayLabel);
     if (!option) return;
 
     const optionCost = option.cost ?? option.impactCost;
@@ -329,7 +364,7 @@
 
     state.lastDecisionDeltas = deltas;
     state.decisionCount += 1;
-    if (optionId === 'B') state.correctCount += 1;
+    if (option.originalKey === 'B') state.correctCount += 1;
 
     const poorOutcome = evaluatePoorOutcome(deltas);
     state.poorStreak = poorOutcome ? state.poorStreak + 1 : 0;
@@ -448,7 +483,7 @@
     } else if (state.currentScreen === 'explore') {
       mainEl.innerHTML = UI.renderExploration(currentMission(), state, RUN_CONFIG);
     } else if (state.currentScreen === 'decision') {
-      mainEl.innerHTML = UI.renderDecision(currentMission(), state, RUN_CONFIG);
+      mainEl.innerHTML = UI.renderDecision(currentMission(), state, RUN_CONFIG, getDecisionOptionsForMission(currentMission()));
     } else if (state.currentScreen === 'complete') {
       mainEl.innerHTML = UI.renderGameComplete(state);
     } else {
