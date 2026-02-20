@@ -94,14 +94,14 @@
     `;
   }
 
-  function renderDecision(mission, state, runConfig) {
-    const optionButtons = mission.options
+  function renderDecision(mission, state, runConfig, displayOptions = []) {
+    const optionButtons = displayOptions
       .map(opt => {
         const optionCost = opt.cost ?? opt.impactCost;
         const afford = state.impactPointsRemaining >= optionCost;
         return `
-          <button class="btn choice ${afford ? '' : 'blocked'}" data-option-id="${opt.id}" aria-label="Select option ${opt.id}" ${afford ? '' : 'disabled'}>
-            <strong>${opt.title}</strong><br />
+          <button class="btn choice ${afford ? '' : 'blocked'}" data-option-id="${opt.displayLabel}" aria-label="Select option ${opt.displayLabel}" ${afford ? '' : 'disabled'}>
+            <strong>${opt.displayLabel}. ${opt.title}</strong><br />
             <span class="small">${opt.description}</span><br />
             <span class="small">Impact Cost: ${optionCost} (${afford ? `${state.impactPointsRemaining} remaining` : 'Insufficient budget'})</span>
           </button>
