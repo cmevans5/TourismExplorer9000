@@ -1,0 +1,7 @@
+# Build/package artifacts (keep outside repository)
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.7z
+*.rar
