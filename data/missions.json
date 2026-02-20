@@ -1,0 +1,59 @@
+{
+  "missions": [
+    {
+      "id": "tampa-riverwalk",
+      "name": "Tampa Riverwalk",
+      "area": "Downtown Tampa",
+      "description": "The Riverwalk is experiencing rising visitor volume, mobility bottlenecks, and mixed sentiment from local vendors regarding crowd behavior and pricing pressure.",
+      "exploration": {
+        "brief": "As a newly hired Tourism Analyst, you are reviewing the Riverwalk's weekend performance and local stakeholder input. Your recommendation should improve outcomes across visitor experience, local inclusion, and long-term city resilience.",
+        "dataPoints": [
+          "Foot traffic increased 18% in the last quarter.",
+          "Local small businesses report uneven customer distribution.",
+          "Visitor sentiment is high for events, but complaints mention congestion and litter."
+        ]
+      },
+      "options": [
+        {
+          "id": "A",
+          "title": "A) Expand event-driven programming",
+          "description": "Increase headline events and premium hospitality pop-ups to drive immediate spending.",
+          "deltas": {
+            "economic": 2,
+            "sustainability": -1,
+            "culture": 0,
+            "hospitality": 2,
+            "satisfaction": 0
+          },
+          "feedback": "Short-term spending and service visibility improved, but environmental strain intensified with higher peak crowding."
+        },
+        {
+          "id": "B",
+          "title": "B) Prioritize green mobility and community co-design",
+          "description": "Invest in transit wayfinding, shade, waste reduction, and local cultural programming partnerships.",
+          "deltas": {
+            "economic": -1,
+            "sustainability": 2,
+            "culture": 2,
+            "hospitality": 1,
+            "satisfaction": 0
+          },
+          "feedback": "Community trust and environmental outcomes improved, though immediate revenue growth softened in the short term."
+        },
+        {
+          "id": "C",
+          "title": "C) Launch premium visitor convenience package",
+          "description": "Offer concierge amenities and express services for visitors, funded by selective reallocations.",
+          "deltas": {
+            "economic": 0,
+            "sustainability": -1,
+            "culture": -1,
+            "hospitality": 0,
+            "satisfaction": 2
+          },
+          "feedback": "Visitor convenience rose, but concerns emerged about local inclusivity and ecological pressure."
+        }
+      ]
+    }
+  ]
+}
