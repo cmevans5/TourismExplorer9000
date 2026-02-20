@@ -16,10 +16,12 @@
   const { saveState, loadState, clearState } = window.TE9000State;
   const {
     RUN_CONFIG,
-    sampleMissionsForRun,
-    buildDiagnosis,
+    getRunSeed,
     createRunId,
-    buildSamplingExplanation
+    createRunRng,
+    generateOfferSet,
+    buildOfferSetExplanation,
+    buildDiagnosis
   } = window.TE9000Adaptation;
   const UI = window.TE9000UI;
 
@@ -35,8 +37,8 @@
   let missions = [];
   let lastFocusedEl = null;
 
-  function getSampledMissions() {
-    const ids = new Set(state.sampledMissionIds || []);
+  function getOfferedMissions() {
+    const ids = new Set(state.offerSetMissionIds || []);
     return missions.filter(mission => ids.has(mission.id));
   }
 
@@ -66,26 +68,68 @@
     return `Your strategy improved ${hi}, but ${lo} lagged behind. Reallocate future Impact Points toward cross-category resilience.`;
   }
 
-  function ensureRunSample(forceNew) {
-    if (!missions.length) return;
-    const hasValidSample = (state.sampledMissionIds || []).length === RUN_CONFIG.RUN_LENGTH
-      && state.sampledMissionIds.every(id => state.missionById[id]);
+  function refreshOfferSet() {
+    if (runCompleted()) {
+      state.offerSetMissionIds = [];
+      state.offerSetRolesById = {};
+      state.offerSetReasonsById = {};
+      state.diagnosis = buildDiagnosis(state, SCORING_CONSTANTS, {
+        offerMissionIds: [],
+        rolesById: {},
+        reasonsById: {},
+        needs: null
+      });
+      return;
+    }
 
-    if (!hasValidSample || forceNew) {
-      const sampled = sampleMissionsForRun(missions, state, SCORING_CONSTANTS, RUN_CONFIG);
-      state.sampledMissionIds = sampled.sampledMissionIds;
-      state.runSeed = sampled.runSeed;
-      state.runId = createRunId(sampled.runSeed);
+    const seedInput = `${state.runSeed}:${state.casesCompletedThisRun}:${(state.completedMissionIds || []).join(',')}`;
+    const offer = generateOfferSet(missions, state, SCORING_CONSTANTS, RUN_CONFIG, createRunRng(seedInput));
+    state.offerSetMissionIds = offer.offerMissionIds;
+    state.offerSetRolesById = offer.rolesById;
+    state.offerSetReasonsById = offer.reasonsById;
+    state.diagnosis = buildDiagnosis(state, SCORING_CONSTANTS, offer);
+  }
+
+  function initializeRun(forceNew) {
+    if (!missions.length) return;
+
+    const missingOfferSet = !Array.isArray(state.offerSetMissionIds) || state.offerSetMissionIds.length !== 4;
+    if (forceNew || !state.runSeed || missingOfferSet || runCompleted()) {
+      state.runSeed = getRunSeed(RUN_CONFIG.RANDOMNESS_SEED_MODE);
+      state.runId = createRunId(state.runSeed);
       state.completedMissionIds = [];
+      state.offerSetMissionIds = [];
+      state.offerSetRolesById = {};
+      state.offerSetReasonsById = {};
       state.casesCompletedThisRun = 0;
       state.selectedMissionId = null;
       state.lastMissionId = null;
       state.lastMissionTags = [];
+      state.lastChosenHub = null;
+      state.lastChosenIssueType = null;
+      state.highlightMissionIds = [];
       state.poorStreak = 0;
       state.pipEnabled = false;
       state.pipForceOpen = false;
       state.pipVoluntaryIndicator = false;
+      state.pipWhyExpanded = false;
+      state.decisionCount = 0;
+      state.correctCount = 0;
+      state.hotspotPlayedCount = 0;
+      state.impactPointsRemaining = 0;
+      state.impactPointsSpent = 0;
+      state.categories = {
+        economic: 0,
+        sustainability: 0,
+        culture: 0,
+        hospitality: 0,
+        satisfaction: 0
+      };
+      state.missionSpendById = {};
     }
+
+    computeAndStoreMetrics();
+    refreshOfferSet();
   }
 
   function navigate(screen) {
@@ -131,19 +175,18 @@
     } else {
       const hasNegative = Object.values(state.categories).some(value => value < 0);
       if (minCategory < SCORING_CONSTANTS.vMinCategoryTop) {
-        state.topGateLockReason = `Top Analyst is locked: every category must be at least ${SCORING_CONSTANTS.vMinCategoryTop}.`;
+        state.topGateLockReason = `every category must be at least ${SCORING_CONSTANTS.vMinCategoryTop}`;
       } else if (state.variance > SCORING_CONSTANTS.vMaxVarianceTop) {
-        state.topGateLockReason = `Top Analyst is locked: variance must be ${SCORING_CONSTANTS.vMaxVarianceTop} or lower.`;
+        state.topGateLockReason = `variance must be ${SCORING_CONSTANTS.vMaxVarianceTop} or lower`;
       } else if (SCORING_CONSTANTS.vNoNegativesTop && hasNegative) {
-        state.topGateLockReason = 'Top Analyst is locked: no category can be negative.';
+        state.topGateLockReason = 'no category can be negative';
       } else if (state.BII < SCORING_CONSTANTS.ratingThresholds.top) {
-        state.topGateLockReason = `Top Analyst is locked: BII must be at least ${SCORING_CONSTANTS.ratingThresholds.top}.`;
+        state.topGateLockReason = `BII must be at least ${SCORING_CONSTANTS.ratingThresholds.top}`;
       } else {
-        state.topGateLockReason = 'Top Analyst is locked: one or more top-tier requirements are unmet.';
+        state.topGateLockReason = 'one or more top-tier requirements are unmet';
       }
     }
     state.finalNarrative = getFinalNarrative();
-    state.diagnosis = buildDiagnosis(state, getSampledMissions(), SCORING_CONSTANTS);
     state.pipVoluntaryIndicator = !state.topGatePassed && state.casesCompletedThisRun >= 2;
   }
 
@@ -154,7 +197,7 @@
 
   function selectMission(missionId) {
     if (state.completedMissionIds.includes(missionId)) return;
-    if (!state.sampledMissionIds.includes(missionId)) return;
+    if (!(state.offerSetMissionIds || []).includes(missionId)) return;
     state.selectedMissionId = missionId;
     state.impactPointsRemaining = SCORING_CONSTANTS.impactBudgetPerHotspot;
     state.currentScreen = 'explore';
@@ -163,12 +206,16 @@
   }
 
   function getPipExplanation() {
-    return buildSamplingExplanation(state, state.diagnosis || {
-      lowestCategories: ['economic'],
-      minValue: 0,
-      variance: 0,
-      flags: []
-    });
+    return buildOfferSetExplanation(
+      state,
+      {
+        offerMissionIds: state.offerSetMissionIds || [],
+        rolesById: state.offerSetRolesById || {},
+        reasonsById: state.offerSetReasonsById || {},
+        needs: state.diagnosis
+      },
+      state.missionById || {}
+    );
   }
 
   function handleDialogKeydown(event) {
@@ -195,7 +242,7 @@
   function openPipOverlay(forceOpen = false) {
     state.pipForceOpen = forceOpen;
     const explanation = getPipExplanation();
-    pipPanelContent.innerHTML = UI.renderPipPanel(state, explanation);
+    pipPanelContent.innerHTML = UI.renderPipPanel(state, explanation, state.missionById || {});
     pipOverlay.classList.remove('hidden');
     lastFocusedEl = document.activeElement;
     pipOverlay.addEventListener('keydown', handleDialogKeydown);
@@ -211,11 +258,7 @@
     state.pipForceOpen = false;
     saveState(state);
     if (lastFocusedEl) lastFocusedEl.focus();
-    if (runCompleted()) {
-      navigate('complete');
-    } else {
-      navigate('map');
-    }
+    navigate(runCompleted() ? 'complete' : 'map');
   }
 
   function bindPipPanelEvents() {
@@ -231,16 +274,26 @@
       });
     }
 
-    const takeMeThere = document.getElementById('btnTakeMeThere');
-    if (takeMeThere) {
-      takeMeThere.addEventListener('click', () => {
-        const topMission = state.diagnosis?.remediationMissions?.[0];
-        if (topMission) {
-          pipOverlay.classList.add('hidden');
-          selectMission(topMission);
-        }
+    const highlightBtn = document.getElementById('btnHighlightMissions');
+    if (highlightBtn) {
+      highlightBtn.addEventListener('click', () => {
+        state.highlightMissionIds = state.diagnosis?.remediationMissions || [];
+        closePipOverlay();
       });
     }
+  }
+
+  function buildSystemInsight(issueType, deltas) {
+    const gains = Object.entries(deltas).filter(([, value]) => value > 0).map(([key]) => CATEGORY_LABELS[key]);
+    const losses = Object.entries(deltas).filter(([, value]) => value < 0).map(([key]) => CATEGORY_LABELS[key]);
+
+    if (gains.length && losses.length) {
+      return `${issueType} trade-off: gains in ${gains.join(', ')} came with pressure on ${losses.join(', ')}.`;
+    }
+    if (gains.length) {
+      return `${issueType} move reinforced ${gains.join(', ')} without immediate category losses.`;
+    }
+    return `${issueType} move created system strain in ${losses.join(', ')}; stabilize in the next offer set.`;
   }
 
   function applyDecision(optionId) {
@@ -290,7 +343,9 @@
         text: option.feedback,
         deltas,
         poorOutcome,
-        impactCost: optionCost
+        impactCost: optionCost,
+        learningNote: option.learningNote || 'Learning note unavailable for this option.',
+        systemInsight: buildSystemInsight(mission.issueType || 'Mission', deltas)
       },
       state
     );
@@ -308,9 +363,13 @@
           state.casesCompletedThisRun += 1;
           state.lastMissionId = mission.id;
           state.lastMissionTags = mission.pedagogy?.tags || [];
+          state.lastChosenHub = mission.hub || null;
+          state.lastChosenIssueType = mission.issueType || null;
         }
         state.selectedMissionId = null;
+        state.highlightMissionIds = [];
         computeAndStoreMetrics();
+        refreshOfferSet();
         saveState(state);
 
         if (state.pipEnabled) {
@@ -324,7 +383,7 @@
   }
 
   function startNewRun() {
-    const ok = window.confirm('Start a new Tourism Sampling run? This resets current run progress and re-samples missions.');
+    const ok = window.confirm('Start a new Tourism Sampling run? This resets current run progress and generates new per-step offers.');
     if (!ok) return;
     state = clearState();
     state.missionOrder = missions.map(m => m.id);
@@ -332,8 +391,7 @@
       acc[m.id] = m;
       return acc;
     }, {});
-    ensureRunSample(true);
-    computeAndStoreMetrics();
+    initializeRun(true);
     saveState(state);
     navigate('map');
   }
@@ -386,7 +444,7 @@
     }
 
     if (state.currentScreen === 'map') {
-      mainEl.innerHTML = UI.renderMap(state, getSampledMissions(), SCORING_CONSTANTS, RUN_CONFIG);
+      mainEl.innerHTML = UI.renderMap(state, getOfferedMissions(), SCORING_CONSTANTS, RUN_CONFIG);
     } else if (state.currentScreen === 'explore') {
       mainEl.innerHTML = UI.renderExploration(currentMission(), state, RUN_CONFIG);
     } else if (state.currentScreen === 'decision') {
@@ -395,7 +453,7 @@
       mainEl.innerHTML = UI.renderGameComplete(state);
     } else {
       state.currentScreen = 'map';
-      mainEl.innerHTML = UI.renderMap(state, getSampledMissions(), SCORING_CONSTANTS, RUN_CONFIG);
+      mainEl.innerHTML = UI.renderMap(state, getOfferedMissions(), SCORING_CONSTANTS, RUN_CONFIG);
     }
 
     bindScreenEvents();
@@ -415,12 +473,7 @@
           acc[m.id] = m;
           return acc;
         }, {});
-        ensureRunSample(false);
-        if (!state.selectedMissionId && state.sampledMissionIds[0]) {
-          state.selectedMissionId = state.sampledMissionIds[0];
-          state.selectedMissionId = null;
-        }
-        computeAndStoreMetrics();
+        initializeRun(false);
         saveState(state);
       })
       .catch(err => {

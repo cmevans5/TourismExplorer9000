@@ -46,7 +46,8 @@
             "hospitality": 1,
             "satisfaction": 0
           },
-          "feedback": "Spending climbs, but congestion and emissions rise in adjacent blocks."
+          "feedback": "Spending climbs, but congestion and emissions rise in adjacent blocks.",
+          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
         },
         {
           "id": "B",
@@ -60,7 +61,8 @@
             "hospitality": 1,
             "satisfaction": 1
           },
-          "feedback": "Performance improves across the board, though headline growth is moderate."
+          "feedback": "Performance improves across the board, though headline growth is moderate.",
+          "learningNote": "This option reinforces economic momentum and is strongest when your weakest category needs quick support."
         },
         {
           "id": "C",
@@ -74,7 +76,8 @@
             "hospitality": 0,
             "satisfaction": 2
           },
-          "feedback": "Some guests are happier, but equity concerns and crowding persist."
+          "feedback": "Some guests are happier, but equity concerns and crowding persist.",
+          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
         }
       ]
     },
@@ -124,7 +127,8 @@
             "hospitality": 1,
             "satisfaction": 1
           },
-          "feedback": "Top-line growth improves, but trust in district stewardship falls."
+          "feedback": "Top-line growth improves, but trust in district stewardship falls.",
+          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
         },
         {
           "id": "B",
@@ -138,7 +142,8 @@
             "hospitality": 1,
             "satisfaction": 0
           },
-          "feedback": "Identity indicators recover while visitor friction drops."
+          "feedback": "Identity indicators recover while visitor friction drops.",
+          "learningNote": "This option reinforces economic momentum and is strongest when your weakest category needs quick support."
         },
         {
           "id": "C",
@@ -152,7 +157,8 @@
             "hospitality": 2,
             "satisfaction": 1
           },
-          "feedback": "Service quality rises for some guests, but exclusion concerns rise."
+          "feedback": "Service quality rises for some guests, but exclusion concerns rise.",
+          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
         }
       ]
     },
@@ -202,7 +208,8 @@
             "hospitality": 2,
             "satisfaction": 1
           },
-          "feedback": "Revenue improves quickly, but fairness and emissions optics worsen."
+          "feedback": "Revenue improves quickly, but fairness and emissions optics worsen.",
+          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
         },
         {
           "id": "B",
@@ -216,7 +223,8 @@
             "hospitality": 1,
             "satisfaction": 1
           },
-          "feedback": "Flow and trust metrics improve with broad portfolio gains."
+          "feedback": "Flow and trust metrics improve with broad portfolio gains.",
+          "learningNote": "This option reinforces sustainability resilience and is strongest when your weakest category needs quick support."
         },
         {
           "id": "C",
@@ -230,7 +238,8 @@
             "hospitality": 1,
             "satisfaction": 2
           },
-          "feedback": "Excitement rises, but core bottlenecks remain."
+          "feedback": "Excitement rises, but core bottlenecks remain.",
+          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
         }
       ]
     },
@@ -280,7 +289,8 @@
             "hospitality": 1,
             "satisfaction": 0
           },
-          "feedback": "Turnover improves, but street-level friction increases."
+          "feedback": "Turnover improves, but street-level friction increases.",
+          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
         },
         {
           "id": "B",
@@ -294,7 +304,8 @@
             "hospitality": 1,
             "satisfaction": 1
           },
-          "feedback": "Performance improves across the board, though headline growth is moderate."
+          "feedback": "Performance improves across the board, though headline growth is moderate.",
+          "learningNote": "This option reinforces economic momentum and is strongest when your weakest category needs quick support."
         },
         {
           "id": "C",
@@ -308,7 +319,8 @@
             "hospitality": 1,
             "satisfaction": 1
           },
-          "feedback": "Premium users benefit, but local impacts remain uneven."
+          "feedback": "Premium users benefit, but local impacts remain uneven.",
+          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
         }
       ]
     },
@@ -358,7 +370,8 @@
             "hospitality": 1,
             "satisfaction": 0
           },
-          "feedback": "Revenue grows, but social license weakens."
+          "feedback": "Revenue grows, but social license weakens.",
+          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
         },
         {
           "id": "B",
@@ -372,7 +385,8 @@
             "hospitality": 1,
             "satisfaction": 1
           },
-          "feedback": "Performance improves across the board, though headline growth is moderate."
+          "feedback": "Performance improves across the board, though headline growth is moderate.",
+          "learningNote": "This option reinforces economic momentum and is strongest when your weakest category needs quick support."
         },
         {
           "id": "C",
@@ -386,7 +400,8 @@
             "hospitality": 2,
             "satisfaction": 1
           },
-          "feedback": "Guest convenience improves while affordability concerns remain."
+          "feedback": "Guest convenience improves while affordability concerns remain.",
+          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
         }
       ]
     },
@@ -436,7 +451,8 @@
             "hospitality": 1,
             "satisfaction": 0
           },
-          "feedback": "Sales rise, but neighborhood authenticity weakens."
+          "feedback": "Sales rise, but neighborhood authenticity weakens.",
+          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
         },
         {
           "id": "B",
@@ -450,7 +466,8 @@
             "hospitality": 1,
             "satisfaction": 1
           },
-          "feedback": "Local capture and guest discovery both improve."
+          "feedback": "Local capture and guest discovery both improve.",
+          "learningNote": "This option reinforces economic momentum and is strongest when your weakest category needs quick support."
         },
         {
           "id": "C",
@@ -464,7 +481,8 @@
             "hospitality": 2,
             "satisfaction": 1
           },
-          "feedback": "Convenience improves, but inclusion outcomes remain uneven."
+          "feedback": "Convenience improves, but inclusion outcomes remain uneven.",
+          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
         }
       ]
     },
@@ -514,7 +532,8 @@
             "hospitality": 0,
             "satisfaction": -1
           },
-          "feedback": "Ad revenue improves but wayfinding friction rises."
+          "feedback": "Ad revenue improves but wayfinding friction rises.",
+          "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
         },
         {
           "id": "B",
@@ -528,7 +547,8 @@
             "hospitality": 1,
             "satisfaction": 1
           },
-          "feedback": "Performance improves across the board, though headline growth is moderate."
+          "feedback": "Performance improves across the board, though headline growth is moderate.",
+          "learningNote": "This option reinforces economic momentum and is strongest when your weakest category needs quick support."
         },
         {
           "id": "C",
@@ -542,7 +562,8 @@
             "hospitality": 2,
             "satisfaction": 1
           },
-          "feedback": "Premium experience improves while broad usability gaps remain."
+          "feedback": "Premium experience improves while broad usability gaps remain.",
+          "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
         }
       ]
     },
@@ -592,7 +613,8 @@
             "hospitality": 1,
             "satisfaction": 1
           },
-          "feedback": "Bookings rise, but ecological degradation risk increases."
+          "feedback": "Bookings rise, but ecological degradation risk increases.",
+          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
         },
         {
           "id": "B",
@@ -606,7 +628,8 @@
             "hospitality": 1,
             "satisfaction": 1
           },
-          "feedback": "Use pressure stabilizes while destination quality improves."
+          "feedback": "Use pressure stabilizes while destination quality improves.",
+          "learningNote": "This option reinforces economic momentum and is strongest when your weakest category needs quick support."
         },
         {
           "id": "C",
@@ -620,7 +643,8 @@
             "hospitality": 2,
             "satisfaction": 1
           },
-          "feedback": "Revenue improves, but equity and carrying-capacity concerns persist."
+          "feedback": "Revenue improves, but equity and carrying-capacity concerns persist.",
+          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
         }
       ]
     },
@@ -670,7 +694,8 @@
             "hospitality": 1,
             "satisfaction": 0
           },
-          "feedback": "Revenue rises quickly but local trust drops."
+          "feedback": "Revenue rises quickly but local trust drops.",
+          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
         },
         {
           "id": "B",
@@ -684,7 +709,8 @@
             "hospitality": 1,
             "satisfaction": 1
           },
-          "feedback": "Footfall stabilizes and district identity strengthens."
+          "feedback": "Footfall stabilizes and district identity strengthens.",
+          "learningNote": "This option reinforces economic momentum and is strongest when your weakest category needs quick support."
         },
         {
           "id": "C",
@@ -698,7 +724,8 @@
             "hospitality": 2,
             "satisfaction": 1
           },
-          "feedback": "Visitors see more options, but equity outcomes stay uneven."
+          "feedback": "Visitors see more options, but equity outcomes stay uneven.",
+          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
         }
       ]
     },
@@ -748,7 +775,8 @@
             "hospitality": 1,
             "satisfaction": 0
           },
-          "feedback": "Parking turnover improves but neighborhood traffic worsens."
+          "feedback": "Parking turnover improves but neighborhood traffic worsens.",
+          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
         },
         {
           "id": "B",
@@ -762,7 +790,8 @@
             "hospitality": 1,
             "satisfaction": 1
           },
-          "feedback": "Performance improves across the board, though headline growth is moderate."
+          "feedback": "Performance improves across the board, though headline growth is moderate.",
+          "learningNote": "This option reinforces economic momentum and is strongest when your weakest category needs quick support."
         },
         {
           "id": "C",
@@ -776,7 +805,8 @@
             "hospitality": 2,
             "satisfaction": 1
           },
-          "feedback": "Queueing improves for some guests, but equity concerns remain."
+          "feedback": "Queueing improves for some guests, but equity concerns remain.",
+          "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
         }
       ]
     },
@@ -826,7 +856,8 @@
             "hospitality": 1,
             "satisfaction": 0
           },
-          "feedback": "Coverage improves but community equity signals weaken."
+          "feedback": "Coverage improves but community equity signals weaken.",
+          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
         },
         {
           "id": "B",
@@ -840,7 +871,8 @@
             "hospitality": 1,
             "satisfaction": 1
           },
-          "feedback": "Service consistency and local trust improve together."
+          "feedback": "Service consistency and local trust improve together.",
+          "learningNote": "This option reinforces economic momentum and is strongest when your weakest category needs quick support."
         },
         {
           "id": "C",
@@ -854,7 +886,8 @@
             "hospitality": 2,
             "satisfaction": 1
           },
-          "feedback": "Speed improves, but workforce inclusion remains shallow."
+          "feedback": "Speed improves, but workforce inclusion remains shallow.",
+          "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
         }
       ]
     },
@@ -904,7 +937,8 @@
             "hospitality": 1,
             "satisfaction": 0
           },
-          "feedback": "Short-term revenue improves but climate risk worsens."
+          "feedback": "Short-term revenue improves but climate risk worsens.",
+          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
         },
         {
           "id": "B",
@@ -918,7 +952,8 @@
             "hospitality": 1,
             "satisfaction": 1
           },
-          "feedback": "Operational reliability and comfort improve across groups."
+          "feedback": "Operational reliability and comfort improve across groups.",
+          "learningNote": "This option reinforces sustainability resilience and is strongest when your weakest category needs quick support."
         },
         {
           "id": "C",
@@ -932,7 +967,8 @@
             "hospitality": 2,
             "satisfaction": 1
           },
-          "feedback": "Guest comfort rises for some segments but equity concerns persist."
+          "feedback": "Guest comfort rises for some segments but equity concerns persist.",
+          "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
         }
       ]
     },
@@ -982,7 +1018,8 @@
             "hospitality": 0,
             "satisfaction": 0
           },
-          "feedback": "Throughput stabilizes, but attendee experience feels restrictive."
+          "feedback": "Throughput stabilizes, but attendee experience feels restrictive.",
+          "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
         },
         {
           "id": "B",
@@ -996,7 +1033,8 @@
             "hospitality": 1,
             "satisfaction": 1
           },
-          "feedback": "Performance improves across the board, though headline growth is moderate."
+          "feedback": "Performance improves across the board, though headline growth is moderate.",
+          "learningNote": "This option reinforces economic momentum and is strongest when your weakest category needs quick support."
         },
         {
           "id": "C",
@@ -1010,7 +1048,8 @@
             "hospitality": 1,
             "satisfaction": 1
           },
-          "feedback": "Some flow gains occur, but fairness concerns grow."
+          "feedback": "Some flow gains occur, but fairness concerns grow.",
+          "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
         }
       ]
     },
@@ -1060,7 +1099,8 @@
             "hospitality": 1,
             "satisfaction": 1
           },
-          "feedback": "Event riders benefit, but baseline reliability remains weak."
+          "feedback": "Event riders benefit, but baseline reliability remains weak.",
+          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
         },
         {
           "id": "B",
@@ -1074,7 +1114,8 @@
             "hospitality": 1,
             "satisfaction": 1
           },
-          "feedback": "Performance improves across the board, though headline growth is moderate."
+          "feedback": "Performance improves across the board, though headline growth is moderate.",
+          "learningNote": "This option reinforces economic momentum and is strongest when your weakest category needs quick support."
         },
         {
           "id": "C",
@@ -1088,7 +1129,8 @@
             "hospitality": 1,
             "satisfaction": 0
           },
-          "feedback": "Operating costs drop, but access equity concerns increase."
+          "feedback": "Operating costs drop, but access equity concerns increase.",
+          "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
         }
       ]
     },
@@ -1138,7 +1180,8 @@
             "hospitality": 0,
             "satisfaction": -1
           },
-          "feedback": "Margins stay strong but trust erodes."
+          "feedback": "Margins stay strong but trust erodes.",
+          "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
         },
         {
           "id": "B",
@@ -1152,7 +1195,8 @@
             "hospitality": 1,
             "satisfaction": 1
           },
-          "feedback": "Performance improves across the board, though headline growth is moderate."
+          "feedback": "Performance improves across the board, though headline growth is moderate.",
+          "learningNote": "This option reinforces economic momentum and is strongest when your weakest category needs quick support."
         },
         {
           "id": "C",
@@ -1166,7 +1210,8 @@
             "hospitality": 1,
             "satisfaction": 1
           },
-          "feedback": "High-end conversion rises, but broad clarity issues persist."
+          "feedback": "High-end conversion rises, but broad clarity issues persist.",
+          "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
         }
       ]
     },
@@ -1216,7 +1261,8 @@
             "hospitality": 0,
             "satisfaction": 0
           },
-          "feedback": "Administrative burden stays low, but accountability is weak."
+          "feedback": "Administrative burden stays low, but accountability is weak.",
+          "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
         },
         {
           "id": "B",
@@ -1230,7 +1276,8 @@
             "hospitality": 1,
             "satisfaction": 1
           },
-          "feedback": "Trust and inclusion improve with manageable operational impact."
+          "feedback": "Trust and inclusion improve with manageable operational impact.",
+          "learningNote": "This option reinforces economic momentum and is strongest when your weakest category needs quick support."
         },
         {
           "id": "C",
@@ -1244,7 +1291,8 @@
             "hospitality": 1,
             "satisfaction": 0
           },
-          "feedback": "Revenue predictability improves, but social license remains fragile."
+          "feedback": "Revenue predictability improves, but social license remains fragile.",
+          "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
         }
       ]
     },
@@ -1295,7 +1343,8 @@
             "hospitality": 2,
             "satisfaction": 0
           },
-          "feedback": "Response times improve, but community confidence is mixed."
+          "feedback": "Response times improve, but community confidence is mixed.",
+          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
         },
         {
           "id": "B",
@@ -1309,7 +1358,8 @@
             "hospitality": 1,
             "satisfaction": 1
           },
-          "feedback": "Performance improves across the board, though headline growth is moderate."
+          "feedback": "Performance improves across the board, though headline growth is moderate.",
+          "learningNote": "This option reinforces economic momentum and is strongest when your weakest category needs quick support."
         },
         {
           "id": "C",
@@ -1323,7 +1373,8 @@
             "hospitality": 0,
             "satisfaction": 1
           },
-          "feedback": "Deterrence improves slightly, but perceived warmth declines."
+          "feedback": "Deterrence improves slightly, but perceived warmth declines.",
+          "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
         }
       ]
     },
@@ -1373,7 +1424,8 @@
             "hospitality": 0,
             "satisfaction": -1
           },
-          "feedback": "Revenue rises, but sentiment and fairness scores slide."
+          "feedback": "Revenue rises, but sentiment and fairness scores slide.",
+          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
         },
         {
           "id": "B",
@@ -1387,7 +1439,8 @@
             "hospitality": 1,
             "satisfaction": 1
           },
-          "feedback": "Performance improves across the board, though headline growth is moderate."
+          "feedback": "Performance improves across the board, though headline growth is moderate.",
+          "learningNote": "This option reinforces economic momentum and is strongest when your weakest category needs quick support."
         },
         {
           "id": "C",
@@ -1401,7 +1454,8 @@
             "hospitality": 1,
             "satisfaction": 1
           },
-          "feedback": "Conversion improves for high spenders, but broad affordability concerns persist."
+          "feedback": "Conversion improves for high spenders, but broad affordability concerns persist.",
+          "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
         }
       ]
     }
