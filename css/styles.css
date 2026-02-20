@@ -12,6 +12,14 @@
 }
 
 * { box-sizing: border-box; }
+
+html,
+body {
+  height: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
@@ -50,6 +58,8 @@ h2 { margin-top: 0; }
 .topbar-actions { display: flex; gap: 0.6rem; }
 
 #mainContent {
+  height: auto;
+  overflow: visible;
   max-width: 1200px;
   margin: 1.2rem auto;
   padding: 0 1rem 2rem;
