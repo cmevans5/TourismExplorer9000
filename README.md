@@ -2,58 +2,58 @@
 
 Tourism Explorer 9000 is an HTML5 simulation game where players act as a tourism analyst balancing **Economic Capital, Sustainability, Cultural Inclusion, Hospitality, and Visitor Satisfaction** across adaptive Tampa-area decision cases.
 
+## Tourism Sampling (Adaptive 8-Case Runs)
+
+Each run now uses **Tourism Sampling**:
+- Exactly **8 cases per run** (`RUN_LENGTH = 8`).
+- Sample includes recommendation-weighted cases plus challenge and wildcard cases for replayability.
+- Controlled randomness is used so runs differ while still respecting adaptive logic.
+- The active map only displays the sampled cases for that run.
+
+### Controlled randomness and seeds
+Sampling uses a deterministic seeded PRNG (Mulberry32) in `js/adaptation.js`.
+
+- `RANDOMNESS_SEED_MODE = "run"` (default) creates a new seed per new run.
+- `RANDOMNESS_WEIGHT = 0.25` controls how often lower-ranked but valid missions are swapped in.
+- Within a run, sampling is stable (same sampled mission IDs).
+
+## Pip coaching + remediation
+
+Pip now acts as both explainer and remediation coach:
+- **Ask Pip why these cases?** button on Map explains why this sampled set appears.
+- Pip explanation references weakest category, variance pressure, pitfall flags, and the Tourism Sampling principle.
+- Pip includes a keyboard-accessible **“Why am I seeing this?”** expandable logic section.
+- After poor streak triggers, Pip shows:
+  - Diagnosis (lowest categories, variance, flags, recommended focus)
+  - Remediation Plan (up to 2 missions from the sampled set)
+  - **Take me there** button routing directly to top remediation mission.
+
+## Run lifecycle + persistence
+
+Run state is persisted in localStorage, including:
+- `runId`, `runSeed`
+- `casesCompletedThisRun`
+- `sampledMissionIds`
+- `completedMissionIds`
+- `lastMissionId`, `lastMissionTags`
+
+Use **Start New Run** to reset progress and re-sample a new run.
+
 ## Mission Database (Adaptive Case Pool)
 
-Missions are defined in `data/missions.json`. Each mission is now one decision case that can be sequenced by a recommender.
+Missions are defined in `data/missions.json`.
 
 ### Mission schema
 Each mission contains:
 - `id` (unique string)
 - `name`
-- `hub` (e.g., `Riverwalk`, `Ybor`, `BuschGardens`, `PortTampa`, `ConventionDistrict`, `Channelside`, `AirportCorridor`, `SouthShore`)
-- `issueType` (`Mobility`, `Sustainability`, `CulturalInclusion`, `Hospitality`, `VisitorSatisfaction`, `Safety`, `Pricing`)
+- `hub`
+- `issueType`
 - `description`
-- `pedagogy`
-  - `tags[]` (for adaptive routing such as remediation/follow-up/variety)
-  - `reinforces[]`
-  - `commonPitfalls[]`
-  - `difficulty`
-- `prerequisites` (optional sequencing hooks)
-  - `minDecisions`
-  - `requiresFlag`
-  - `excludesFlag`
+- `pedagogy` (`tags[]`, `reinforces[]`, `commonPitfalls[]`, `difficulty`)
+- `prerequisites`
 - `exploration`
-  - `brief`
-  - `mediaLabel`
-  - `bullets[]`
-- `options[]` (A/B/C)
-  - `id`
-  - `title`
-  - `description`
-  - `cost`
-  - `deltas`
-  - `feedback`
-
-## Hub + Case Coverage
-
-The mission pool currently includes **18 cases** across **8 hubs**, with 2–3 cases per hub to support:
-- remediation picks (target weak categories / high variance),
-- consequence follow-ups (same hub, related issue),
-- variety constraints (avoid repeating the same hub 3 times in a row).
-
-## Scoring + Top Analyst Gate
-
-Scoring is centralized in `js/scoring.js`:
-- `computeBII(categories, budget, constants)`
-- `computeVariance(categories)`
-- `checkTopGate(categories, variance, budget, constants)`
-- `classifyRating(BII, topGatePassed, constants)`
-
-`Top Analyst` requires:
-- all categories `>= 2`
-- variance `<= 2`
-- no negative categories
-- BII meeting the top threshold.
+- `options[]` (A/B/C with cost, deltas, feedback)
 
 ## Run Locally
 
@@ -65,4 +65,10 @@ Then open `http://localhost:8000`.
 
 ## QA
 
-See `docs/test-plan.md` and `docs/qa/mission-pool-audit.mjs` for mission-structure and achievability checks.
+Run validation checks:
+
+```bash
+python3 -m json.tool data/missions.json
+node --check js/app.js js/ui.js js/state.js js/scoring.js js/adaptation.js
+node docs/qa/tourism-sampling-audit.mjs
+```

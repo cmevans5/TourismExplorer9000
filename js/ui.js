@@ -7,7 +7,16 @@
     satisfaction: 'Visitor Satisfaction'
   };
 
-  function renderMap(state, missions, constants) {
+  function toCategoryLabel(key) {
+    return CATEGORY_LABELS[key] || key;
+  }
+
+  function renderRunProgress(state, runLength) {
+    const caseNumber = Math.min(state.casesCompletedThisRun + 1, runLength);
+    return `<p class="sampling-progress"><strong>Tourism Sampling:</strong> Case ${caseNumber}/${runLength}</p>`;
+  }
+
+  function renderMap(state, missions, constants, runConfig) {
     const missionCards = missions.map(mission => {
       const completed = state.completedMissionIds.includes(mission.id);
       const status = completed
@@ -30,12 +39,21 @@
       `;
     }).join('');
 
+    const pipIndicator = state.pipVoluntaryIndicator
+      ? '<p class="tag warn">Pip has an update based on your current gate status.</p>'
+      : '';
+
     return `
       <section class="card">
         <h2>City Map Hub</h2>
+        ${renderRunProgress(state, runConfig.RUN_LENGTH)}
         <p><strong>Role:</strong> Newly hired Tourism Analyst for Tampa Areas of Economic Interest.</p>
         <p>Select a hotspot, evaluate evidence, and decide how to allocate constrained impact resources.</p>
-        <p><strong>Missions Complete:</strong> ${state.completedMissionIds.length}/${missions.length}</p>
+        <p><strong>Missions Complete:</strong> ${state.casesCompletedThisRun}/${runConfig.RUN_LENGTH}</p>
+        ${pipIndicator}
+        <div class="inline-actions">
+          <button id="btnAskPipWhy" class="btn secondary">Ask Pip why these cases?</button>
+        </div>
       </section>
       <section class="card">
         <h2>Impact Budget</h2>
@@ -47,7 +65,7 @@
     `;
   }
 
-  function renderExploration(mission, state) {
+  function renderExploration(mission, state, runConfig) {
     const points = (mission.exploration.bullets || mission.exploration.dataPoints || [])
       .map(point => `<li>${point}</li>`)
       .join('');
@@ -55,6 +73,7 @@
     return `
       <section class="card">
         <h2>Exploration: ${mission.name}</h2>
+        ${renderRunProgress(state, runConfig.RUN_LENGTH)}
         <p><strong>Impact Points Remaining:</strong> ${state.impactPointsRemaining}</p>
         <div class="grid two">
           <div>
@@ -72,7 +91,7 @@
     `;
   }
 
-  function renderDecision(mission, state) {
+  function renderDecision(mission, state, runConfig) {
     const optionButtons = mission.options
       .map(opt => {
         const optionCost = opt.cost ?? opt.impactCost;
@@ -90,6 +109,7 @@
     return `
       <section class="card">
         <h2>Decision Point</h2>
+        ${renderRunProgress(state, runConfig.RUN_LENGTH)}
         <p>Choose one strategy. Each choice improves some outcomes while creating trade-offs.</p>
         <p><strong>Impact Points Remaining:</strong> ${state.impactPointsRemaining}</p>
         <div class="grid">
@@ -118,10 +138,67 @@
         <p><strong>Impact Cost:</strong> ${feedback.impactCost}</p>
         <p><strong>Remaining Impact Points:</strong> ${state.impactPointsRemaining}</p>
         <p><strong>Balance Check:</strong> Min category = ${state.minCategory}, variance = ${state.variance}</p>
-        <p><strong>Top Tier Requirements:</strong> Top Analyst requires all categories ≥ 2 and variance ≤ 2.</p>
         <p><strong>Poor outcome:</strong> ${feedback.poorOutcome ? 'Yes' : 'No'}</p>
         <button id="btnReturnMap" class="btn">Return to Map</button>
       </section>
+    `;
+  }
+
+  function renderDiagnosis(state) {
+    const diagnosis = state.diagnosis;
+    if (!diagnosis) return '<p class="small">Pip is collecting more decisions before giving a diagnosis.</p>';
+
+    const lowest = diagnosis.lowestCategories.map(toCategoryLabel).join(', ');
+    const flags = diagnosis.flags.length ? diagnosis.flags.join(', ') : 'None currently detected';
+    const focus = diagnosis.recommendedFocus === 'Balance' ? 'Balance all categories' : toCategoryLabel(diagnosis.recommendedFocus);
+
+    return `
+      <section class="card">
+        <h3>Diagnosis</h3>
+        <p><strong>Lowest categories:</strong> ${lowest} (${diagnosis.minValue})</p>
+        <p><strong>Variance:</strong> ${diagnosis.variance}</p>
+        <p><strong>Pitfall flags:</strong> ${flags}</p>
+        <p><strong>Recommended focus:</strong> ${focus}</p>
+      </section>
+    `;
+  }
+
+  function renderRemediationPlan(state) {
+    const diagnosis = state.diagnosis;
+    if (!diagnosis || !diagnosis.remediationMissions.length) {
+      return '<section class="card"><h3>Remediation Plan</h3><p>No remediation mission available. Continue the current route.</p></section>';
+    }
+
+    const missionItems = diagnosis.remediationMissions.map((missionId, index) => `
+      <li>
+        ${missionId}
+        ${index === 0 ? '<button id="btnTakeMeThere" class="btn secondary">Take me there</button>' : ''}
+      </li>
+    `).join('');
+
+    return `
+      <section class="card">
+        <h3>Remediation Plan</h3>
+        <p>Pip recommends these missions from your current sampled set:</p>
+        <ul>${missionItems}</ul>
+      </section>
+    `;
+  }
+
+  function renderPipPanel(state, explanation) {
+    const whyBullets = (explanation?.bullets || []).map(item => `<li>${item}</li>`).join('');
+    const logicBullets = (explanation?.logic || []).map(item => `<li>${item}</li>`).join('');
+
+    return `
+      <p><strong>Pattern detected:</strong> ${state.pipForceOpen ? 'two consecutive poor outcomes.' : 'adaptive coaching update available.'}</p>
+      <ul>${whyBullets}</ul>
+      <button id="btnPipWhyToggle" class="btn secondary" aria-expanded="${state.pipWhyExpanded ? 'true' : 'false'}" aria-controls="pipWhyDetails">Why am I seeing this?</button>
+      <div id="pipWhyDetails" ${state.pipWhyExpanded ? '' : 'hidden'}>
+        <ul>${logicBullets}</ul>
+      </div>
+      ${renderDiagnosis(state)}
+      ${renderRemediationPlan(state)}
+      <button id="btnPipClose" class="btn">Continue</button>
     `;
   }
 
@@ -133,7 +210,7 @@
     return `
       <section class="card">
         <h2>Game Complete</h2>
-        <p>All hotspots have been completed. Final tourism systems report is now available.</p>
+        <p>You completed this Tourism Sampling run. Start a new run to get a new 8-case sample.</p>
         <p class="end-rating">Analyst Tier: ${state.ratingBand}</p>
         <p><strong>Final BII:</strong> ${state.BII}</p>
         <p><strong>Variance:</strong> ${state.variance}</p>
@@ -144,9 +221,10 @@
     `;
   }
 
-  function renderDashboard(state) {
+  function renderDashboard(state, runConfig) {
     const cat = state.categories;
     return `
+      <p><strong>Tourism Sampling:</strong> Case ${Math.min(state.casesCompletedThisRun + 1, runConfig.RUN_LENGTH)}/${runConfig.RUN_LENGTH}</p>
       <div class="kpi-row">
         <div class="kpi"><h3>Economic Capital</h3><div class="value">${cat.economic}</div></div>
         <div class="kpi"><h3>Sustainability</h3><div class="value">${cat.sustainability}</div></div>
@@ -172,6 +250,7 @@
     renderExploration,
     renderDecision,
     renderFeedback,
+    renderPipPanel,
     renderGameComplete,
     renderDashboard
   };
