@@ -50,8 +50,8 @@ Validate adaptive Tourism Sampling, seeded controlled randomness, and Pip remedi
 ### TC-15: Determinism within run / variation across runs
 **Check**: for fixed seed, sampled output is deterministic; different seeds produce different sampled sets.
 
-### TC-16: Vertical scroll behavior on Map
-**Check**: with 6+ mission cards visible, the page scrolls vertically on Map and no root layout container blocks scroll.
+### TC-16: Embedded scroll behavior on Map
+**Check**: with 6+ mission cards visible, mouse-wheel/trackpad scrolling moves the mission grid inside `#mainContent` while the page itself remains fixed and no horizontal scrollbar appears.
 
 ## Automated QA scripts
 
