@@ -46,6 +46,9 @@
   }
 
   function buildMissionInsights(mission) {
+    if (mission && mission._avgDeltas) {
+      return mission._avgDeltas;
+    }
     const totals = { economic: 0, sustainability: 0, culture: 0, hospitality: 0, satisfaction: 0 };
     (mission.options || []).forEach(option => {
       Object.keys(totals).forEach(cat => {
