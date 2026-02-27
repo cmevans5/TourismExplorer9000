@@ -511,8 +511,9 @@
         const validation = validateMissions(missions);
         if (validation.warnings.length) console.warn('Mission validation warnings:', validation.warnings);
         if (validation.errors.length) {
-          console.warn('Mission validation errors:', validation.errors);
-          throw new Error(`Mission schema validation failed (${validation.errors.length} issues).`);
+          console.error('Mission validation errors:', validation.errors);
+          const sampleErrors = validation.errors.slice(0, 3).join(' | ');
+          throw new Error(`Mission schema validation failed: ${sampleErrors}`);
         }
 
         buildMissionLookups(missions);

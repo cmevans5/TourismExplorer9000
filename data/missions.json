@@ -56,13 +56,13 @@
           "cost": 30,
           "deltas": {
             "economic": 1,
-            "sustainability": 1,
-            "culture": 1,
+            "sustainability": 2,
+            "culture": 0,
             "hospitality": 1,
-            "satisfaction": 1
+            "satisfaction": 2
           },
           "feedback": "Performance improves across the board, though headline growth is moderate.",
-          "learningNote": "This option reinforces economic momentum and is strongest when your weakest category needs quick support."
+          "learningNote": "This balanced mobility package prioritizes cleaner circulation and visitor experience while holding revenue growth steady."
         },
         {
           "id": "C",
@@ -299,16 +299,16 @@
           "id": "B",
           "title": "B) Balanced systems package",
           "description": "Fund a cross-agency package that prioritizes weakest indicators first.",
-          "cost": 30,
+          "cost": 32,
           "deltas": {
             "economic": 1,
-            "sustainability": 1,
-            "culture": 1,
+            "sustainability": 2,
+            "culture": 0,
             "hospitality": 1,
-            "satisfaction": 1
+            "satisfaction": 2
           },
           "feedback": "Performance improves across the board, though headline growth is moderate.",
-          "learningNote": "This option reinforces economic momentum and is strongest when your weakest category needs quick support."
+          "learningNote": "This package reduces cruise-area congestion and improves arrivals flow, with moderate upside for local businesses."
         },
         {
           "id": "C",
@@ -383,14 +383,14 @@
           "description": "Fund a cross-agency package that prioritizes weakest indicators first.",
           "cost": 30,
           "deltas": {
-            "economic": 1,
-            "sustainability": 1,
+            "economic": 0,
+            "sustainability": 0,
             "culture": 1,
             "hospitality": 1,
-            "satisfaction": 1
+            "satisfaction": 2
           },
           "feedback": "Performance improves across the board, though headline growth is moderate.",
-          "learningNote": "This option reinforces economic momentum and is strongest when your weakest category needs quick support."
+          "learningNote": "This pricing package improves fairness perception and attendee trust, but does not maximize short-term revenue."
         },
         {
           "id": "C",
@@ -545,16 +545,16 @@
           "id": "B",
           "title": "B) Balanced systems package",
           "description": "Fund a cross-agency package that prioritizes weakest indicators first.",
-          "cost": 30,
+          "cost": 31,
           "deltas": {
             "economic": 1,
             "sustainability": 1,
-            "culture": 1,
-            "hospitality": 1,
-            "satisfaction": 1
+            "culture": 0,
+            "hospitality": 2,
+            "satisfaction": 2
           },
           "feedback": "Performance improves across the board, though headline growth is moderate.",
-          "learningNote": "This option reinforces economic momentum and is strongest when your weakest category needs quick support."
+          "learningNote": "This package improves first-impression navigation and service quality, supporting smoother arrivals over pure volume gains."
         },
         {
           "id": "C",
@@ -791,16 +791,16 @@
           "id": "B",
           "title": "B) Balanced systems package",
           "description": "Fund a cross-agency package that prioritizes weakest indicators first.",
-          "cost": 30,
+          "cost": 32,
           "deltas": {
-            "economic": 1,
-            "sustainability": 1,
+            "economic": 0,
+            "sustainability": 2,
             "culture": 1,
             "hospitality": 1,
-            "satisfaction": 1
+            "satisfaction": 2
           },
           "feedback": "Performance improves across the board, though headline growth is moderate.",
-          "learningNote": "This option reinforces economic momentum and is strongest when your weakest category needs quick support."
+          "learningNote": "This late-night mobility mix reduces street pressure and improves guest safety sentiment, with balanced district economics."
         },
         {
           "id": "C",
@@ -1040,13 +1040,13 @@
           "cost": 30,
           "deltas": {
             "economic": 1,
-            "sustainability": 1,
-            "culture": 1,
-            "hospitality": 1,
-            "satisfaction": 1
+            "sustainability": 0,
+            "culture": 0,
+            "hospitality": 2,
+            "satisfaction": 2
           },
           "feedback": "Performance improves across the board, though headline growth is moderate.",
-          "learningNote": "This option reinforces economic momentum and is strongest when your weakest category needs quick support."
+          "learningNote": "This safety-flow package focuses on crowd comfort and confidence, improving experience outcomes more than direct revenue."
         },
         {
           "id": "C",
@@ -1119,16 +1119,16 @@
           "id": "B",
           "title": "B) Balanced systems package",
           "description": "Fund a cross-agency package that prioritizes weakest indicators first.",
-          "cost": 30,
+          "cost": 31,
           "deltas": {
             "economic": 1,
-            "sustainability": 1,
-            "culture": 1,
+            "sustainability": 2,
+            "culture": 0,
             "hospitality": 1,
-            "satisfaction": 1
+            "satisfaction": 2
           },
           "feedback": "Performance improves across the board, though headline growth is moderate.",
-          "learningNote": "This option reinforces economic momentum and is strongest when your weakest category needs quick support."
+          "learningNote": "This transit reliability package strengthens low-emission nighttime movement and keeps visitor confidence high."
         },
         {
           "id": "C",
@@ -1203,14 +1203,14 @@
           "description": "Fund a cross-agency package that prioritizes weakest indicators first.",
           "cost": 30,
           "deltas": {
-            "economic": 1,
-            "sustainability": 1,
+            "economic": 0,
+            "sustainability": 0,
             "culture": 1,
             "hospitality": 1,
-            "satisfaction": 1
+            "satisfaction": 2
           },
           "feedback": "Performance improves across the board, though headline growth is moderate.",
-          "learningNote": "This option reinforces economic momentum and is strongest when your weakest category needs quick support."
+          "learningNote": "This transparent pricing package improves trust and inclusion for transfer visitors, with limited short-term revenue lift."
         },
         {
           "id": "C",
@@ -1366,16 +1366,16 @@
           "id": "B",
           "title": "B) Balanced systems package",
           "description": "Fund a cross-agency package that prioritizes weakest indicators first.",
-          "cost": 30,
+          "cost": 33,
           "deltas": {
-            "economic": 1,
+            "economic": 0,
             "sustainability": 1,
-            "culture": 1,
-            "hospitality": 1,
-            "satisfaction": 1
+            "culture": 0,
+            "hospitality": 2,
+            "satisfaction": 2
           },
           "feedback": "Performance improves across the board, though headline growth is moderate.",
-          "learningNote": "This option reinforces economic momentum and is strongest when your weakest category needs quick support."
+          "learningNote": "This balanced safety package improves confidence and hospitality outcomes while supporting steady, durable night activity."
         },
         {
           "id": "C",
@@ -1450,14 +1450,14 @@
           "description": "Fund a cross-agency package that prioritizes weakest indicators first.",
           "cost": 30,
           "deltas": {
-            "economic": 1,
-            "sustainability": 1,
+            "economic": 0,
+            "sustainability": 0,
             "culture": 1,
             "hospitality": 1,
-            "satisfaction": 1
+            "satisfaction": 2
           },
           "feedback": "Performance improves across the board, though headline growth is moderate.",
-          "learningNote": "This option reinforces economic momentum and is strongest when your weakest category needs quick support."
+          "learningNote": "This package eases pricing fatigue and preserves guest goodwill, favoring retention and fairness over immediate yield."
         },
         {
           "id": "C",
