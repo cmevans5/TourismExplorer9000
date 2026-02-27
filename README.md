@@ -78,7 +78,8 @@ Run validation checks:
 
 ```bash
 python3 -m json.tool data/missions.json
-node --check js/app.js js/ui.js js/state.js js/scoring.js js/adaptation.js
+node --check js/app.js js/adaptation.js js/ui.js js/state.js js/scoring.js js/mission-validation.js
 node docs/qa/offer-set-audit.mjs
 node docs/qa/anti-cheese-learning-audit.mjs
+node docs/qa/prereq-audit.mjs
 ```

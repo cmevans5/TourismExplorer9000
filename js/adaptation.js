@@ -189,6 +189,10 @@
   function pickWithRandomness(scoredCandidates, rng, randomnessWeight) {
     if (!scoredCandidates.length) return null;
     const top = scoredCandidates[0];
+    const topTied = scoredCandidates.filter(item => item.score === top.score);
+    if (topTied.length > 1) {
+      return topTied[Math.floor(rng() * topTied.length)];
+    }
     const nearTop = scoredCandidates.filter(item => item.score >= top.score - 2);
     if (nearTop.length > 1 && rng() < randomnessWeight) {
       return nearTop[Math.floor(rng() * nearTop.length)];
@@ -207,9 +211,42 @@
     return picked ? picked.mission : null;
   }
 
+  function isMissionEligible(mission, state) {
+    const prereq = mission?.prerequisites || {};
+    const minDecisions = Number(prereq.minDecisions);
+    if (Number.isFinite(minDecisions) && (state.decisionCount || 0) < minDecisions) {
+      return false;
+    }
+
+    const requiredMissionId = prereq.requiresFlag;
+    if (requiredMissionId) {
+      const completed = new Set(state.completedMissionIds || []);
+      if (!completed.has(requiredMissionId)) return false;
+    }
+
+    return true;
+  }
+
+  function isEligibleIgnoringRequiresFlag(mission, state) {
+    const prereq = mission?.prerequisites || {};
+    const minDecisions = Number(prereq.minDecisions);
+    return !Number.isFinite(minDecisions) || (state.decisionCount || 0) >= minDecisions;
+  }
+
   function generateOfferSet(missions, state, constants, runConfig = RUN_CONFIG, rng) {
     const completed = new Set(state.completedMissionIds || []);
-    const available = missions.filter(mission => !completed.has(mission.id));
+    let available = missions.filter(mission => !completed.has(mission.id) && isMissionEligible(mission, state));
+
+    if (available.length < 4) {
+      // Relaxation ladder for sparse pools: keep the strongest prerequisites first.
+      // 1) Keep minDecisions gate, but ignore requiresFlag dependency.
+      // 2) If still short, allow any non-completed mission regardless of prerequisites.
+      available = missions.filter(mission => !completed.has(mission.id) && isEligibleIgnoringRequiresFlag(mission, state));
+      if (available.length < 4) {
+        available = missions.filter(mission => !completed.has(mission.id));
+      }
+    }
+
     const needs = deriveNeeds(state, constants);
     const localRng = rng || createRunRng(`${state.runSeed || 'default'}:${state.casesCompletedThisRun || 0}`);
 
