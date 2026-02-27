@@ -79,7 +79,8 @@
           "feedback": "Some guests are happier, but equity concerns and crowding persist.",
           "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
         }
-      ]
+      ],
+      "correctOptionId": "B"
     },
     {
       "id": "ybor-nightlife-balance",
@@ -160,7 +161,8 @@
           "feedback": "Service quality rises for some guests, but exclusion concerns rise.",
           "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
         }
-      ]
+      ],
+      "correctOptionId": "B"
     },
     {
       "id": "busch-queue-emissions",
@@ -241,7 +243,8 @@
           "feedback": "Excitement rises, but core bottlenecks remain.",
           "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
         }
-      ]
+      ],
+      "correctOptionId": "B"
     },
     {
       "id": "port-cruise-dispersal",
@@ -322,7 +325,8 @@
           "feedback": "Premium users benefit, but local impacts remain uneven.",
           "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
         }
-      ]
+      ],
+      "correctOptionId": "B"
     },
     {
       "id": "convention-pricing-pressure",
@@ -403,7 +407,8 @@
           "feedback": "Guest convenience improves while affordability concerns remain.",
           "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
         }
-      ]
+      ],
+      "correctOptionId": "B"
     },
     {
       "id": "channelside-cruise-retail-mix",
@@ -484,7 +489,8 @@
           "feedback": "Convenience improves, but inclusion outcomes remain uneven.",
           "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
         }
-      ]
+      ],
+      "correctOptionId": "B"
     },
     {
       "id": "airport-corridor-wayfinding",
@@ -565,7 +571,8 @@
           "feedback": "Premium experience improves while broad usability gaps remain.",
           "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
         }
-      ]
+      ],
+      "correctOptionId": "B"
     },
     {
       "id": "southshore-eco-access",
@@ -646,7 +653,8 @@
           "feedback": "Revenue improves, but equity and carrying-capacity concerns persist.",
           "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
         }
-      ]
+      ],
+      "correctOptionId": "B"
     },
     {
       "id": "riverwalk-vendor-equity",
@@ -727,7 +735,8 @@
           "feedback": "Visitors see more options, but equity outcomes stay uneven.",
           "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
         }
-      ]
+      ],
+      "correctOptionId": "B"
     },
     {
       "id": "ybor-late-night-mobility",
@@ -808,7 +817,8 @@
           "feedback": "Queueing improves for some guests, but equity concerns remain.",
           "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
         }
-      ]
+      ],
+      "correctOptionId": "B"
     },
     {
       "id": "busch-workforce-inclusion",
@@ -889,7 +899,8 @@
           "feedback": "Speed improves, but workforce inclusion remains shallow.",
           "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
         }
-      ]
+      ],
+      "correctOptionId": "B"
     },
     {
       "id": "port-waterfront-resilience",
@@ -970,7 +981,8 @@
           "feedback": "Guest comfort rises for some segments but equity concerns persist.",
           "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
         }
-      ]
+      ],
+      "correctOptionId": "B"
     },
     {
       "id": "convention-safety-flow",
@@ -1051,7 +1063,8 @@
           "feedback": "Some flow gains occur, but fairness concerns grow.",
           "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
         }
-      ]
+      ],
+      "correctOptionId": "B"
     },
     {
       "id": "channelside-night-transit",
@@ -1132,7 +1145,8 @@
           "feedback": "Operating costs drop, but access equity concerns increase.",
           "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
         }
-      ]
+      ],
+      "correctOptionId": "B"
     },
     {
       "id": "airport-corridor-pricing-transparency",
@@ -1213,7 +1227,8 @@
           "feedback": "High-end conversion rises, but broad clarity issues persist.",
           "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
         }
-      ]
+      ],
+      "correctOptionId": "B"
     },
     {
       "id": "southshore-community-benefits",
@@ -1294,7 +1309,8 @@
           "feedback": "Revenue predictability improves, but social license remains fragile.",
           "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
         }
-      ]
+      ],
+      "correctOptionId": "B"
     },
     {
       "id": "riverwalk-night-safety",
@@ -1376,7 +1392,8 @@
           "feedback": "Deterrence improves slightly, but perceived warmth declines.",
           "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
         }
-      ]
+      ],
+      "correctOptionId": "B"
     },
     {
       "id": "busch-pricing-fatigue",
@@ -1457,7 +1474,8 @@
           "feedback": "Conversion improves for high spenders, but broad affordability concerns persist.",
           "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
         }
-      ]
+      ],
+      "correctOptionId": "B"
     }
   ]
 }

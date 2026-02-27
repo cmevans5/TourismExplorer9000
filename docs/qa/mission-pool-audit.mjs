@@ -24,7 +24,7 @@ function evalPath(pathChoices) {
   });
   const variance = scoring.computeVariance(totals);
   const BII = Math.round(scoring.computeBII(totals, { remainingImpactPoints: 0, totalSpent: 0 }, scoring.SCORING_CONSTANTS).BII);
-  const gate = scoring.checkTopGate(totals, variance, { completedHotspots: pathChoices.length, totalRemainingImpactPoints: 0 }, scoring.SCORING_CONSTANTS);
+  const gate = scoring.checkTopGate(totals, variance, scoring.SCORING_CONSTANTS);
   return { totals, variance, BII, gate };
 }
 

@@ -75,7 +75,7 @@
     return { BII, baseScore, imbalancePenalty, budgetPenalty, variance, sum };
   }
 
-  function checkTopGate(categories, variance, budget, constants = SCORING_CONSTANTS) {
+  function checkTopGate(categories, variance, constants = SCORING_CONSTANTS) {
     const vals = valuesArray(categories);
     const minPass = vals.every(value => value >= constants.vMinCategoryTop);
     const variancePass = variance <= constants.vMaxVarianceTop;

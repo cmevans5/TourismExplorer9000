@@ -13,6 +13,15 @@
     wildcard: 'bad'
   };
 
+  function escapeHtml(value) {
+    return String(value ?? '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
   function toCategoryLabel(key) {
     return CATEGORY_LABELS[key] || key;
   }
@@ -37,14 +46,16 @@
     const highlightIds = new Set(state.highlightMissionIds || []);
     const missionCards = missions.slice(0, 4).map(mission => {
       const role = state.offerSetRolesById?.[mission.id] || 'wildcard';
-      const roleTag = `<span class="tag ${ROLE_CLASS[role] || 'warn'}">${roleLabel(role)}</span>`;
+      const roleTag = `<span class="tag ${ROLE_CLASS[role] || 'warn'}">${escapeHtml(roleLabel(role))}</span>`;
+      const missionName = escapeHtml(mission.name);
+      const hubName = escapeHtml(mission.hub || mission.area || 'City Hub');
 
       return `
         <article class="map-hotspot ${highlightIds.has(mission.id) ? 'highlighted' : ''}">
-          <h3>${mission.name} — ${mission.hub || mission.area || 'City Hub'}</h3>
-          <p>${mission.description}</p>
+          <h3>${missionName} — ${hubName}</h3>
+          <p>${escapeHtml(mission.description)}</p>
           <p>${roleTag}</p>
-          <button class="btn" data-mission-id="${mission.id}" aria-label="Enter ${mission.name}">Enter Hotspot</button>
+          <button class="btn" data-mission-id="${escapeHtml(mission.id)}" aria-label="Enter ${missionName}">Enter Hotspot</button>
         </article>
       `;
     }).join('');
@@ -82,23 +93,23 @@
 
   function renderExploration(mission, state, runConfig) {
     const points = (mission.exploration.bullets || mission.exploration.dataPoints || [])
-      .map(point => `<li>${point}</li>`)
+      .map(point => `<li>${escapeHtml(point)}</li>`)
       .join('');
 
     return `
       <section class="card">
-        <h2>Exploration: ${mission.name}</h2>
+        <h2>Exploration: ${escapeHtml(mission.name)}</h2>
         ${renderRunProgress(state, runConfig.RUN_LENGTH)}
         <p><strong>Impact Points Remaining:</strong> ${state.impactPointsRemaining}</p>
         <div class="grid two">
           <div>
-            <p>${mission.exploration.brief}</p>
+            <p>${escapeHtml(mission.exploration.brief)}</p>
             <ul>
               ${points}
             </ul>
           </div>
           <div class="media-placeholder" aria-label="Placeholder media panel">
-            ${mission.exploration.mediaLabel || 'Placeholder media panel (image/video)'}
+            ${escapeHtml(mission.exploration.mediaLabel || 'Placeholder media panel (image/video)')}
           </div>
         </div>
         <button id="btnToDecision" class="btn">Proceed to Decision</button>
@@ -113,9 +124,9 @@
         const afford = state.impactPointsRemaining >= optionCost;
         const displayTitle = stripOptionKeyPrefix(opt.title);
         return `
-          <button class="btn choice ${afford ? '' : 'blocked'}" data-option-id="${opt.displayLabel}" aria-label="Select option ${opt.displayLabel}" ${afford ? '' : 'disabled'}>
-            <strong>${opt.displayLabel}) ${displayTitle}</strong><br />
-            <span class="small">${opt.description}</span><br />
+          <button class="btn choice ${afford ? '' : 'blocked'}" data-option-id="${escapeHtml(opt.displayLabel)}" aria-label="Select option ${escapeHtml(opt.displayLabel)}" ${afford ? '' : 'disabled'}>
+            <strong>${escapeHtml(opt.displayLabel)}) ${escapeHtml(displayTitle)}</strong><br />
+            <span class="small">${escapeHtml(opt.description)}</span><br />
             <span class="small">Impact Cost: ${optionCost} (${afford ? `${state.impactPointsRemaining} remaining` : 'Insufficient budget'})</span>
           </button>
         `;
@@ -149,16 +160,16 @@
     return `
       <section class="card" tabindex="-1">
         <h2>Outcome Feedback</h2>
-        <p>${feedback.text}</p>
-        <p><strong>Learning note:</strong> ${feedback.learningNote}</p>
-        <p><strong>System insight:</strong> ${feedback.systemInsight}</p>
-        <p><strong>Trade-off Spotlight:</strong> ${feedback.tradeoffSpotlight}</p>
+        <p>${escapeHtml(feedback.text)}</p>
+        <p><strong>Learning note:</strong> ${escapeHtml(feedback.learningNote)}</p>
+        <p><strong>System insight:</strong> ${escapeHtml(feedback.systemInsight)}</p>
+        <p><strong>Trade-off Spotlight:</strong> ${escapeHtml(feedback.tradeoffSpotlight)}</p>
         <ul class="delta-list">${deltaItems}</ul>
         <p><strong>Impact Cost:</strong> ${feedback.impactCost}</p>
         <p><strong>Remaining Impact Points:</strong> ${state.impactPointsRemaining}</p>
         <p><strong>Balance Check:</strong> Min category = ${state.minCategory}, variance = ${state.variance}</p>
         <p><strong>Poor outcome:</strong> ${feedback.poorOutcome ? 'Yes' : 'No'}</p>
-        ${state.topGateLockReason ? `<p>Top Analyst currently blocked because: ${state.topGateLockReason}.</p>` : ''}
+        ${state.topGateLockReason ? `<p>Top Analyst currently blocked because: ${escapeHtml(state.topGateLockReason)}.</p>` : ''}
         <button id="btnReturnMap" class="btn">Return to Map</button>
       </section>
     `;
@@ -174,9 +185,9 @@
     return `
       <section class="card">
         <h3>Current Needs</h3>
-        <p><strong>Lowest categories:</strong> ${lowest} (${diagnosis.minValue ?? state.minCategory})</p>
+        <p><strong>Lowest categories:</strong> ${escapeHtml(lowest)} (${diagnosis.minValue ?? state.minCategory})</p>
         <p><strong>Variance:</strong> ${diagnosis.variance}</p>
-        <p><strong>Pitfall flags:</strong> ${flags}</p>
+        <p><strong>Pitfall flags:</strong> ${escapeHtml(flags)}</p>
       </section>
     `;
   }
@@ -188,7 +199,7 @@
 
     const names = missionIds
       .map(id => missionsById[id]?.name || id)
-      .map(name => `<li>${name}</li>`)
+      .map(name => `<li>${escapeHtml(name)}</li>`)
       .join('');
 
     return `
@@ -202,17 +213,17 @@
   }
 
   function renderPipPanel(state, explanation, missionsById) {
-    const summaryBullets = (explanation?.summaryBullets || []).map(item => `<li>${item}</li>`).join('');
+    const summaryBullets = (explanation?.summaryBullets || []).map(item => `<li>${escapeHtml(item)}</li>`).join('');
     const missionBlocks = (state.offerSetMissionIds || []).map(id => {
       const mission = missionsById[id];
       const role = roleLabel(state.offerSetRolesById?.[id] || 'wildcard');
       const bullets = (explanation?.perMissionBullets?.[id] || state.offerSetReasonsById?.[id] || [])
-        .map(item => `<li>${item}</li>`)
+        .map(item => `<li>${escapeHtml(item)}</li>`)
         .join('');
       return `
         <section class="card">
-          <h4>${mission?.name || id}</h4>
-          <p><strong>${role}</strong></p>
+          <h4>${escapeHtml(mission?.name || id)}</h4>
+          <p><strong>${escapeHtml(role)}</strong></p>
           <ul>${bullets}</ul>
         </section>
       `;
@@ -241,10 +252,10 @@
       <section class="card">
         <h2>Game Complete</h2>
         <p>You completed 8 cases in this run. Start a new run to get a fresh sequence of offer sets.</p>
-        <p class="end-rating">Analyst Tier: ${state.ratingBand}</p>
+        <p class="end-rating">Analyst Tier: ${escapeHtml(state.ratingBand)}</p>
         <p><strong>Final BII:</strong> ${state.BII}</p>
         <p><strong>Variance:</strong> ${state.variance}</p>
-        <p><strong>Narrative Summary:</strong> ${state.finalNarrative}</p>
+        <p><strong>Narrative Summary:</strong> ${escapeHtml(state.finalNarrative)}</p>
         <ul>${totals}</ul>
         <button id="btnBackMap" class="btn secondary">Review Map</button>
       </section>
@@ -264,11 +275,11 @@
       </div>
       <hr />
       <p><strong>Balanced Impact Index (BII):</strong> ${state.BII}</p>
-      <p><strong>Rating Band:</strong> ${state.ratingBand}</p>
+      <p><strong>Rating Band:</strong> ${escapeHtml(state.ratingBand)}</p>
       <p><strong>Min Category:</strong> ${state.minCategory}</p>
       <p><strong>Variance:</strong> ${state.variance}</p>
       <p><strong>Top Gate Passed:</strong> ${state.topGatePassed ? 'Yes' : 'No'}</p>
-      ${state.topGatePassed ? '' : `<p><strong>Top Analyst Lock:</strong> ${state.topGateLockReason}</p>`}
+      ${state.topGatePassed ? '' : `<p><strong>Top Analyst Lock:</strong> ${escapeHtml(state.topGateLockReason)}</p>`}
       <p><strong>Poor Streak:</strong> ${state.poorStreak}</p>
       <p><strong>Decisions Made:</strong> ${state.decisionCount}</p>
       <p><strong>Total Impact Spent:</strong> ${state.impactPointsSpent}</p>
@@ -282,6 +293,7 @@
     renderFeedback,
     renderPipPanel,
     renderGameComplete,
-    renderDashboard
+    renderDashboard,
+    escapeHtml
   };
 })();
