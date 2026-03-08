@@ -31,7 +31,13 @@
           "Pedestrian dwell time rose 24% near two choke points.",
           "Ride-share dwell violations increased at sunset.",
           "Resident complaints cite blocked sidewalks."
-        ]
+        ],
+        "visualEvidence": {
+          "type": "chart",
+          "imagePath": "assets/images/missions/riverwalk-mobility-surge.svg",
+          "caption": "Pedestrian chokepoints cluster around two curb segments during sunset arrivals.",
+          "sourceLabel": "Source: Tampa Mobility Ops Dashboard (Weekend Snapshot)"
+        }
       },
       "options": [
         {
@@ -113,7 +119,13 @@
           "Night permits rose 21% YoY.",
           "Heritage venues report lower weekend bookings.",
           "Resident association requested a noise mitigation plan."
-        ]
+        ],
+        "visualEvidence": {
+          "type": "image",
+          "imagePath": "assets/images/missions/ybor-nightlife-balance.svg",
+          "caption": "Nighttime permit growth is outpacing heritage venue utilization on Fridays.",
+          "sourceLabel": "Source: Ybor Cultural Affairs + Permit Office"
+        }
       },
       "options": [
         {
@@ -195,7 +207,13 @@
           "Average queue time increased by 14 minutes.",
           "Diesel shuttle share is still 68%.",
           "Repeat guests cite \u201csame experience, higher stress.\u201d"
-        ]
+        ],
+        "visualEvidence": {
+          "type": "chart",
+          "imagePath": "assets/images/missions/busch-queue-emissions.svg",
+          "caption": "Queue-time and diesel-share indicators rise together during peak afternoon blocks.",
+          "sourceLabel": "Source: Park Operations Telemetry"
+        }
       },
       "options": [
         {
@@ -277,7 +295,13 @@
           "Two ships overlap on 14 days next month.",
           "Coach idle times exceed target by 19%.",
           "Neighborhood board requested quieter rerouting."
-        ]
+        ],
+        "visualEvidence": {
+          "type": "image",
+          "imagePath": "assets/images/missions/port-cruise-dispersal.svg",
+          "caption": "Overlapping disembarkation windows create localized curb and coach idling pressure.",
+          "sourceLabel": "Source: Port Tampa Mobility Coordination Unit"
+        }
       },
       "options": [
         {

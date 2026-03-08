@@ -289,6 +289,31 @@
     const points = (mission.exploration.bullets || mission.exploration.dataPoints || [])
       .map(point => `<li>${escapeHtml(point)}</li>`)
       .join('');
+    const visualEvidence = mission.exploration?.visualEvidence;
+    const evidenceType = escapeHtml(visualEvidence?.type || 'image');
+    const evidenceMedia = visualEvidence?.imagePath
+      ? `
+        <div class="evidence-media-wrap">
+          <img
+            class="evidence-media"
+            src="${escapeHtml(visualEvidence.imagePath)}"
+            alt="${escapeHtml(visualEvidence.caption || 'Mission evidence panel')}"
+            loading="lazy"
+            onerror="this.closest('.evidence-media-wrap')?.remove()"
+          >
+          <span class="evidence-type-badge">${evidenceType}</span>
+        </div>
+      `
+      : '';
+    const evidenceCard = visualEvidence
+      ? `
+        <article class="evidence-card" aria-label="Mission evidence ${evidenceType}">
+          ${evidenceMedia}
+          ${visualEvidence.caption ? `<p class="small evidence-caption">${escapeHtml(visualEvidence.caption)}</p>` : ''}
+          ${visualEvidence.sourceLabel ? `<p class="small evidence-source">${escapeHtml(visualEvidence.sourceLabel)}</p>` : ''}
+        </article>
+      `
+      : '';
     const media = getExplorationMedia(mission);
     const fallbackLabel = escapeHtml(mission.exploration.mediaLabel || 'Mission visual / source evidence panel');
     const mediaPanel = media
@@ -316,6 +341,7 @@
             <h3>Current Situation</h3>
             <p>${escapeHtml(mission.exploration.brief)}</p>
             <ul>${points}</ul>
+            ${evidenceCard}
           </div>
           ${mediaPanel}
         </div>
