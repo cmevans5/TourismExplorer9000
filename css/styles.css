@@ -440,16 +440,22 @@ h4 {
   align-items: center;
   align-self: flex-start;
   margin-top: -0.1rem;
-  border: 1px solid rgba(179, 211, 235, 0.36);
-  background: rgba(22, 53, 74, 0.6);
-  color: var(--text-muted);
+  border: 1px solid rgba(169, 200, 224, 0.3);
+  background: rgba(19, 46, 64, 0.52);
+  color: #d0deea;
   border-radius: 999px;
   padding: 0.14rem 0.55rem;
   font-size: 0.7rem;
   letter-spacing: 0.01em;
 }
 
-.projected-balance-risk.risk-moderate {
+.projected-balance-risk.risk-low {
+  border-color: rgba(169, 200, 224, 0.3);
+  background: rgba(19, 46, 64, 0.52);
+  color: #d0deea;
+}
+
+.projected-balance-risk.risk-medium {
   color: #f2e3bb;
   border-color: rgba(255, 203, 108, 0.46);
   background: rgba(96, 73, 27, 0.3);
