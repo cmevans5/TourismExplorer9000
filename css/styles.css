@@ -189,27 +189,28 @@ h4 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 1.9rem;
-  padding: 0.04rem 0.36rem;
+  min-width: 1.75rem;
+  padding: 0.02rem 0.34rem;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.46);
-  font-size: 0.68rem;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  font-size: 0.65rem;
   line-height: 1.15;
   font-weight: 800;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.015em;
   text-shadow: none;
+  box-shadow: 0 1px 3px rgba(1, 10, 18, 0.45);
 }
 
 .token-delta-badge.plus {
-  color: #032110;
-  background: #8dffc4;
-  border-color: #c9ffe4;
+  color: #041e0f;
+  background: #73f5b1;
+  border-color: #d4ffe7;
 }
 
 .token-delta-badge.minus {
-  color: #2b0202;
-  background: #ffadad;
-  border-color: #ffd6d6;
+  color: #2d0505;
+  background: #ff9f9f;
+  border-color: #ffdcdc;
 }
 
 .composite-score {
