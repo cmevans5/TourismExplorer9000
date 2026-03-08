@@ -72,7 +72,10 @@ Run:
 ```bash
 node docs/qa/offer-set-audit.mjs
 node docs/qa/anti-cheese-learning-audit.mjs
+node docs/qa/mission-copy-audit.mjs
 ```
+
+`mission-copy-audit.mjs` checks map district label collisions, option title prefix artifacts, and long strings that risk key-card overflow. It currently reports warnings only; switch to `--strict` mode once the baseline is clean.
 
 The anti-cheese + learning audit verifies:
 - offer set size is always 4

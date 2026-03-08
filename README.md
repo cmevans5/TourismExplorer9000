@@ -82,4 +82,7 @@ node --check js/app.js js/adaptation.js js/ui.js js/state.js js/scoring.js js/mi
 node docs/qa/offer-set-audit.mjs
 node docs/qa/anti-cheese-learning-audit.mjs
 node docs/qa/prereq-audit.mjs
+node docs/qa/mission-copy-audit.mjs
 ```
+
+`mission-copy-audit.mjs` is intentionally non-blocking for baseline cleanup; run `node docs/qa/mission-copy-audit.mjs --strict` to fail on warnings once content is clean.
