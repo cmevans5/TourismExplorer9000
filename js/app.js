@@ -401,7 +401,9 @@
         mission: mission.name,
         selectedOption: option.title,
         deltas: { ...deltas },
+        impactCost: optionCost,
         cost: optionCost,
+        shortOutcome: feedbackOutcome,
         feedbackOutcome
       });
       trackPatternGamingNudge(displayLabel);

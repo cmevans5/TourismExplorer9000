@@ -175,7 +175,7 @@
       const selectedOption = stripOptionKeyPrefix(item.selectedOption || item.optionTitle || 'Unknown option');
       const missionName = item.mission || item.missionName || 'Mission';
       const impactCost = item.cost ?? item.impactCost ?? 0;
-      const feedbackText = item.feedbackOutcome || item.feedbackText || item.feedbackNote || '';
+      const feedbackText = item.shortOutcome || item.feedbackOutcome || item.feedbackText || item.feedbackNote || '';
       const feedback = feedbackText ? `<p class="small report-timeline-feedback"><strong>Outcome:</strong> ${escapeHtml(feedbackText)}</p>` : '';
       return `
         <article class="report-timeline-row">

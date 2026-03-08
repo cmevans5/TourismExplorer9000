@@ -834,6 +834,22 @@ a:focus-visible {
   margin: 0.2rem 0;
 }
 
+.report-timeline-row:focus-within,
+.report-timeline-row:hover {
+  background: rgba(20, 55, 85, 0.7);
+}
+
+.report-timeline-row strong {
+  color: #f2fbff;
+}
+
+.report-timeline-row p,
+.report-timeline-impact,
+.report-timeline-feedback {
+  overflow-wrap: anywhere;
+}
+
+
 @keyframes choiceFade {
   from { opacity: 0.2; transform: translateY(4px); }
   to { opacity: 1; transform: translateY(0); }
@@ -985,6 +1001,7 @@ a:focus-visible {
     color: #000;
     break-inside: avoid;
     page-break-inside: avoid;
+    padding: 0.75rem 0.85rem 0.75rem 1rem;
   }
 
   .report-timeline-row::before {
