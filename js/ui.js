@@ -88,12 +88,14 @@
     }
 
     const rows = decisionHistory.map((item, idx) => {
-      const feedback = item.feedbackNote ? `<p class="small"><strong>Note:</strong> ${escapeHtml(item.feedbackNote)}</p>` : '';
+      const selectedOption = stripOptionKeyPrefix(item.selectedOption || item.optionTitle || 'Unknown option');
+      const feedbackText = item.feedbackText || item.feedbackNote || '';
+      const feedback = feedbackText ? `<p class="small report-timeline-feedback"><strong>Note:</strong> ${escapeHtml(feedbackText)}</p>` : '';
       return `
         <article class="report-timeline-row">
-          <p class="small">Decision ${idx + 1}</p>
-          <p><strong>${escapeHtml(item.mission || 'Mission')}</strong></p>
-          <p>Choice: ${escapeHtml(stripOptionKeyPrefix(item.optionTitle || 'Unknown option'))}</p>
+          <p class="small report-timeline-step">Decision ${idx + 1}</p>
+          <p><strong>${escapeHtml(item.mission || item.missionName || 'Mission')}</strong></p>
+          <p>Choice: ${escapeHtml(selectedOption)}</p>
           <p>Impact Cost: <strong>${escapeHtml(item.impactCost ?? '0')}</strong></p>
           <p class="small">Primary impacts: ${escapeHtml(formatImpactSummary(item.deltas))}</p>
           ${feedback}
@@ -450,7 +452,7 @@
         <p><strong>Narrative Summary:</strong> ${escapeHtml(state.finalNarrative)}</p>
         <h3>Final Badge Distribution</h3>
         <ul>${totals}</ul>
-        <h3>Decision History</h3>
+        <h3>Decision Timeline</h3>
         ${renderDecisionHistory(state.decisionHistory)}
         <h3>Debrief</h3>
         <p>Use this report to reflect on category trade-offs, then replay to test an alternative balancing strategy.</p>

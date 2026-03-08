@@ -373,9 +373,12 @@
       draft.decisionHistory = draft.decisionHistory || [];
       draft.decisionHistory.push({
         mission: mission.name,
+        missionName: mission.name,
+        selectedOption: option.title,
         optionTitle: option.title,
         impactCost: optionCost,
         deltas,
+        feedbackText: option.feedback || '',
         feedbackNote: option.feedback || ''
       });
       trackPatternGamingNudge(displayLabel);
