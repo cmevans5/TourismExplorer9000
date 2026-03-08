@@ -99,6 +99,11 @@
     }
   };
 
+  const DEFAULT_IMAGE_DIMENSIONS = {
+    width: 640,
+    height: 360
+  };
+
   function toResponsiveImageAttrs(media = {}, sizeHint) {
     const srcset = typeof media.srcset === 'string' ? media.srcset.trim() : '';
     const sizes = typeof sizeHint === 'string' && sizeHint.trim() ? sizeHint.trim() : '';
@@ -112,7 +117,19 @@
     const candidate = typeof rawAlt === 'string' ? rawAlt.trim() : '';
     if (candidate) return candidate;
     const fallback = typeof fallbackAlt === 'string' ? fallbackAlt.trim() : '';
-    return fallback || 'Mission image';
+    return fallback || 'Illustrative tourism scenario image.';
+  }
+
+  function toImageDimensionAttrs(media = {}, fallback = DEFAULT_IMAGE_DIMENSIONS) {
+    const candidateWidth = Number(media.width);
+    const candidateHeight = Number(media.height);
+    const width = Number.isFinite(candidateWidth) && candidateWidth > 0
+      ? Math.round(candidateWidth)
+      : fallback.width;
+    const height = Number.isFinite(candidateHeight) && candidateHeight > 0
+      ? Math.round(candidateHeight)
+      : fallback.height;
+    return ` width="${width}" height="${height}"`;
   }
 
   function escapeHtml(value) {
@@ -232,6 +249,7 @@
       const districtLabel = escapeHtml(DISTRICT_LABELS[districtKey]);
       const missionMedia = MISSION_MEDIA[mission.id] || DISTRICT_MEDIA[districtKey] || null;
       const thumbnailAttrs = toResponsiveImageAttrs(missionMedia, '(max-width: 960px) 100vw, 280px');
+      const thumbnailDimensions = toImageDimensionAttrs(missionMedia);
       const thumbnail = missionMedia
         ? `
           <div class="hotspot-thumbnail" aria-hidden="true">
@@ -241,6 +259,8 @@
               ${thumbnailAttrs.sizes}
               alt=""
               loading="lazy"
+              decoding="async"
+              ${thumbnailDimensions}
               onerror="this.closest('.hotspot-thumbnail')?.remove()"
             >
           </div>
@@ -322,6 +342,7 @@
     const visualEvidence = mission.exploration?.visualEvidence;
     const evidenceType = escapeHtml(visualEvidence?.type || 'image');
     const evidenceAttrs = toResponsiveImageAttrs(visualEvidence, '(max-width: 960px) 100vw, 360px');
+    const evidenceDimensions = toImageDimensionAttrs(visualEvidence);
     const evidenceAlt = getMeaningfulAltText(visualEvidence?.alt, visualEvidence?.caption || mission.name);
     const evidenceMedia = visualEvidence?.imagePath
       ? `
@@ -333,6 +354,8 @@
             ${evidenceAttrs.sizes}
             alt="${escapeHtml(evidenceAlt)}"
             loading="lazy"
+            decoding="async"
+            ${evidenceDimensions}
             onerror="this.closest('.evidence-media-wrap')?.remove()"
           >
           <span class="evidence-type-badge">${evidenceType}</span>
@@ -355,6 +378,7 @@
       srcset: mission.exploration?.srcset || ''
     };
     const missionMediaAttrs = toResponsiveImageAttrs(missionMedia, '(max-width: 960px) 100vw, 480px');
+    const missionMediaDimensions = toImageDimensionAttrs(mission.exploration || {});
     const missionAlt = getMeaningfulAltText(mission.exploration?.alt, `${mission.name} mission visual`);
     const missionCaption = mission.exploration?.caption || mission.exploration?.mediaLabel || 'Mission visual evidence';
     const missionSource = mission.exploration?.source;
@@ -367,6 +391,8 @@
             ${missionMediaAttrs.sizes}
             alt="${escapeHtml(missionAlt)}"
             loading="lazy"
+            decoding="async"
+            ${missionMediaDimensions}
             onerror="this.closest('figure').outerHTML='&lt;div class=&quot;media-placeholder&quot; aria-label=&quot;Placeholder media panel&quot;&gt;${fallbackLabel}&lt;/div&gt;'"
           >
           <figcaption>

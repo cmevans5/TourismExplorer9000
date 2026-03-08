@@ -906,6 +906,10 @@ a:focus-visible {
     scroll-behavior: auto !important;
   }
 
+  .btn {
+    transition: filter 120ms ease, box-shadow 120ms ease;
+  }
+
   .btn:hover,
   .btn:focus-visible {
     transform: none;
@@ -914,12 +918,22 @@ a:focus-visible {
 
   .btn.choice {
     animation: none;
+    transition: background-color 120ms ease, box-shadow 120ms ease;
   }
 
-  .map-hotspot,
+  .btn.choice:hover,
+  .btn.choice:focus-visible {
+    box-shadow: 0 0 0 1px rgba(84, 216, 245, 0.24);
+  }
+
+  .map-hotspot {
+    transform: translateY(calc(var(--stack-index, 0) * 8px));
+    transition: border-color 120ms ease, box-shadow 120ms ease;
+  }
+
   .map-hotspot:hover,
-  .map-hotspot.highlighted {
-    transition: none;
+  .map-hotspot.highlighted,
+  .map-hotspot:focus-within {
     box-shadow: var(--shadow-soft);
   }
 }
