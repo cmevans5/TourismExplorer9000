@@ -34,6 +34,13 @@
     satisfaction: 'Visitor Satisfaction'
   };
   const PRESENTATION_LABEL_REPEAT_THRESHOLD = 3;
+  const DISTRICT_STORYBOARD_ORDER = [
+    'downtown-waterfront',
+    'cultural-corridor',
+    'historic-ybor',
+    'eco-park',
+    'beachfront-zone'
+  ];
 
   let state = loadState();
   let missions = [];
@@ -230,6 +237,33 @@
     if (!(state.offerSetMissionIds || []).includes(hotspotId)) return;
     commit(draft => {
       draft.selectedHotspotId = hotspotId;
+    });
+  }
+
+  function getStoryboardOrderedHotspotIds() {
+    const markers = Array.from(mainEl.querySelectorAll('[data-hotspot-id][data-district-key]'));
+    if (!markers.length) return [];
+
+    markers.sort((left, right) => {
+      const leftDistrict = left.getAttribute('data-district-key') || '';
+      const rightDistrict = right.getAttribute('data-district-key') || '';
+      const leftIndex = DISTRICT_STORYBOARD_ORDER.indexOf(leftDistrict);
+      const rightIndex = DISTRICT_STORYBOARD_ORDER.indexOf(rightDistrict);
+      return leftIndex - rightIndex;
+    });
+
+    return markers.map(marker => marker.getAttribute('data-hotspot-id')).filter(Boolean);
+  }
+
+  function moveHotspotSelectionByArrow(currentHotspotId, direction) {
+    const orderedHotspotIds = getStoryboardOrderedHotspotIds();
+    if (!orderedHotspotIds.length) return;
+    const currentIndex = Math.max(orderedHotspotIds.indexOf(currentHotspotId), 0);
+    const nextIndex = (currentIndex + direction + orderedHotspotIds.length) % orderedHotspotIds.length;
+    selectHotspot(orderedHotspotIds[nextIndex]);
+    requestAnimationFrame(() => {
+      const nextButton = mainEl.querySelector(`[data-hotspot-id="${orderedHotspotIds[nextIndex]}"]`);
+      if (nextButton) nextButton.focus();
     });
   }
 
@@ -504,6 +538,28 @@
       if (target.matches('[data-option-id]')) return applyDecision(target.getAttribute('data-option-id'));
       if (target.matches('#btnReturnMap')) return handleReturnToMap();
       if (target.matches('#btnBackMap')) return navigate('map');
+    });
+
+    mainEl.addEventListener('keydown', event => {
+      const target = event.target.closest('[data-hotspot-id]');
+      if (!target) return;
+      const hotspotId = target.getAttribute('data-hotspot-id');
+      if (!hotspotId) return;
+
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        return selectHotspot(hotspotId);
+      }
+
+      if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+        event.preventDefault();
+        return moveHotspotSelectionByArrow(hotspotId, 1);
+      }
+
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+        event.preventDefault();
+        return moveHotspotSelectionByArrow(hotspotId, -1);
+      }
     });
   }
 
