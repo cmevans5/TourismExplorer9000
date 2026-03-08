@@ -403,11 +403,13 @@
             </ul>
           </aside>
         </div>
-        <p class="map-selection-helper">Select a district marker to load mission details.</p>
-        <section class="console-shell city-map-board" aria-label="Tampa map hotspots" role="group">
-          ${missionMarkers}
-          ${districtOverflowChips}
-        </section>
+        <div class="map-board-stack">
+          <p class="map-selection-helper">Select a district marker to load mission details.</p>
+          <section class="console-shell city-map-board" aria-label="Tampa map hotspots" role="group">
+            ${missionMarkers}
+            ${districtOverflowChips}
+          </section>
+        </div>
         ${missionDetailPanel}
       </section>
     `;
