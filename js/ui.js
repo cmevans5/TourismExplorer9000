@@ -183,7 +183,7 @@
           ${districtLegendItems}
         </ul>
       </section>
-      <section class="console-shell city-map-board" aria-label="Tampa map hotspots">
+      <section class="console-shell city-map-board" aria-label="Tampa map hotspots" role="group">
         ${missionCards}
       </section>
     `;
@@ -259,7 +259,7 @@
         const projectedCategories = computeProjectedCategories(state.categories, opt.deltas);
         const projectedRisk = computeProjectedBalanceRiskLabel(projectedCategories);
         return `
-          <button class="btn choice ${afford ? '' : 'blocked'}" data-option-id="${escapeHtml(opt.displayLabel)}" aria-label="Select option ${escapeHtml(opt.displayLabel)}" ${afford ? '' : 'disabled'}>
+          <button class="btn choice ${afford ? '' : 'blocked'}" data-option-id="${escapeHtml(opt.displayLabel)}" aria-label="Select option ${escapeHtml(opt.displayLabel)}: ${escapeHtml(displayTitle)}" ${afford ? '' : 'disabled'}>
             <span class="choice-head">
               <strong>${escapeHtml(opt.displayLabel)}) ${escapeHtml(displayTitle)}</strong>
               <span class="choice-cost">Cost ${optionCost}</span>
@@ -280,7 +280,7 @@
         ${renderRunProgress(state, runConfig.RUN_LENGTH)}
         <p>Choose one strategy. Each option improves some categories while creating trade-offs.</p>
         <p><strong>Impact Points Remaining:</strong> ${state.impactPointsRemaining}</p>
-        <div class="grid decision-grid">${optionButtons}</div>
+        <div class="grid decision-grid" role="group" aria-label="Decision options">${optionButtons}</div>
       </section>
       <section id="feedbackContainer"></section>
     `;
