@@ -52,26 +52,36 @@
     'downtown-waterfront': {
       src: 'assets/images/districts/downtown-waterfront.svg',
       srcset: 'assets/images/districts/downtown-waterfront.svg 1x',
+      width: 1280,
+      height: 720,
       alt: 'Riverwalk redevelopment zone with mixed-use pedestrian corridor and coordinated curb management.'
     },
     'cultural-corridor': {
       src: 'assets/images/districts/cultural-corridor.svg',
       srcset: 'assets/images/districts/cultural-corridor.svg 1x',
+      width: 1280,
+      height: 720,
       alt: 'Airport cultural corridor showing multilingual wayfinding, transit links, and visitor service touchpoints.'
     },
     'historic-ybor': {
       src: 'assets/images/districts/historic-ybor.svg',
       srcset: 'assets/images/districts/historic-ybor.svg 1x',
+      width: 1280,
+      height: 720,
       alt: 'Historic Ybor entertainment district balancing nightlife activity with heritage storefront preservation.'
     },
     'eco-park': {
       src: 'assets/images/districts/eco-park.svg',
       srcset: 'assets/images/districts/eco-park.svg 1x',
+      width: 1280,
+      height: 720,
       alt: 'Eco-park mobility loop with shaded paths, low-emission shuttles, and community recreation access.'
     },
     'beachfront-zone': {
       src: 'assets/images/districts/beachfront-zone.svg',
       srcset: 'assets/images/districts/beachfront-zone.svg 1x',
+      width: 1280,
+      height: 720,
       alt: 'Beachfront district transit transfer node linking cruise arrivals to waterfront retail and public access.'
     }
   };
@@ -80,21 +90,29 @@
     'riverwalk-mobility-surge': {
       src: 'assets/images/missions/riverwalk-mobility-surge.svg',
       srcset: 'assets/images/missions/riverwalk-mobility-surge.svg 1x',
+      width: 1280,
+      height: 720,
       alt: 'Riverwalk intersection showing pedestrian crowding, curb conflicts, and temporary circulation controls.'
     },
     'ybor-nightlife-balance': {
       src: 'assets/images/missions/ybor-nightlife-balance.svg',
       srcset: 'assets/images/missions/ybor-nightlife-balance.svg 1x',
+      width: 1280,
+      height: 720,
       alt: 'Ybor nightlife corridor with heritage venues, noise mitigation zones, and permit-management checkpoints.'
     },
     'busch-queue-emissions': {
       src: 'assets/images/missions/busch-queue-emissions.svg',
       srcset: 'assets/images/missions/busch-queue-emissions.svg 1x',
+      width: 1280,
+      height: 720,
       alt: 'Theme-park queue network with shuttle electrification staging and wait-time pressure points.'
     },
     'port-cruise-dispersal': {
       src: 'assets/images/missions/port-cruise-dispersal.svg',
       srcset: 'assets/images/missions/port-cruise-dispersal.svg 1x',
+      width: 1280,
+      height: 720,
       alt: 'Cruise terminal exit plan illustrating staggered coach routing and neighborhood-sensitive dispersal paths.'
     }
   };
@@ -130,6 +148,10 @@
       ? Math.round(candidateHeight)
       : fallback.height;
     return ` width="${width}" height="${height}"`;
+  }
+
+  function nonCriticalImageAttrs() {
+    return ' loading="lazy" decoding="async" fetchpriority="low"';
   }
 
   function escapeHtml(value) {
@@ -265,8 +287,7 @@
               ${thumbnailAttrs.srcset}
               ${thumbnailAttrs.sizes}
               alt=""
-              loading="lazy"
-              decoding="async"
+              ${nonCriticalImageAttrs()}
               ${thumbnailDimensions}
               onerror="this.closest('.hotspot-thumbnail')?.remove()"
             >
@@ -372,8 +393,7 @@
               ${evidenceAttrs.srcset}
               ${evidenceAttrs.sizes}
               alt="${escapeHtml(evidenceAlt)}"
-              loading="lazy"
-              decoding="async"
+              ${nonCriticalImageAttrs()}
               ${evidenceDimensions}
               onerror="this.closest('.evidence-card').outerHTML='&lt;div class=&quot;media-placeholder evidence-placeholder&quot; aria-label=&quot;Placeholder media panel&quot;&gt;${fallbackLabel}&lt;/div&gt;'"
             >
