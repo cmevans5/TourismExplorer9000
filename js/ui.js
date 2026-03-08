@@ -122,6 +122,38 @@
     height: 360
   };
 
+  const PEDAGOGY_TAG_LABELS = {
+    remediation: 'Recovery planning',
+    'variance-control': 'Systems balancing',
+    mobility: 'Mobility planning',
+    variety: 'Portfolio variety',
+    culture: 'Cultural stewardship',
+    'consequence-followup': 'Consequence tracking',
+    equity: 'Equity lens',
+    'high-impact': 'High-impact choices',
+    hospitality: 'Service design',
+    pricing: 'Pricing strategy',
+    safety: 'Safety readiness',
+    'same-hub': 'Hub continuity',
+    satisfaction: 'Visitor satisfaction',
+    'visitor-satisfaction': 'Visitor satisfaction',
+    sustainability: 'Sustainability practice'
+  };
+
+  const REINFORCE_LABELS = {
+    economic: 'Economic Capital',
+    sustainability: 'Sustainability',
+    culture: 'Cultural Inclusion',
+    hospitality: 'Hospitality',
+    satisfaction: 'Visitor Satisfaction'
+  };
+
+  const MASTERY_DIMENSIONS = {
+    equity: ['equity', 'culture', 'variety', 'hospitality', 'satisfaction', 'visitor-satisfaction'],
+    resilience: ['sustainability', 'safety', 'remediation', 'mobility', 'consequence-followup'],
+    'systems-balancing': ['variance-control', 'high-impact', 'pricing', 'same-hub', 'remediation']
+  };
+
   function getFallbackDistrictArt(districtKey) {
     return DISTRICT_MEDIA[districtKey] || null;
   }
@@ -242,6 +274,67 @@
 
   function roleLabel(role) {
     return role ? `${role.charAt(0).toUpperCase()}${role.slice(1)}` : 'Wildcard';
+  }
+
+  function toTitleCase(value) {
+    return String(value || '')
+      .split(/[-_\s]+/)
+      .filter(Boolean)
+      .map(part => `${part.charAt(0).toUpperCase()}${part.slice(1)}`)
+      .join(' ');
+  }
+
+  function normalizePedagogyTags(pedagogy) {
+    return Array.from(new Set((pedagogy?.tags || []).map(tag => String(tag || '').trim()).filter(Boolean)));
+  }
+
+  function pedagogyTagLabel(tag) {
+    return PEDAGOGY_TAG_LABELS[tag] || toTitleCase(tag);
+  }
+
+  function reinforceLabel(reinforce) {
+    return REINFORCE_LABELS[reinforce] || toTitleCase(reinforce);
+  }
+
+  function buildLearningObjective(mission) {
+    const reinforces = (mission?.pedagogy?.reinforces || []).map(reinforceLabel).slice(0, 2);
+    const focus = reinforceLabel(mission?.issueType || 'systems balancing');
+    if (reinforces.length === 2) {
+      return `Strengthen ${reinforces[0]} and ${reinforces[1]} while managing ${focus}.`;
+    }
+    if (reinforces.length === 1) {
+      return `Strengthen ${reinforces[0]} while managing ${focus}.`;
+    }
+    return `Practice balanced decisions while managing ${focus}.`;
+  }
+
+  function renderSkillTagList(tags, variant = 'good') {
+    if (!tags.length) return '<span class="tag warn">General systems practice</span>';
+    return tags.map(tag => `<span class="tag ${variant}">${escapeHtml(pedagogyTagLabel(tag))}</span>`).join('');
+  }
+
+  function computeMasteryTracker(decisionHistory = []) {
+    const tracker = {
+      equity: 0,
+      resilience: 0,
+      'systems-balancing': 0
+    };
+
+    decisionHistory.forEach((decision) => {
+      const tags = new Set((decision?.pedagogyTags || []).map(tag => String(tag || '').trim()).filter(Boolean));
+      Object.entries(MASTERY_DIMENSIONS).forEach(([dimension, mappedTags]) => {
+        if (mappedTags.some(tag => tags.has(tag))) tracker[dimension] += 1;
+      });
+    });
+
+    return tracker;
+  }
+
+  function masteryTierLabel(score) {
+    if (score >= 4) return 'Strong';
+    if (score >= 2) return 'Building';
+    if (score >= 1) return 'Emerging';
+    return 'Not started';
   }
 
   function stripOptionKeyPrefix(text) {
@@ -626,6 +719,7 @@
       <section class="console-shell card mission-briefing">
         <h2>Mission Briefing: ${escapeHtml(mission.name)}</h2>
         ${renderRunProgress(state, runConfig.RUN_LENGTH)}
+        <p class="pedagogy-objective"><strong>Learning Objective:</strong> ${escapeHtml(buildLearningObjective(mission))}</p>
         <p><strong>Impact Points Remaining:</strong> ${state.impactPointsRemaining}</p>
         <div class="grid two">
           <div class="brief-panel">
@@ -751,11 +845,13 @@
     const deltaItems = Object.entries(feedback.deltas)
       .map(([key, value]) => `<li>${CATEGORY_LABELS[key]}: <strong>${deltaText(value)}</strong></li>`)
       .join('');
+    const skillTags = normalizePedagogyTags(feedback.pedagogy);
 
     return `
       <section class="console-shell card feedback-card" tabindex="-1">
         <h2>Outcome Feedback</h2>
         <p class="feedback-summary"><strong>Outcome in 1 sentence:</strong> ${escapeHtml(feedback.text)}</p>
+        <p class="feedback-skill-practice"><strong>Skill practiced:</strong> ${renderSkillTagList(skillTags, 'good')}</p>
         <ul class="feedback-delta-header" aria-label="Category movement summary">${categoryDeltaChips || '<li class="feedback-delta-chip neutral">No category changes</li>'}</ul>
         <details class="feedback-accordion" open>
           <summary>Why this happened</summary>
@@ -863,6 +959,22 @@
   }
 
   function renderGameComplete(state) {
+    const categoryEntries = Object.entries(state.categories);
+    const improvedCategories = categoryEntries
+      .filter(([, value]) => value > 0)
+      .sort((left, right) => right[1] - left[1])
+      .slice(0, 3)
+      .map(([key]) => CATEGORY_LABELS[key]);
+    const practiceCategories = categoryEntries
+      .sort((left, right) => left[1] - right[1])
+      .slice(0, 2)
+      .map(([key]) => CATEGORY_LABELS[key]);
+    const mastery = computeMasteryTracker(state.decisionHistory || []);
+    const weakestMastery = Object.entries(mastery)
+      .sort((left, right) => left[1] - right[1])
+      .slice(0, 2)
+      .map(([dimension]) => toTitleCase(dimension));
+
     const totals = Object.entries(state.categories)
       .map(([key, value]) => `<li>${CATEGORY_LABELS[key]}: <strong>${value}</strong></li>`)
       .join('');
@@ -880,8 +992,9 @@
         <ul>${totals}</ul>
         <h3>Decision Timeline</h3>
         ${renderDecisionHistory(state.decisionHistory)}
-        <h3>Debrief</h3>
-        <p>Use this report to reflect on category trade-offs, then replay to test an alternative balancing strategy.</p>
+        <h3>Reflection</h3>
+        <p><strong>What you improved:</strong> ${escapeHtml(improvedCategories.join(' • ') || 'No category gains yet.')}</p>
+        <p><strong>What to practice next:</strong> ${escapeHtml([...practiceCategories, ...weakestMastery].join(' • '))}</p>
         <div class="inline-actions">
           <button id="btnBackMap" class="btn secondary">Review Map</button>
           <button class="btn" onclick="window.print()">Export Report</button>
@@ -892,6 +1005,11 @@
 
   function renderDashboard(state, runConfig) {
     const cat = state.categories;
+    const mastery = computeMasteryTracker(state.decisionHistory || []);
+    const masteryItems = Object.entries(mastery)
+      .map(([dimension, score]) => `<span class="tag ${score >= 2 ? 'good' : (score >= 1 ? 'warn' : 'bad')}">${escapeHtml(toTitleCase(dimension))}: ${escapeHtml(masteryTierLabel(score))}</span>`)
+      .join('');
+
     return `
       <section class="dashboard-modal-shell">
         <p><strong>Tourism Sampling:</strong> Case ${Math.min(state.casesCompletedThisRun + 1, runConfig.RUN_LENGTH)}/${runConfig.RUN_LENGTH}</p>
@@ -912,6 +1030,9 @@
         <p><strong>Poor Streak:</strong> ${state.poorStreak}</p>
         <p><strong>Decisions Made:</strong> ${state.decisionCount}</p>
         <p><strong>Total Impact Spent:</strong> ${state.impactPointsSpent}</p>
+        <hr />
+        <p><strong>Run Mastery Tracker:</strong></p>
+        <div class="mastery-tag-row" aria-label="Run-level mastery tracker">${masteryItems}</div>
       </section>
     `;
   }
