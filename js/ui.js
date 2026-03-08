@@ -405,6 +405,82 @@
     return DISTRICT_BY_HUB[mission.hub] || 'historic-ybor';
   }
 
+  function computeMilestoneBadges(state) {
+    const history = Array.isArray(state.decisionHistory) ? state.decisionHistory : [];
+    if (!history.length) return [];
+
+    const scoringConstants = window.TE9000Scoring?.SCORING_CONSTANTS;
+    const varianceTarget = scoringConstants?.vMaxVarianceTop ?? 2;
+    const lastThree = history.slice(-3);
+    const allBalancedInWindow = lastThree.length >= 3 && lastThree.every((entry) => {
+      const deltas = Object.values(entry?.deltas || {});
+      const positives = deltas.filter(value => value > 0).length;
+      const negatives = deltas.filter(value => value < 0).length;
+      const net = deltas.reduce((sum, value) => sum + value, 0);
+      return positives >= 2 && negatives <= 2 && net >= 0;
+    });
+
+    const hadEarlierDeficit = history.slice(0, -1).some((entry) => {
+      const values = Object.values(entry?.deltas || {});
+      return values.some(value => value < 0);
+    });
+
+    const latestDeltas = state.lastDecisionDeltas || {};
+    const strongestLift = Object.entries(latestDeltas)
+      .filter(([, value]) => typeof value === 'number' && value > 0)
+      .sort((left, right) => right[1] - left[1])[0]?.[0];
+    const recentNet = Object.values(latestDeltas).reduce((sum, value) => sum + (Number(value) || 0), 0);
+    const previousNet = Object.values(history[history.length - 2]?.deltas || {}).reduce((sum, value) => sum + (Number(value) || 0), 0);
+
+    const badges = [];
+    if (allBalancedInWindow && state.variance <= varianceTarget + 1) {
+      badges.push({ label: 'Balanced Run', tone: 'good', detail: '3 stable decisions in a row.' });
+    }
+    if (hadEarlierDeficit && state.minCategory >= 0 && (latestDeltas.culture > 0 || latestDeltas.satisfaction > 0)) {
+      badges.push({ label: 'Equity Recovery', tone: 'warn', detail: `${toCategoryLabel(strongestLift || 'culture')} rebounded.` });
+    }
+    if (history.length >= 2 && previousNet < 0 && recentNet > 0 && (latestDeltas.sustainability > 0 || latestDeltas.hospitality > 0)) {
+      badges.push({ label: 'Resilience Save', tone: 'good', detail: 'Recovered immediately after a setback.' });
+    }
+    return badges.slice(0, 3);
+  }
+
+  function buildFlavorLine(feedback, state) {
+    const pools = {
+      recovery: [
+        'Field teams adjusted quickly, and pressure dropped across the district.',
+        'That response stabilized operations faster than expected.',
+        'You absorbed the shock and restored control in one move.'
+      ],
+      momentum: [
+        'Momentum is building—keep reinforcing weak categories while gains hold.',
+        'Visitors are feeling the improvement; now protect system balance.',
+        'A clean operational win. Keep the next move measured.'
+      ],
+      caution: [
+        'Short-term relief came with longer-term pressure to monitor.',
+        'The mission landed, but uneven effects are now visible.',
+        'Useful gains, though one side of the system is stretching thin.'
+      ],
+      setback: [
+        'The city can recover, but the next mission should be corrective.',
+        'This outcome exposed fragility—target your lowest category next.',
+        'Signals are mixed; prioritize stabilization before expansion.'
+      ]
+    };
+
+    const recentNet = Object.values(feedback?.deltas || {}).reduce((sum, value) => sum + (Number(value) || 0), 0);
+    const previousNet = Object.values((state.decisionHistory || []).slice(-2)[0]?.deltas || {}).reduce((sum, value) => sum + (Number(value) || 0), 0);
+    let key = 'caution';
+    if (feedback?.poorOutcome) key = 'setback';
+    else if (previousNet < 0 && recentNet > 0) key = 'recovery';
+    else if (recentNet >= 2) key = 'momentum';
+
+    const bucket = pools[key];
+    const index = Math.abs((state.decisionCount || 0) + Math.round(state.BII || 0)) % bucket.length;
+    return bucket[index];
+  }
+
 
   function renderTokenDashboard(state) {
     const decisionDeltas = state.lastDecisionDeltas || null;
@@ -415,8 +491,13 @@
       const deltaClass = value > 0 ? 'plus' : 'minus';
       const deltaLabel = value > 0 ? `+${value}` : `${value}`;
       const semanticClass = value > 0 ? 'good' : 'bad';
-      return `<span class="token-delta-chip ${deltaClass} ${semanticClass}" aria-label="Recent token change ${escapeHtml(deltaLabel)}">${escapeHtml(deltaLabel)}</span>`;
+      return `<span class="token-delta-chip token-delta-pulse ${deltaClass} ${semanticClass}" aria-label="Recent token change ${escapeHtml(deltaLabel)}">${escapeHtml(deltaLabel)}</span>`;
     }
+
+    const milestoneBadges = computeMilestoneBadges(state);
+    const milestoneStrip = milestoneBadges.length
+      ? `<div class="milestone-badge-row" aria-label="Run milestones">${milestoneBadges.map((badge) => `<span class="tag ${badge.tone} milestone-badge" title="${escapeHtml(badge.detail)}">${escapeHtml(badge.label)}</span>`).join('')}</div>`
+      : '';
 
     const tokenItems = Object.entries(state.categories)
       .map(([key, value]) => `
@@ -444,6 +525,7 @@
           <span>Tourism Composite Score (BII)</span>
           <strong>${state.BII}</strong>
           <small>${escapeHtml(state.ratingBand)}</small>
+          ${milestoneStrip}
         </div>
         ${latestOutcomeStrip}
       </section>
@@ -603,6 +685,7 @@
       `;
 
     return `
+      <div class="scene-transition scene-map">
       ${renderTokenDashboard(state)}
       <section class="map-stage">
         <div class="map-overview-stack map-zone-status" aria-label="Run status">
@@ -642,6 +725,7 @@
           ${missionDetailPanel}
         </div>
       </section>
+      </div>
     `;
   }
 
@@ -715,6 +799,7 @@
       : `<div class="media-placeholder" aria-label="Placeholder media panel">${fallbackLabel}</div>`;
 
     return `
+      <div class="scene-transition scene-briefing">
       ${renderTokenDashboard(state)}
       <section class="console-shell card mission-briefing">
         <h2>Mission Briefing: ${escapeHtml(mission.name)}</h2>
@@ -732,6 +817,7 @@
         </div>
         <button id="btnToDecision" class="btn">Proceed to Decision</button>
       </section>
+      </div>
     `;
   }
 
@@ -814,6 +900,7 @@
       .join('');
 
     return `
+      <div class="scene-transition scene-decision">
       ${renderTokenDashboard(state)}
       <section class="console-shell card decision-card">
         <h2>Decision Point</h2>
@@ -823,6 +910,7 @@
         <div class="grid decision-grid" role="group" aria-label="Decision options">${optionButtons}</div>
       </section>
       <section id="feedbackContainer"></section>
+      </div>
     `;
   }
 
@@ -848,9 +936,10 @@
     const skillTags = normalizePedagogyTags(feedback.pedagogy);
 
     return `
-      <section class="console-shell card feedback-card" tabindex="-1">
+      <section class="console-shell card feedback-card scene-transition scene-feedback" tabindex="-1">
         <h2>Outcome Feedback</h2>
         <p class="feedback-summary"><strong>Outcome in 1 sentence:</strong> ${escapeHtml(feedback.text)}</p>
+        <p class="small feedback-flavor" aria-live="polite">${escapeHtml(buildFlavorLine(feedback, state))}</p>
         <p class="feedback-skill-practice"><strong>Skill practiced:</strong> ${renderSkillTagList(skillTags, 'good')}</p>
         <ul class="feedback-delta-header" aria-label="Category movement summary">${categoryDeltaChips || '<li class="feedback-delta-chip neutral">No category changes</li>'}</ul>
         <details class="feedback-accordion" open>
