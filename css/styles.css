@@ -419,19 +419,27 @@ h4 {
   margin: 0.45rem 0 0.7rem;
 }
 
-.district-downtown-waterfront { --district-anchor-x: 6%; --district-anchor-y: 7%; }
-.district-cultural-corridor { --district-anchor-x: 71%; --district-anchor-y: 8%; }
+.district-downtown-waterfront { --district-anchor-x: 9%; --district-anchor-y: 11%; }
+.district-cultural-corridor { --district-anchor-x: 66%; --district-anchor-y: 11%; }
 .district-historic-ybor { --district-anchor-x: 37%; --district-anchor-y: 34%; }
 .district-eco-park { --district-anchor-x: 9%; --district-anchor-y: 78%; }
 .district-beachfront-zone { --district-anchor-x: 70%; --district-anchor-y: 78%; }
 
-.district-downtown-waterfront-slot-1,
-.district-cultural-corridor-slot-1,
 .district-historic-ybor-slot-1,
 .district-eco-park-slot-1,
 .district-beachfront-zone-slot-1 {
   --district-offset-x: 1rem;
   --district-offset-y: 1.05rem;
+}
+
+.district-downtown-waterfront-slot-1 {
+  --district-offset-x: 1.75rem;
+  --district-offset-y: 1.6rem;
+}
+
+.district-cultural-corridor-slot-1 {
+  --district-offset-x: 2rem;
+  --district-offset-y: 1.55rem;
 }
 
 
