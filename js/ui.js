@@ -283,30 +283,34 @@
 
     return `
       ${renderTokenDashboard(state)}
-      <section class="console-shell card map-intro-card">
-        <h2>City Map Hub</h2>
-        ${renderRunProgress(state, runConfig.RUN_LENGTH)}
-        <p><strong>Role:</strong> Newly hired Tourism Analyst for the City of Tampa.</p>
-        <p>Select one mission from the current set, evaluate evidence, and manage system trade-offs.</p>
-        <p><strong>Missions Complete:</strong> ${state.casesCompletedThisRun}/${runConfig.RUN_LENGTH}</p>
-        ${pipIndicator}
-        ${antiCheeseNudge}
-        <div class="inline-actions">
-          <button id="btnAskPipWhy" class="btn secondary">Ask Pip why these cases?</button>
+      <section class="map-stage">
+        <div class="map-overview-stack">
+          <section class="console-shell card map-intro-card">
+            <h2>City Map Hub</h2>
+            ${renderRunProgress(state, runConfig.RUN_LENGTH)}
+            <p><strong>Role:</strong> Newly hired Tourism Analyst for the City of Tampa.</p>
+            <p>Select one mission from the current set, evaluate evidence, and manage system trade-offs.</p>
+            <p><strong>Missions Complete:</strong> ${state.casesCompletedThisRun}/${runConfig.RUN_LENGTH}</p>
+            ${pipIndicator}
+            ${antiCheeseNudge}
+            <div class="inline-actions">
+              <button id="btnAskPipWhy" class="btn secondary">Ask Pip why these cases?</button>
+            </div>
+          </section>
+          <section class="console-shell card budget-card">
+            <h2>Impact Budget</h2>
+            <p>You receive <strong>${constants.impactBudgetPerHotspot} Impact Points</strong> per mission. Decisions exceeding remaining budget are blocked.</p>
+          </section>
+          <section class="console-shell card district-legend" aria-label="District legend">
+            <h3>District Legend</h3>
+            <ul>
+              ${districtLegendItems}
+            </ul>
+          </section>
         </div>
-      </section>
-      <section class="console-shell card budget-card">
-        <h2>Impact Budget</h2>
-        <p>You receive <strong>${constants.impactBudgetPerHotspot} Impact Points</strong> per mission. Decisions exceeding remaining budget are blocked.</p>
-      </section>
-      <section class="console-shell district-legend" aria-label="District legend">
-        <h3>District Legend</h3>
-        <ul>
-          ${districtLegendItems}
-        </ul>
-      </section>
-      <section class="console-shell city-map-board" aria-label="Tampa map hotspots" role="group">
-        ${missionCards}
+        <section class="console-shell city-map-board" aria-label="Tampa map hotspots" role="group">
+          ${missionCards}
+        </section>
       </section>
     `;
   }
