@@ -72,6 +72,38 @@
       .trim();
   }
 
+  function formatImpactSummary(deltas) {
+    if (!deltas || typeof deltas !== 'object') return 'No category deltas logged.';
+    const primary = Object.entries(deltas)
+      .filter(([, value]) => typeof value === 'number' && value !== 0)
+      .sort((a, b) => Math.abs(b[1]) - Math.abs(a[1]))
+      .slice(0, 3)
+      .map(([key, value]) => `${toCategoryLabel(key)} ${value > 0 ? '+' : ''}${value}`);
+    return primary.length ? primary.join(' • ') : 'No category deltas logged.';
+  }
+
+  function renderDecisionHistory(decisionHistory) {
+    if (!Array.isArray(decisionHistory) || !decisionHistory.length) {
+      return '<p class="small">No decision history captured for this run.</p>';
+    }
+
+    const rows = decisionHistory.map((item, idx) => {
+      const feedback = item.feedbackNote ? `<p class="small"><strong>Note:</strong> ${escapeHtml(item.feedbackNote)}</p>` : '';
+      return `
+        <article class="report-timeline-row">
+          <p class="small">Decision ${idx + 1}</p>
+          <p><strong>${escapeHtml(item.mission || 'Mission')}</strong></p>
+          <p>Choice: ${escapeHtml(stripOptionKeyPrefix(item.optionTitle || 'Unknown option'))}</p>
+          <p>Impact Cost: <strong>${escapeHtml(item.impactCost ?? '0')}</strong></p>
+          <p class="small">Primary impacts: ${escapeHtml(formatImpactSummary(item.deltas))}</p>
+          ${feedback}
+        </article>
+      `;
+    }).join('');
+
+    return `<div class="report-timeline" aria-label="Decision history timeline">${rows}</div>`;
+  }
+
   function renderRunProgress(state, runLength) {
     const caseNumber = Math.min(state.casesCompletedThisRun + 1, runLength);
     return `<p class="sampling-progress"><strong>Tourism Sampling:</strong> Case ${caseNumber}/${runLength}</p>`;
@@ -408,6 +440,8 @@
         <p><strong>Narrative Summary:</strong> ${escapeHtml(state.finalNarrative)}</p>
         <h3>Final Badge Distribution</h3>
         <ul>${totals}</ul>
+        <h3>Decision History</h3>
+        ${renderDecisionHistory(state.decisionHistory)}
         <h3>Debrief</h3>
         <p>Use this report to reflect on category trade-offs, then replay to test an alternative balancing strategy.</p>
         <div class="inline-actions">
