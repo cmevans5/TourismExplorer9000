@@ -36,6 +36,7 @@
     missionSpendById: {},
     decisionShuffleByMissionId: {},
     decisionLabelSelectionCounts: {},
+    decisionHistory: [],
     patternGamingNudgeShownThisRun: false,
     showPatternGamingNudge: false,
     lastDecisionDeltas: null,

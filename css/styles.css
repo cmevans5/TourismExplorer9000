@@ -529,6 +529,25 @@ a:focus-visible {
   background: rgba(111, 86, 20, 0.2);
 }
 
+.report-timeline {
+  margin: 0.75rem 0 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: linear-gradient(165deg, rgba(17, 48, 72, 0.45), rgba(10, 31, 47, 0.72));
+}
+
+.report-timeline-row {
+  padding: 0.8rem 1rem;
+}
+
+.report-timeline-row + .report-timeline-row {
+  border-top: 1px solid var(--border);
+}
+
+.report-timeline-row p {
+  margin: 0.2rem 0;
+}
+
 @keyframes choiceFade {
   from { opacity: 0.2; transform: translateY(4px); }
   to { opacity: 1; transform: translateY(0); }

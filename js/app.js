@@ -128,6 +128,7 @@
       state.missionSpendById = {};
       state.decisionShuffleByMissionId = {};
       state.decisionLabelSelectionCounts = {};
+      state.decisionHistory = [];
       state.patternGamingNudgeShownThisRun = false;
       state.showPatternGamingNudge = false;
       state.lastDecisionDeltas = null;
@@ -360,6 +361,14 @@
       draft.missionSpendById[mission.id] = optionCost;
       draft.lastDecisionDeltas = deltas;
       draft.decisionCount += 1;
+      draft.decisionHistory = draft.decisionHistory || [];
+      draft.decisionHistory.push({
+        mission: mission.name,
+        optionTitle: option.title,
+        impactCost: optionCost,
+        deltas,
+        feedbackNote: option.feedback || ''
+      });
       trackPatternGamingNudge(displayLabel);
       if (isCorrect) draft.correctCount += 1;
       const poorOutcome = evaluatePoorOutcome(deltas);
