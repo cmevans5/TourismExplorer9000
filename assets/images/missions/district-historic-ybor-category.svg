@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">Historic Ybor district category art</title>
+  <desc id="desc">Heritage brick streetscape and nightlife lighting representing historic Ybor.</desc>
+  <rect width="1280" height="720" fill="#5a2f34"/>
+  <rect y="460" width="1280" height="260" fill="#3b1f23"/>
+  <circle cx="980" cy="160" r="85" fill="#ffd59a" opacity="0.32"/>
+  <text x="70" y="120" fill="#fff4ea" font-family="Arial, sans-serif" font-size="54" font-weight="700">Historic Ybor</text>
+  <text x="70" y="172" fill="#ffd8c3" font-family="Arial, sans-serif" font-size="30">District category fallback visual</text>
+</svg>

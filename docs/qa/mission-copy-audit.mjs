@@ -86,6 +86,33 @@ function checkLength(value, limit, label) {
   }
 }
 
+
+function checkImageCopyQuality(mission) {
+  const media = mission?.media || {};
+  const blocks = ['hero', 'thumbnail', 'fallbackDistrictArt', 'evidenceChart'];
+
+  blocks.forEach((blockKey) => {
+    const block = media[blockKey];
+    if (!block || typeof block !== 'object') return;
+
+    const alt = String(block.alt || '').trim();
+    const caption = String(block.caption || '').trim();
+    const sourceLabel = String(block.sourceLabel || '').trim();
+
+    if (!alt) {
+      warn(`${mission.id} media.${blockKey}.alt is missing.`);
+    }
+
+    if (!caption) {
+      warn(`${mission.id} media.${blockKey}.caption is empty.`);
+    }
+
+    if (!sourceLabel) {
+      warn(`${mission.id} media.${blockKey}.sourceLabel is empty.`);
+    }
+  });
+}
+
 function checkCardOverflowRisk(mission) {
   checkLength(mission.name, LIMITS.missionName, `${mission.id} mission.name`);
   checkLength(mission.description, LIMITS.missionDescription, `${mission.id} mission.description`);
@@ -109,6 +136,7 @@ checkDuplicateDistrictLabels(districtLabels);
 missions.forEach(mission => {
   checkOptionTitleArtifacts(mission);
   checkCardOverflowRisk(mission);
+  checkImageCopyQuality(mission);
 });
 
 if (warnings.length) {
