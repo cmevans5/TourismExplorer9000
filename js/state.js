@@ -50,7 +50,8 @@
     topGateLockReason: '',
     ratingBand: 'At Risk',
     finalNarrative: '',
-    currentScreen: 'map'
+    currentScreen: 'map',
+    mapOnboardingDismissed: false
   };
 
   function clone(obj) {

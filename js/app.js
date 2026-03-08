@@ -534,6 +534,7 @@
       if (target.matches('[data-hotspot-id]')) return selectHotspot(target.getAttribute('data-hotspot-id'));
       if (target.matches('[data-mission-id]')) return selectMission(target.getAttribute('data-mission-id'));
       if (target.matches('#btnAskPipWhy')) return openPipOverlay(false);
+      if (target.matches('[data-dismiss-map-onboarding]')) return commit(draft => { draft.mapOnboardingDismissed = true; });
       if (target.matches('#btnToDecision')) return navigate('decision');
       if (target.matches('[data-option-id]')) return applyDecision(target.getAttribute('data-option-id'));
       if (target.matches('#btnReturnMap')) return handleReturnToMap();

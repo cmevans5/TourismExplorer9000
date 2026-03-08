@@ -263,10 +263,15 @@ h4 {
 
 .map-stage {
   display: grid;
-  grid-template-columns: minmax(260px, 340px) minmax(0, 1fr) minmax(280px, 340px);
+  grid-template-columns: minmax(250px, 320px) minmax(0, 1fr) minmax(280px, 340px);
+  grid-template-areas: "status play selected";
   gap: 1rem;
   align-items: start;
 }
+
+.map-zone-status { grid-area: status; }
+.map-zone-play { grid-area: play; position: relative; }
+.map-zone-selected { grid-area: selected; }
 
 .map-overview-stack {
   display: grid;
@@ -383,6 +388,70 @@ h4 {
   color: #d6ecfb;
 }
 
+
+
+.mission-objective {
+  margin: 0.3rem 0 0.7rem;
+  font-weight: 600;
+}
+
+.mission-microcopy {
+  margin: 0.55rem 0 0.45rem;
+  color: #cde3f6;
+}
+
+.mission-detail-drawer {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  margin-top: 0.55rem;
+  background: rgba(10, 32, 49, 0.58);
+}
+
+.mission-detail-drawer summary {
+  cursor: pointer;
+  padding: 0.55rem 0.7rem;
+  font-weight: 600;
+  list-style: none;
+}
+
+.mission-detail-drawer summary::-webkit-details-marker {
+  display: none;
+}
+
+.mission-detail-content {
+  padding: 0 0.7rem 0.65rem;
+}
+
+.aux-panel-collapsible summary {
+  cursor: pointer;
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+}
+
+.map-onboarding-overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(2, 11, 19, 0.66);
+  border-radius: var(--radius-lg);
+  z-index: 8;
+}
+
+.map-onboarding-panel {
+  width: min(420px, 100%);
+  padding: 1rem 1.1rem;
+}
+
+.map-onboarding-panel h3 {
+  margin-bottom: 0.5rem;
+}
+
+.map-onboarding-panel ol {
+  margin: 0 0 0.9rem 1rem;
+  padding: 0;
+}
 
 .hotspot-thumbnail {
   position: relative;
@@ -1021,11 +1090,14 @@ a:focus-visible {
   }
 
   .map-stage {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(250px, 320px);
+    grid-template-areas:
+      "play play"
+      "selected status";
   }
 
   .map-overview-stack {
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: 1fr;
     align-items: stretch;
   }
 
@@ -1062,7 +1134,20 @@ a:focus-visible {
   }
 }
 
-@media (max-width: 620px) {
+@media (max-width: 760px) {
+  .map-stage {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "play"
+      "selected"
+      "status";
+  }
+
+  .map-onboarding-overlay {
+    position: static;
+    margin-top: 0.3rem;
+  }
+
   .map-overview-stack {
     grid-template-columns: 1fr;
   }
