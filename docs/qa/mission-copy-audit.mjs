@@ -12,8 +12,10 @@ const LIMITS = {
   missionDescription: 145,
   optionTitle: 78,
   explorationBullet: 160,
-  explorationBrief: 240,
-  explorationMediaLabel: 72
+  explorationBrief: 220,
+  explorationMediaLabel: 72,
+  feedbackSummary: 95,
+  learningNote: 150
 };
 
 const warnings = [];
@@ -90,6 +92,8 @@ function checkCardOverflowRisk(mission) {
 
   (mission.options || []).forEach((option, idx) => {
     checkLength(option?.title, LIMITS.optionTitle, `${mission.id}:option[${idx}] title`);
+    checkLength(option?.feedback, LIMITS.feedbackSummary, `${mission.id}:option[${idx}] feedback`);
+    checkLength(option?.learningNote, LIMITS.learningNote, `${mission.id}:option[${idx}] learningNote`);
   });
 
   checkLength(mission.exploration?.brief, LIMITS.explorationBrief, `${mission.id} exploration.brief`);

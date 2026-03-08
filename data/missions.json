@@ -60,7 +60,7 @@
             "satisfaction": 0
           },
           "feedback": "Spending climbs, but congestion and emissions rise in adjacent blocks.",
-          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
         },
         {
           "id": "B",
@@ -90,7 +90,7 @@
             "satisfaction": 2
           },
           "feedback": "Some guests are happier, but equity concerns and crowding persist.",
-          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
         }
       ],
       "correctOptionId": "B"
@@ -155,7 +155,7 @@
             "satisfaction": 1
           },
           "feedback": "Top-line growth improves, but trust in district stewardship falls.",
-          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
         },
         {
           "id": "B",
@@ -170,7 +170,7 @@
             "satisfaction": 0
           },
           "feedback": "Identity indicators recover while visitor friction drops.",
-          "learningNote": "This option reinforces economic momentum and is strongest when your weakest category needs quick support."
+          "learningNote": "Use this when your weakest category needs quick support without a major downside."
         },
         {
           "id": "C",
@@ -185,7 +185,7 @@
             "satisfaction": 1
           },
           "feedback": "Service quality rises for some guests, but exclusion concerns rise.",
-          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
         }
       ],
       "correctOptionId": "B"
@@ -250,7 +250,7 @@
             "satisfaction": 1
           },
           "feedback": "Revenue improves quickly, but fairness and emissions optics worsen.",
-          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
         },
         {
           "id": "B",
@@ -265,7 +265,7 @@
             "satisfaction": 1
           },
           "feedback": "Flow and trust metrics improve with broad portfolio gains.",
-          "learningNote": "This option reinforces sustainability resilience and is strongest when your weakest category needs quick support."
+          "learningNote": "Use this to quickly stabilize sustainability while supporting your weakest category."
         },
         {
           "id": "C",
@@ -280,7 +280,7 @@
             "satisfaction": 2
           },
           "feedback": "Excitement rises, but core bottlenecks remain.",
-          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
         }
       ],
       "correctOptionId": "B"
@@ -345,7 +345,7 @@
             "satisfaction": 0
           },
           "feedback": "Turnover improves, but street-level friction increases.",
-          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
         },
         {
           "id": "B",
@@ -375,7 +375,7 @@
             "satisfaction": 1
           },
           "feedback": "Premium users benefit, but local impacts remain uneven.",
-          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
         }
       ],
       "correctOptionId": "B"
@@ -431,7 +431,7 @@
             "satisfaction": 0
           },
           "feedback": "Revenue grows, but social license weakens.",
-          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
         },
         {
           "id": "B",
@@ -461,7 +461,7 @@
             "satisfaction": 1
           },
           "feedback": "Guest convenience improves while affordability concerns remain.",
-          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
         }
       ],
       "correctOptionId": "B"
@@ -517,7 +517,7 @@
             "satisfaction": 0
           },
           "feedback": "Sales rise, but neighborhood authenticity weakens.",
-          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
         },
         {
           "id": "B",
@@ -532,7 +532,7 @@
             "satisfaction": 1
           },
           "feedback": "Local capture and guest discovery both improve.",
-          "learningNote": "This option reinforces economic momentum and is strongest when your weakest category needs quick support."
+          "learningNote": "Use this when your weakest category needs quick support without a major downside."
         },
         {
           "id": "C",
@@ -547,7 +547,7 @@
             "satisfaction": 1
           },
           "feedback": "Convenience improves, but inclusion outcomes remain uneven.",
-          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
         }
       ],
       "correctOptionId": "B"
@@ -603,7 +603,7 @@
             "satisfaction": -1
           },
           "feedback": "Ad revenue improves but wayfinding friction rises.",
-          "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
+          "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
         },
         {
           "id": "B",
@@ -633,7 +633,7 @@
             "satisfaction": 1
           },
           "feedback": "Premium experience improves while broad usability gaps remain.",
-          "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
+          "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
         }
       ],
       "correctOptionId": "B"
@@ -689,7 +689,7 @@
             "satisfaction": 1
           },
           "feedback": "Bookings rise, but ecological degradation risk increases.",
-          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
         },
         {
           "id": "B",
@@ -704,7 +704,7 @@
             "satisfaction": 1
           },
           "feedback": "Use pressure stabilizes while destination quality improves.",
-          "learningNote": "This option reinforces economic momentum and is strongest when your weakest category needs quick support."
+          "learningNote": "Use this when your weakest category needs quick support without a major downside."
         },
         {
           "id": "C",
@@ -719,7 +719,7 @@
             "satisfaction": 1
           },
           "feedback": "Revenue improves, but equity and carrying-capacity concerns persist.",
-          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
         }
       ],
       "correctOptionId": "B"
@@ -775,7 +775,7 @@
             "satisfaction": 0
           },
           "feedback": "Revenue rises quickly but local trust drops.",
-          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
         },
         {
           "id": "B",
@@ -790,7 +790,7 @@
             "satisfaction": 1
           },
           "feedback": "Footfall stabilizes and district identity strengthens.",
-          "learningNote": "This option reinforces economic momentum and is strongest when your weakest category needs quick support."
+          "learningNote": "Use this when your weakest category needs quick support without a major downside."
         },
         {
           "id": "C",
@@ -805,7 +805,7 @@
             "satisfaction": 1
           },
           "feedback": "Visitors see more options, but equity outcomes stay uneven.",
-          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
         }
       ],
       "correctOptionId": "B"
@@ -861,7 +861,7 @@
             "satisfaction": 0
           },
           "feedback": "Parking turnover improves but neighborhood traffic worsens.",
-          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
         },
         {
           "id": "B",
@@ -891,7 +891,7 @@
             "satisfaction": 1
           },
           "feedback": "Queueing improves for some guests, but equity concerns remain.",
-          "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
+          "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
         }
       ],
       "correctOptionId": "B"
@@ -947,7 +947,7 @@
             "satisfaction": 0
           },
           "feedback": "Coverage improves but community equity signals weaken.",
-          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
         },
         {
           "id": "B",
@@ -962,7 +962,7 @@
             "satisfaction": 1
           },
           "feedback": "Service consistency and local trust improve together.",
-          "learningNote": "This option reinforces economic momentum and is strongest when your weakest category needs quick support."
+          "learningNote": "Use this when your weakest category needs quick support without a major downside."
         },
         {
           "id": "C",
@@ -977,7 +977,7 @@
             "satisfaction": 1
           },
           "feedback": "Speed improves, but workforce inclusion remains shallow.",
-          "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
+          "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
         }
       ],
       "correctOptionId": "B"
@@ -1033,7 +1033,7 @@
             "satisfaction": 0
           },
           "feedback": "Short-term revenue improves but climate risk worsens.",
-          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
         },
         {
           "id": "B",
@@ -1048,7 +1048,7 @@
             "satisfaction": 1
           },
           "feedback": "Operational reliability and comfort improve across groups.",
-          "learningNote": "This option reinforces sustainability resilience and is strongest when your weakest category needs quick support."
+          "learningNote": "Use this to quickly stabilize sustainability while supporting your weakest category."
         },
         {
           "id": "C",
@@ -1063,7 +1063,7 @@
             "satisfaction": 1
           },
           "feedback": "Guest comfort rises for some segments but equity concerns persist.",
-          "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
+          "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
         }
       ],
       "correctOptionId": "B"
@@ -1119,7 +1119,7 @@
             "satisfaction": 0
           },
           "feedback": "Throughput stabilizes, but attendee experience feels restrictive.",
-          "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
+          "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
         },
         {
           "id": "B",
@@ -1149,7 +1149,7 @@
             "satisfaction": 1
           },
           "feedback": "Some flow gains occur, but fairness concerns grow.",
-          "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
+          "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
         }
       ],
       "correctOptionId": "B"
@@ -1205,7 +1205,7 @@
             "satisfaction": 1
           },
           "feedback": "Event riders benefit, but baseline reliability remains weak.",
-          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
         },
         {
           "id": "B",
@@ -1235,7 +1235,7 @@
             "satisfaction": 0
           },
           "feedback": "Operating costs drop, but access equity concerns increase.",
-          "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
+          "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
         }
       ],
       "correctOptionId": "B"
@@ -1291,7 +1291,7 @@
             "satisfaction": -1
           },
           "feedback": "Margins stay strong but trust erodes.",
-          "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
+          "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
         },
         {
           "id": "B",
@@ -1321,7 +1321,7 @@
             "satisfaction": 1
           },
           "feedback": "High-end conversion rises, but broad clarity issues persist.",
-          "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
+          "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
         }
       ],
       "correctOptionId": "B"
@@ -1377,7 +1377,7 @@
             "satisfaction": 0
           },
           "feedback": "Administrative burden stays low, but accountability is weak.",
-          "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
+          "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
         },
         {
           "id": "B",
@@ -1392,7 +1392,7 @@
             "satisfaction": 1
           },
           "feedback": "Trust and inclusion improve with manageable operational impact.",
-          "learningNote": "This option reinforces economic momentum and is strongest when your weakest category needs quick support."
+          "learningNote": "Use this when your weakest category needs quick support without a major downside."
         },
         {
           "id": "C",
@@ -1407,7 +1407,7 @@
             "satisfaction": 0
           },
           "feedback": "Revenue predictability improves, but social license remains fragile.",
-          "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
+          "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
         }
       ],
       "correctOptionId": "B"
@@ -1464,7 +1464,7 @@
             "satisfaction": 0
           },
           "feedback": "Response times improve, but community confidence is mixed.",
-          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
         },
         {
           "id": "B",
@@ -1494,7 +1494,7 @@
             "satisfaction": 1
           },
           "feedback": "Deterrence improves slightly, but perceived warmth declines.",
-          "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
+          "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
         }
       ],
       "correctOptionId": "B"
@@ -1550,7 +1550,7 @@
             "satisfaction": -1
           },
           "feedback": "Revenue rises, but sentiment and fairness scores slide.",
-          "learningNote": "This option grows economic momentum but risks sustainability resilience, so pair it with a balancing follow-up case."
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
         },
         {
           "id": "B",
@@ -1580,7 +1580,7 @@
             "satisfaction": 1
           },
           "feedback": "Conversion improves for high spenders, but broad affordability concerns persist.",
-          "learningNote": "This option grows economic momentum but risks cultural inclusion, so pair it with a balancing follow-up case."
+          "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
         }
       ],
       "correctOptionId": "B"

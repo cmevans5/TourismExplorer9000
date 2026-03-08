@@ -362,6 +362,26 @@
     return `${issueType} delivered a neutral profile this case, so use the next mission to improve sustainability and stakeholder balance.`;
   }
 
+
+  function buildWhatToTryNext(deltas) {
+    const losses = Object.entries(deltas || {})
+      .filter(([, value]) => value < 0)
+      .sort((a, b) => a[1] - b[1])
+      .map(([key]) => CATEGORY_LABELS[key]);
+    const gains = Object.entries(deltas || {})
+      .filter(([, value]) => value > 0)
+      .sort((a, b) => b[1] - a[1])
+      .map(([key]) => CATEGORY_LABELS[key]);
+
+    if (losses.length) {
+      return `Prioritize ${losses[0]} next while protecting gains in ${gains[0] || 'your strongest category'}.`;
+    }
+    if (gains.length) {
+      return `Reinforce ${gains[0]} with a low-variance mission to keep categories balanced.`;
+    }
+    return 'Pick a mission that raises your lowest category without creating new deficits.';
+  }
+
   function trackPatternGamingNudge(displayLabel) {
     state.decisionLabelSelectionCounts = state.decisionLabelSelectionCounts || {};
     const nextCount = (state.decisionLabelSelectionCounts[displayLabel] || 0) + 1;
@@ -466,7 +486,8 @@
         impactCost: optionCost,
         learningNote: requireLearningNote(option, mission),
         systemInsight: buildSystemInsight(mission.issueType || 'Mission', deltas),
-        tradeoffSpotlight: buildTradeoffSpotlight(mission.issueType || 'Mission', deltas)
+        tradeoffSpotlight: buildTradeoffSpotlight(mission.issueType || 'Mission', deltas),
+        whatToTryNext: buildWhatToTryNext(deltas)
       },
       state
     );
