@@ -343,27 +343,41 @@
         `
         : '';
 
+      const objectiveLine = String(selectedMission.description || '').split(/(?<=[.!?])\s+/)[0] || selectedMission.description || 'Review this mission to balance tourism outcomes.';
+
       missionDetailPanel = `
         <section class="console-shell map-mission-detail ${selectedMission ? 'is-selected' : ''}" aria-live="polite" aria-label="Selected mission detail">
           ${thumbnail}
           <p class="district-label">${districtLabel}</p>
           <h3>${escapeHtml(selectedMission.name)}</h3>
-          <p class="small">${escapeHtml(selectedMission.description)}</p>
-          <div class="hotspot-meta">
-            <span class="tag ${ROLE_CLASS[role] || 'warn'}">${escapeHtml(roleLabel(role))}</span>
-            <span class="small">Hub: ${escapeHtml(selectedMission.hub || selectedMission.area || 'City Hub')}</span>
-          </div>
+          <p class="mission-objective">${escapeHtml(objectiveLine)}</p>
           <button class="btn" data-mission-id="${escapeHtml(selectedMission.id)}" aria-label="Enter mission: ${escapeHtml(selectedMission.name)}">Enter Mission</button>
+          <p class="small mission-microcopy">Need details first? Expand a section below.</p>
+          <details class="mission-detail-drawer">
+            <summary>Mission Context</summary>
+            <div class="mission-detail-content">
+              <p class="small"><strong>Role:</strong> ${escapeHtml(roleLabel(role))}</p>
+              <p class="small"><strong>Hub:</strong> ${escapeHtml(selectedMission.hub || selectedMission.area || 'City Hub')}</p>
+              <p class="small">${escapeHtml(selectedMission.description)}</p>
+            </div>
+          </details>
+          <details class="mission-detail-drawer">
+            <summary>How scoring works</summary>
+            <div class="mission-detail-content">
+              <p class="small">Each mission starts with <strong>${constants.impactBudgetPerHotspot} Impact Points</strong>.</p>
+              <p class="small">Choices change category tokens, and your composite score rewards balance over one-dimensional gains.</p>
+            </div>
+          </details>
         </section>
       `;
     }
 
     const pipIndicator = state.pipVoluntaryIndicator
-      ? '<p class="tag warn">Pip has a coaching update on district balance.</p>'
+      ? '<p class="tag warn">Need a nudge? Pip has a quick district-balance coaching tip.</p>'
       : '';
 
     const antiCheeseNudge = state.showPatternGamingNudge
-      ? '<p class="tag warn">Options are shuffled each case—choose based on trade-offs, not the letter.</p>'
+      ? '<p class="tag warn">Micro-tip: options shuffle each case—read the impact, not the letter.</p>'
       : '';
 
     const districtLegendItems = DISTRICT_STORYBOARD_ORDER
@@ -375,42 +389,60 @@
       `)
       .join('');
 
+    const onboardingOverlay = state.mapOnboardingDismissed
+      ? ''
+      : `
+        <div class="map-onboarding-overlay" role="dialog" aria-modal="false" aria-label="Quick map walkthrough">
+          <section class="console-shell map-onboarding-panel">
+            <h3>Quick Start</h3>
+            <ol>
+              <li>Pick a mission marker in the map.</li>
+              <li>Review the selected mission panel.</li>
+              <li>Press <strong>Enter Mission</strong> to continue.</li>
+            </ol>
+            <button class="btn" data-dismiss-map-onboarding="true">Got it</button>
+          </section>
+        </div>
+      `;
+
     return `
       ${renderTokenDashboard(state)}
       <section class="map-stage">
-        <div class="map-overview-stack">
+        <div class="map-overview-stack map-zone-status" aria-label="Run status">
           <section class="console-shell card map-intro-card" tabindex="0">
-            <h2>City Map Hub</h2>
+            <h2>Run Status</h2>
             ${renderRunProgress(state, runConfig.RUN_LENGTH)}
-            <p><strong>Role:</strong> Newly hired Tourism Analyst for the City of Tampa.</p>
-            <p>Select one mission from the current set, evaluate evidence, and manage system trade-offs.</p>
-            <p><strong>Missions Complete:</strong> ${state.casesCompletedThisRun}/${runConfig.RUN_LENGTH}</p>
+            <p class="small"><strong>Missions Complete:</strong> ${state.casesCompletedThisRun}/${runConfig.RUN_LENGTH}</p>
+            <p class="small">Choose one map marker to load your next mission.</p>
             ${pipIndicator}
             ${antiCheeseNudge}
             <div class="inline-actions">
               <button id="btnAskPipWhy" class="btn secondary">Ask Pip why these cases?</button>
             </div>
           </section>
-          <section class="console-shell card budget-card">
-            <h2>Impact Budget</h2>
-            <p>You receive <strong>${constants.impactBudgetPerHotspot} Impact Points</strong> per mission. Decisions exceeding remaining budget are blocked.</p>
-          </section>
-          <aside class="console-shell map-board-chrome" aria-label="Map legend and orientation cues" tabindex="0">
+          <details class="console-shell card budget-card aux-panel-collapsible">
+            <summary>Impact Budget</summary>
+            <p><strong>${constants.impactBudgetPerHotspot} points</strong> per mission. Over-budget choices are blocked.</p>
+          </details>
+          <details class="console-shell map-board-chrome aux-panel-collapsible" aria-label="Map legend and orientation cues">
+            <summary>District Legend</summary>
             <p class="map-board-cue" aria-hidden="true">🧭 North ↑ · Waterfront edge ≈ bay side</p>
-            <h3>District Legend</h3>
             <ul>
               ${districtLegendItems}
             </ul>
-          </aside>
+          </details>
         </div>
-        <div class="map-board-stack">
-          <p class="map-selection-helper">Select a district marker to load mission details.</p>
+        <div class="map-board-stack map-zone-play" aria-label="Play area">
+          <p class="map-selection-helper">Tap a marker, then use Enter Mission.</p>
           <section class="console-shell city-map-board" aria-label="Tampa map hotspots" role="group">
             ${missionMarkers}
             ${districtOverflowChips}
           </section>
+          ${onboardingOverlay}
         </div>
-        ${missionDetailPanel}
+        <div class="map-zone-selected" aria-label="Selected mission">
+          ${missionDetailPanel}
+        </div>
       </section>
     `;
   }
