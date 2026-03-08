@@ -130,6 +130,7 @@
       state.decisionLabelSelectionCounts = {};
       state.patternGamingNudgeShownThisRun = false;
       state.showPatternGamingNudge = false;
+      state.lastDecisionDeltas = null;
     }
 
     computeAndStoreMetrics();
@@ -470,6 +471,10 @@
     }
 
     mainEl.focus();
+
+    if (state.lastDecisionDeltas && state.currentScreen !== 'decision') {
+      commit(draft => { draft.lastDecisionDeltas = null; }, { renderAfter: false });
+    }
   }
 
   function buildMissionLookups(items) {

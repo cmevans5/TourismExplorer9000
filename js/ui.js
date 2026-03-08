@@ -74,13 +74,25 @@
   }
 
   function renderTokenDashboard(state) {
+    const decisionDeltas = state.lastDecisionDeltas || null;
+
+    function renderDeltaBadge(value) {
+      if (typeof value !== 'number' || value === 0) return '';
+      const deltaClass = value > 0 ? 'plus' : 'minus';
+      const deltaLabel = value > 0 ? `+${value}` : `${value}`;
+      return `<span class="token-delta-badge ${deltaClass}" aria-label="Recent change ${escapeHtml(deltaLabel)}">${escapeHtml(deltaLabel)}</span>`;
+    }
+
     const tokenItems = Object.entries(state.categories)
       .map(([key, value]) => `
         <div class="token-chip">
           <span class="token-icon" aria-hidden="true">${CATEGORY_ICONS[key]}</span>
           <div class="token-metric">
             <span class="token-label">${CATEGORY_LABELS[key]}</span>
-            <strong>${value}</strong>
+            <div class="token-value-row">
+              <strong>${value}</strong>
+              ${renderDeltaBadge(decisionDeltas?.[key])}
+            </div>
           </div>
         </div>
       `)
