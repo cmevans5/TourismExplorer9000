@@ -553,6 +553,30 @@ a:focus-visible {
   font-weight: 700;
 }
 
+.mission-media {
+  margin: 0;
+  border: 1px solid rgba(143, 200, 236, 0.56);
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(16, 48, 68, 0.7);
+}
+
+.mission-media img {
+  width: 100%;
+  min-height: 190px;
+  max-height: 240px;
+  object-fit: cover;
+  display: block;
+}
+
+.mission-media figcaption {
+  color: #d9edf7;
+  font-weight: 600;
+  text-align: center;
+  padding: 0.75rem 0.9rem;
+  border-top: 1px dashed rgba(143, 200, 236, 0.4);
+}
+
 .media-placeholder {
   background: rgba(31, 73, 102, 0.6);
   border: 1px dashed rgba(143, 200, 236, 0.56);

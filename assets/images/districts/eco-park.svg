@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-labelledby="title desc">
+  <title id="title">Eco-Park district</title>
+  <desc id="desc">Stylized park and mobility loop with trees, paths, and low-emission transport zones.</desc>
+  <rect width="800" height="450" fill="#113126"/>
+  <rect y="290" width="800" height="160" fill="#1c5a3f"/>
+  <ellipse cx="400" cy="250" rx="280" ry="95" fill="#2f8a5f"/>
+  <path d="M180 250 Q400 150 620 250" fill="none" stroke="#d1f3b8" stroke-width="18"/>
+  <rect x="330" y="190" width="140" height="90" rx="10" fill="#5ebf88"/>
+  <circle cx="150" cy="200" r="45" fill="#58a96f"/>
+  <circle cx="650" cy="190" r="45" fill="#58a96f"/>
+  <rect x="145" y="240" width="10" height="45" fill="#2d5034"/>
+  <rect x="645" y="230" width="10" height="55" fill="#2d5034"/>
+</svg>

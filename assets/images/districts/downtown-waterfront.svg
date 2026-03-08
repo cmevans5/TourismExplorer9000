@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-labelledby="title desc">
+  <title id="title">Downtown Waterfront corridor</title>
+  <desc id="desc">Stylized illustration of a waterfront district with pedestrian corridor and managed curb lanes.</desc>
+  <rect width="800" height="450" fill="#0f2940"/>
+  <rect y="300" width="800" height="150" fill="#1b4a6b"/>
+  <rect x="80" y="220" width="640" height="120" rx="10" fill="#2f6f94"/>
+  <rect x="110" y="250" width="580" height="20" fill="#c4e8ff" opacity="0.7"/>
+  <rect x="110" y="285" width="580" height="16" fill="#93d5ff" opacity="0.5"/>
+  <circle cx="140" cy="210" r="16" fill="#ffd36a"/>
+  <circle cx="220" cy="210" r="16" fill="#ffd36a"/>
+  <circle cx="300" cy="210" r="16" fill="#ffd36a"/>
+  <rect x="520" y="110" width="160" height="150" fill="#4f89ab"/>
+  <rect x="550" y="140" width="30" height="120" fill="#73abc9"/>
+  <rect x="600" y="130" width="30" height="130" fill="#73abc9"/>
+</svg>
