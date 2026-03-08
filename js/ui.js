@@ -346,39 +346,43 @@
     const points = (mission.exploration.bullets || mission.exploration.dataPoints || [])
       .map(point => `<li>${escapeHtml(point)}</li>`)
       .join('');
-    const visualEvidence = mission.exploration?.visualEvidence;
-    const evidenceType = escapeHtml(visualEvidence?.type || 'image');
-    const evidenceAttrs = toResponsiveImageAttrs(visualEvidence, '(max-width: 960px) 100vw, 360px');
-    const evidenceDimensions = toImageDimensionAttrs(visualEvidence);
-    const evidenceAlt = getMeaningfulAltText(visualEvidence?.alt, visualEvidence?.caption || mission.name);
-    const evidenceMedia = visualEvidence?.imagePath
-      ? `
-        <div class="evidence-media-wrap">
-          <img
-            class="evidence-media"
-            src="${escapeHtml(visualEvidence.imagePath)}"
-            ${evidenceAttrs.srcset}
-            ${evidenceAttrs.sizes}
-            alt="${escapeHtml(evidenceAlt)}"
-            loading="lazy"
-            decoding="async"
-            ${evidenceDimensions}
-            onerror="this.closest('.evidence-media-wrap')?.remove()"
-          >
-          <span class="evidence-type-badge">${evidenceType}</span>
-        </div>
-      `
-      : '';
-    const evidenceCard = visualEvidence
+    const fallbackLabel = escapeHtml(mission.exploration.mediaLabel || 'Mission visual / source evidence panel');
+    const legacyEvidence = mission.exploration?.visualEvidence || {};
+    const evidenceImage = typeof mission.exploration?.image === 'string'
+      ? mission.exploration.image.trim()
+      : (typeof legacyEvidence.imagePath === 'string' ? legacyEvidence.imagePath.trim() : '');
+    const evidenceCaption = mission.exploration?.caption || legacyEvidence.caption || '';
+    const evidenceSource = mission.exploration?.source || legacyEvidence.sourceLabel || '';
+    const evidenceAlt = getMeaningfulAltText(mission.exploration?.alt || legacyEvidence.alt, evidenceCaption || mission.name);
+    const evidenceType = escapeHtml(legacyEvidence?.type || 'image');
+    const evidenceMediaMeta = {
+      src: evidenceImage,
+      srcset: mission.exploration?.srcset || legacyEvidence?.srcset || ''
+    };
+    const evidenceAttrs = toResponsiveImageAttrs(evidenceMediaMeta, '(max-width: 960px) 100vw, 360px');
+    const evidenceDimensions = toImageDimensionAttrs(mission.exploration || legacyEvidence || {});
+    const evidenceCard = evidenceImage
       ? `
         <article class="evidence-card" aria-label="Mission evidence ${evidenceType}">
-          ${evidenceMedia}
-          ${visualEvidence.caption ? `<p class="small evidence-caption">${escapeHtml(visualEvidence.caption)}</p>` : ''}
-          ${visualEvidence.sourceLabel ? `<p class="small evidence-source">${escapeHtml(visualEvidence.sourceLabel)}</p>` : ''}
+          <div class="evidence-media-wrap">
+            <img
+              class="evidence-media"
+              src="${escapeHtml(evidenceImage)}"
+              ${evidenceAttrs.srcset}
+              ${evidenceAttrs.sizes}
+              alt="${escapeHtml(evidenceAlt)}"
+              loading="lazy"
+              decoding="async"
+              ${evidenceDimensions}
+              onerror="this.closest('.evidence-card').outerHTML='&lt;div class=&quot;media-placeholder evidence-placeholder&quot; aria-label=&quot;Placeholder media panel&quot;&gt;${fallbackLabel}&lt;/div&gt;'"
+            >
+            <span class="evidence-type-badge">${evidenceType}</span>
+          </div>
+          ${evidenceCaption ? `<p class="small evidence-caption">${escapeHtml(evidenceCaption)}</p>` : ''}
+          ${evidenceSource ? `<p class="small evidence-source">${escapeHtml(evidenceSource)}</p>` : ''}
         </article>
       `
-      : '';
-    const fallbackLabel = escapeHtml(mission.exploration.mediaLabel || 'Mission visual / source evidence panel');
+      : `<div class="media-placeholder evidence-placeholder" aria-label="Placeholder media panel">${fallbackLabel}</div>`;
     const missionImage = typeof mission.exploration?.image === 'string' ? mission.exploration.image.trim() : '';
     const missionMedia = {
       src: missionImage,
