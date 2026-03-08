@@ -172,7 +172,7 @@
             <span class="tag ${ROLE_CLASS[role] || 'warn'}">${escapeHtml(roleLabel(role))}</span>
             <span class="small">Hub: ${escapeHtml(mission.hub || mission.area || 'City Hub')}</span>
           </div>
-          <button class="btn" data-mission-id="${escapeHtml(mission.id)}" aria-label="Enter ${escapeHtml(mission.name)}">Enter Mission</button>
+          <button class="btn" data-mission-id="${escapeHtml(mission.id)}" aria-label="Enter mission: ${escapeHtml(mission.name)}">Enter Mission</button>
         </article>
       `;
     }).join('');
@@ -303,7 +303,7 @@
           .map(([key, value]) => `${CATEGORY_ICONS[key]} ${value}`)
           .join(' • ');
         return `
-          <button class="btn choice ${afford ? '' : 'blocked'}" data-option-id="${escapeHtml(opt.displayLabel)}" aria-label="Select option ${escapeHtml(opt.displayLabel)}: ${escapeHtml(displayTitle)}" ${afford ? '' : 'disabled'}>
+          <button class="btn choice ${afford ? '' : 'blocked'}" data-option-id="${escapeHtml(opt.displayLabel)}" aria-label="${escapeHtml(afford ? `Select option ${opt.displayLabel}: ${displayTitle}` : `Option ${opt.displayLabel}: ${displayTitle} unavailable due to insufficient budget`)}" ${afford ? '' : 'disabled'}>
             <span class="choice-head">
               <strong>${escapeHtml(opt.displayLabel)}) ${escapeHtml(displayTitle)}</strong>
               <span class="choice-cost">Cost ${optionCost}</span>
@@ -319,7 +319,7 @@
 
     return `
       ${renderTokenDashboard(state)}
-      <section class="console-shell card">
+      <section class="console-shell card decision-card">
         <h2>Decision Point</h2>
         ${renderRunProgress(state, runConfig.RUN_LENGTH)}
         <p>Choose one strategy. Each option improves some categories while creating trade-offs.</p>
