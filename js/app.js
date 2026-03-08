@@ -193,6 +193,15 @@
     return net < 0;
   }
 
+  function summarizeFeedbackOutcome(feedbackText, poorOutcome) {
+    const cleanText = String(feedbackText || '').replace(/\s+/g, ' ').trim();
+    const firstSentence = cleanText.split(/(?<=[.!?])\s+/)[0] || cleanText;
+    if (firstSentence) return firstSentence.slice(0, 180);
+    return poorOutcome
+      ? 'Net-negative outcome; plan a balancing mission next.'
+      : 'Stable-to-positive outcome; continue balancing weak categories.';
+  }
+
   function selectMission(missionId) {
     if (state.completedMissionIds.includes(missionId)) return;
     if (!(state.offerSetMissionIds || []).includes(missionId)) return;
@@ -367,6 +376,9 @@
       ? option.id === mission.correctOptionId
       : option.isBest === true;
 
+    const poorOutcome = evaluatePoorOutcome(deltas);
+    const feedbackOutcome = summarizeFeedbackOutcome(option.feedback, poorOutcome);
+
     commit(draft => {
       Object.keys(deltas).forEach(key => { draft.categories[key] += deltas[key]; });
       draft.impactPointsRemaining -= optionCost;
@@ -378,22 +390,17 @@
       draft.decisionHistory = draft.decisionHistory || [];
       draft.decisionHistory.push({
         mission: mission.name,
-        missionName: mission.name,
         selectedOption: option.title,
-        optionTitle: option.title,
-        impactCost: optionCost,
-        deltas,
-        feedbackText: option.feedback || '',
-        feedbackNote: option.feedback || ''
+        deltas: { ...deltas },
+        cost: optionCost,
+        feedbackOutcome
       });
       trackPatternGamingNudge(displayLabel);
       if (isCorrect) draft.correctCount += 1;
-      const poorOutcome = evaluatePoorOutcome(deltas);
       draft.poorStreak = poorOutcome ? draft.poorStreak + 1 : 0;
       draft.pipEnabled = draft.poorStreak >= 2;
     }, { renderAfter: false, recomputeMetrics: true });
 
-    const poorOutcome = evaluatePoorOutcome(deltas);
     const feedbackHtml = UI.renderFeedback(
       {
         text: option.feedback,

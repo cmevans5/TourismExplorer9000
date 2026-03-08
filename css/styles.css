@@ -741,12 +741,26 @@ a:focus-visible {
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   background: linear-gradient(165deg, rgba(17, 48, 72, 0.45), rgba(10, 31, 47, 0.72));
+  overflow: hidden;
 }
 
 .report-timeline-row {
-  padding: 0.9rem 1rem 0.9rem 1.2rem;
-  border-left: 3px solid rgba(84, 216, 245, 0.55);
+  padding: 0.95rem 1rem 0.9rem 1.3rem;
+  border-left: 4px solid rgba(84, 216, 245, 0.55);
   background: rgba(16, 44, 68, 0.52);
+  position: relative;
+}
+
+.report-timeline-row::before {
+  content: '';
+  position: absolute;
+  left: -0.5rem;
+  top: 1.15rem;
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  background: #9ee8ff;
+  box-shadow: 0 0 0 2px rgba(10, 31, 47, 0.75);
 }
 
 .report-timeline-row + .report-timeline-row {
@@ -756,6 +770,12 @@ a:focus-visible {
 .report-timeline-step {
   color: #bfe4ff;
   letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.report-timeline-impact {
+  font-weight: 600;
+  color: #e5f7ff;
 }
 
 .report-timeline-feedback {
@@ -890,10 +910,18 @@ a:focus-visible {
     border-left-color: #333;
     background: #fff;
     color: #000;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .report-timeline-row::before {
+    background: #444;
+    box-shadow: none;
   }
 
   .report-timeline-step,
-  .report-timeline-row .small {
+  .report-timeline-row .small,
+  .report-timeline-impact {
     color: #1a1a1a;
   }
 

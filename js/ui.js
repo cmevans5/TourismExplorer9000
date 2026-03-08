@@ -156,21 +156,23 @@
 
     const rows = decisionHistory.map((item, idx) => {
       const selectedOption = stripOptionKeyPrefix(item.selectedOption || item.optionTitle || 'Unknown option');
-      const feedbackText = item.feedbackText || item.feedbackNote || '';
-      const feedback = feedbackText ? `<p class="small report-timeline-feedback"><strong>Note:</strong> ${escapeHtml(feedbackText)}</p>` : '';
+      const missionName = item.mission || item.missionName || 'Mission';
+      const impactCost = item.cost ?? item.impactCost ?? 0;
+      const feedbackText = item.feedbackOutcome || item.feedbackText || item.feedbackNote || '';
+      const feedback = feedbackText ? `<p class="small report-timeline-feedback"><strong>Outcome:</strong> ${escapeHtml(feedbackText)}</p>` : '';
       return `
         <article class="report-timeline-row">
           <p class="small report-timeline-step">Decision ${idx + 1}</p>
-          <p><strong>${escapeHtml(item.mission || item.missionName || 'Mission')}</strong></p>
+          <p><strong>${escapeHtml(missionName)}</strong></p>
           <p>Choice: ${escapeHtml(selectedOption)}</p>
-          <p>Impact Cost: <strong>${escapeHtml(item.impactCost ?? '0')}</strong></p>
-          <p class="small">Primary impacts: ${escapeHtml(formatImpactSummary(item.deltas))}</p>
+          <p>Impact Cost: <strong>${escapeHtml(impactCost)}</strong></p>
+          <p class="small report-timeline-impact">Impact summary: ${escapeHtml(formatImpactSummary(item.deltas))}</p>
           ${feedback}
         </article>
       `;
     }).join('');
 
-    return `<div class="report-timeline" aria-label="Decision history timeline">${rows}</div>`;
+    return `<section class="report-timeline" aria-label="Decision timeline in chronological order">${rows}</section>`;
   }
 
   function renderRunProgress(state, runLength) {
