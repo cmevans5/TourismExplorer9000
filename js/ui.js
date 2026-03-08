@@ -221,12 +221,43 @@
       .join('');
   }
 
+  function computeProjectedCategories(categories, deltas = {}) {
+    const projected = {};
+    Object.entries(categories || {}).forEach(([key, value]) => {
+      projected[key] = value + (deltas[key] || 0);
+    });
+    return projected;
+  }
+
+  function computeProjectedBalanceRiskLabel(projectedCategories) {
+    const values = Object.values(projectedCategories || {});
+    if (!values.length) return 'Moderate';
+
+    const projectedMinCategory = Math.min(...values);
+    const projectedVariance = Math.max(...values) - projectedMinCategory;
+    const scoringConstants = window.TE9000Scoring?.SCORING_CONSTANTS;
+    const minTarget = scoringConstants?.vMinCategoryTop ?? 2;
+    const varianceTarget = scoringConstants?.vMaxVarianceTop ?? 2;
+
+    if (projectedMinCategory < 0 || projectedVariance > varianceTarget + 2 || projectedMinCategory < minTarget - 1) {
+      return 'High';
+    }
+
+    if (projectedMinCategory < minTarget || projectedVariance > varianceTarget) {
+      return 'Moderate';
+    }
+
+    return 'Low';
+  }
+
   function renderDecision(mission, state, runConfig, displayOptions = []) {
     const optionButtons = displayOptions
       .map(opt => {
         const optionCost = opt.cost ?? opt.impactCost;
         const afford = state.impactPointsRemaining >= optionCost;
         const displayTitle = stripOptionKeyPrefix(opt.title);
+        const projectedCategories = computeProjectedCategories(state.categories, opt.deltas);
+        const projectedRisk = computeProjectedBalanceRiskLabel(projectedCategories);
         return `
           <button class="btn choice ${afford ? '' : 'blocked'}" data-option-id="${escapeHtml(opt.displayLabel)}" aria-label="Select option ${escapeHtml(opt.displayLabel)}" ${afford ? '' : 'disabled'}>
             <span class="choice-head">
@@ -235,6 +266,7 @@
             </span>
             <span class="small">${escapeHtml(opt.description)}</span>
             <span class="impact-row">${renderImpactPills(opt.deltas || {})}</span>
+            <span class="projected-balance-risk risk-${projectedRisk.toLowerCase()}">Projected Balance Risk: ${projectedRisk}</span>
             <span class="small">${afford ? `${state.impactPointsRemaining} points remaining before decision` : 'Insufficient budget'}</span>
           </button>
         `;
