@@ -157,12 +157,13 @@
     const missionCards = missions.slice(0, 4).map(mission => {
       const role = state.offerSetRolesById?.[mission.id] || 'wildcard';
       const districtKey = getDistrictKey(mission);
+      const districtLabel = escapeHtml(DISTRICT_LABELS[districtKey]);
       districtCounts[districtKey] = (districtCounts[districtKey] || 0) + 1;
       const stackIndex = districtCounts[districtKey] - 1;
 
       return `
         <article class="map-hotspot district-${districtKey} ${highlightIds.has(mission.id) ? 'highlighted' : ''}" style="--stack-index:${stackIndex};">
-          <p class="district-label">${DISTRICT_LABELS[districtKey]}</p>
+          <p class="district-label">${districtLabel}</p>
           <h3>${escapeHtml(mission.name)}</h3>
           <p class="small">${escapeHtml(mission.description)}</p>
           <div class="hotspot-meta">

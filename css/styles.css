@@ -288,10 +288,11 @@ h4 {
 
 .district-legend {
   margin-bottom: 1rem;
-  padding: 0.7rem 1rem;
+  padding: 0.8rem 1rem;
   border-radius: var(--radius-md);
   border: 1px solid var(--border);
   background: linear-gradient(165deg, rgba(20, 54, 82, 0.58), rgba(9, 31, 49, 0.76));
+  box-shadow: var(--shadow-soft);
 }
 
 .district-legend h3 {
@@ -306,9 +307,9 @@ h4 {
   margin: 0;
   padding: 0;
   list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem 0.9rem;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.35rem 0.75rem;
 }
 
 .district-legend-item {
@@ -643,8 +644,8 @@ a:focus-visible {
     transform: none;
   }
 
-  .district-legend {
-    display: none;
+  .district-legend ul {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   }
 }
 
