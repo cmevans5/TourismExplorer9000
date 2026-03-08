@@ -240,10 +240,21 @@ h4 {
   position: relative;
   overflow: hidden;
   margin-bottom: 1rem;
-  background:
-    linear-gradient(145deg, rgba(11, 47, 74, 0.5), rgba(6, 23, 37, 0.65)),
+  background-image:
+    linear-gradient(145deg, rgba(11, 47, 74, 0.54), rgba(6, 23, 37, 0.7)),
     repeating-linear-gradient(0deg, rgba(102, 161, 194, 0.08), rgba(102, 161, 194, 0.08) 1px, transparent 1px, transparent 48px),
-    repeating-linear-gradient(90deg, rgba(102, 161, 194, 0.08), rgba(102, 161, 194, 0.08) 1px, transparent 1px, transparent 48px);
+    repeating-linear-gradient(90deg, rgba(102, 161, 194, 0.08), rgba(102, 161, 194, 0.08) 1px, transparent 1px, transparent 48px),
+    url("../assets/images/maps/tampa-district-board.svg");
+  background-repeat: no-repeat, repeat, repeat, no-repeat;
+  background-size: 100% 100%, 48px 48px, 48px 48px, cover;
+  background-position: center, center, center, center;
+}
+
+@media (max-width: 1200px) {
+  .city-map-board {
+    background-size: 100% 100%, 48px 48px, 48px 48px, contain;
+    background-position: center, center, center, center top;
+  }
 }
 
 .city-map-board:focus-within {
@@ -683,6 +694,8 @@ a:focus-visible {
     min-height: auto;
     display: grid;
     gap: var(--space-4);
+    background-size: 100% 100%, 40px 40px, 40px 40px, contain;
+    background-position: center, center, center, center top;
   }
 
   .map-hotspot {
@@ -693,6 +706,18 @@ a:focus-visible {
 
   .district-legend ul {
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .city-map-board {
+    background-image:
+      linear-gradient(145deg, rgba(11, 47, 74, 0.6), rgba(6, 23, 37, 0.76)),
+      repeating-linear-gradient(0deg, rgba(102, 161, 194, 0.08), rgba(102, 161, 194, 0.08) 1px, transparent 1px, transparent 44px),
+      repeating-linear-gradient(90deg, rgba(102, 161, 194, 0.08), rgba(102, 161, 194, 0.08) 1px, transparent 1px, transparent 44px);
+    background-size: 100% 100%, 44px 44px, 44px 44px;
+    background-repeat: no-repeat, repeat, repeat;
+    background-position: center;
   }
 }
 

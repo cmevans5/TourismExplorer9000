@@ -1,0 +1,51 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Stylized Tampa district map background</title>
+  <desc id="desc">Abstract shoreline and transit bands aligned to Tourism Explorer district hotspot anchors.</desc>
+  <defs>
+    <linearGradient id="water" x1="0" y1="0" x2="1600" y2="900" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#11486D" stop-opacity="0.92"/>
+      <stop offset="1" stop-color="#0A2D47" stop-opacity="0.95"/>
+    </linearGradient>
+    <radialGradient id="bayGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1075 248) rotate(147.63) scale(460 270)">
+      <stop stop-color="#4ED2FF" stop-opacity="0.32"/>
+      <stop offset="1" stop-color="#4ED2FF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="corridor" x1="370" y1="365" x2="1225" y2="520" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8FD2A8" stop-opacity="0.3"/>
+      <stop offset="0.5" stop-color="#B2E4AA" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#5DC8C8" stop-opacity="0.32"/>
+    </linearGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="8"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#water)"/>
+  <path d="M136 160C315 96 495 140 642 244C771 333 797 396 939 441C1083 488 1297 464 1464 553L1528 900H0V261C35 218 73 185 136 160Z" fill="#1E5876" fill-opacity="0.4"/>
+  <path d="M855 38C1020 11 1270 30 1468 193C1555 264 1576 312 1600 373V0H792C806 17 827 28 855 38Z" fill="#3A7B9A" fill-opacity="0.2"/>
+  <ellipse cx="1093" cy="258" rx="452" ry="261" fill="url(#bayGlow)"/>
+
+  <path d="M233 198L430 149L559 199L494 285L329 307L233 198Z" fill="#62CFE8" fill-opacity="0.3"/>
+  <path d="M1135 156L1303 113L1452 213L1409 308L1200 309L1135 156Z" fill="#A7E080" fill-opacity="0.28"/>
+  <path d="M665 308L818 296L897 352L850 452L683 468L621 399L665 308Z" fill="#FFD98A" fill-opacity="0.3"/>
+  <path d="M192 565L334 540L440 620L398 744L236 764L151 671L192 565Z" fill="#65DCA4" fill-opacity="0.28"/>
+  <path d="M1174 560L1327 533L1458 625L1420 762L1256 784L1132 693L1174 560Z" fill="#F8A9D0" fill-opacity="0.3"/>
+
+  <path d="M320 250C539 310 730 403 955 451C1110 484 1231 502 1362 584" stroke="url(#corridor)" stroke-opacity="0.55" stroke-width="54" stroke-linecap="round" filter="url(#soft)"/>
+  <path d="M281 253C506 312 710 400 931 449C1089 484 1233 506 1368 586" stroke="#D8F5D6" stroke-opacity="0.24" stroke-width="12" stroke-linecap="round"/>
+
+  <g opacity="0.38" stroke="#C5E6F8" stroke-width="3" stroke-dasharray="10 14">
+    <path d="M308 247C389 276 447 322 505 365"/>
+    <path d="M1204 226C1129 267 1063 325 1006 380"/>
+    <path d="M733 374C640 432 542 520 453 626"/>
+    <path d="M901 419C1006 486 1116 564 1265 651"/>
+  </g>
+
+  <g fill="#EAF9FF" fill-opacity="0.32">
+    <circle cx="445" cy="242" r="6"/>
+    <circle cx="1253" cy="211" r="6"/>
+    <circle cx="771" cy="383" r="6"/>
+    <circle cx="292" cy="658" r="6"/>
+    <circle cx="1299" cy="673" r="6"/>
+  </g>
+</svg>
