@@ -595,6 +595,62 @@ a:focus-visible {
   font-weight: 700;
 }
 
+
+.brief-panel ul {
+  margin-bottom: 0.85rem;
+}
+
+.evidence-card {
+  border: 1px solid rgba(143, 200, 236, 0.45);
+  border-radius: 10px;
+  background: rgba(13, 41, 59, 0.72);
+  padding: 0.65rem 0.7rem;
+  display: grid;
+  gap: 0.45rem;
+  max-width: 360px;
+}
+
+.evidence-media-wrap {
+  position: relative;
+  border: 1px solid rgba(143, 200, 236, 0.45);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.evidence-media {
+  width: 100%;
+  max-height: 140px;
+  object-fit: cover;
+  display: block;
+}
+
+.evidence-type-badge {
+  position: absolute;
+  top: 0.45rem;
+  left: 0.45rem;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: rgba(5, 21, 32, 0.82);
+  border: 1px solid rgba(143, 200, 236, 0.45);
+  border-radius: 999px;
+  padding: 0.1rem 0.45rem;
+  color: #d9edf7;
+}
+
+.evidence-caption {
+  margin: 0;
+  color: #e5f6ff;
+}
+
+.evidence-source {
+  margin: 0;
+  color: #b8d8eb;
+}
+
+.mission-briefing #btnToDecision {
+  margin-top: 1.1rem;
+}
 .mission-media {
   margin: 0;
   border: 1px solid rgba(143, 200, 236, 0.56);
