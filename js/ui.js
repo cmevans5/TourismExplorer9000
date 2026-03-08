@@ -271,17 +271,46 @@
   function renderMap(state, missions, constants, runConfig) {
     const highlightIds = new Set(state.highlightMissionIds || []);
     const districtCounts = {};
+    const offeredMissions = missions.slice(0, 4);
+    const selectedHotspotId = offeredMissions.some(mission => mission.id === state.selectedHotspotId)
+      ? state.selectedHotspotId
+      : (offeredMissions[0]?.id || null);
+    const selectedMission = offeredMissions.find(mission => mission.id === selectedHotspotId) || null;
 
-    const missionCards = missions.slice(0, 4).map(mission => {
+    const missionMarkers = offeredMissions.map(mission => {
       const role = state.offerSetRolesById?.[mission.id] || 'wildcard';
       const districtKey = getDistrictKey(mission);
       const districtLabel = escapeHtml(DISTRICT_LABELS[districtKey]);
-      const missionMedia = MISSION_MEDIA[mission.id] || DISTRICT_MEDIA[districtKey] || null;
-      const thumbnailAttrs = toResponsiveImageAttrs(missionMedia, '(max-width: 960px) 100vw, 280px');
+      districtCounts[districtKey] = (districtCounts[districtKey] || 0) + 1;
+      const stackIndex = districtCounts[districtKey] - 1;
+      const isSelected = selectedHotspotId === mission.id;
+
+      return `
+        <button
+          class="map-hotspot-marker district-${districtKey} ${highlightIds.has(mission.id) ? 'highlighted' : ''} ${isSelected ? 'is-selected' : ''}"
+          style="--stack-index:${stackIndex};"
+          data-hotspot-id="${escapeHtml(mission.id)}"
+          aria-pressed="${isSelected ? 'true' : 'false'}"
+          aria-label="View mission details: ${escapeHtml(mission.name)} in ${districtLabel}"
+        >
+          <span class="district-marker district-${districtKey}" aria-hidden="true"></span>
+          <span class="marker-name">${escapeHtml(mission.name)}</span>
+          <span class="marker-role tag ${ROLE_CLASS[role] || 'warn'}">${escapeHtml(roleLabel(role))}</span>
+        </button>
+      `;
+    }).join('');
+
+    let missionDetailPanel = '<section class="map-mission-detail card" aria-live="polite"><p class="small">No missions currently available.</p></section>';
+    if (selectedMission) {
+      const districtKey = getDistrictKey(selectedMission);
+      const districtLabel = escapeHtml(DISTRICT_LABELS[districtKey]);
+      const role = state.offerSetRolesById?.[selectedMission.id] || 'wildcard';
+      const missionMedia = MISSION_MEDIA[selectedMission.id] || DISTRICT_MEDIA[districtKey] || null;
+      const thumbnailAttrs = toResponsiveImageAttrs(missionMedia, '(max-width: 960px) 100vw, 360px');
       const thumbnailDimensions = toImageDimensionAttrs(missionMedia);
       const thumbnail = missionMedia
         ? `
-          <div class="hotspot-thumbnail" aria-hidden="true">
+          <div class="hotspot-thumbnail">
             <img
               src="${escapeHtml(missionMedia.src)}"
               ${thumbnailAttrs.srcset}
@@ -294,23 +323,21 @@
           </div>
         `
         : '';
-      districtCounts[districtKey] = (districtCounts[districtKey] || 0) + 1;
-      const stackIndex = districtCounts[districtKey] - 1;
 
-      return `
-        <article class="map-hotspot district-${districtKey} ${highlightIds.has(mission.id) ? 'highlighted' : ''}" style="--stack-index:${stackIndex};">
+      missionDetailPanel = `
+        <section class="console-shell map-mission-detail" aria-live="polite" aria-label="Selected mission detail">
           ${thumbnail}
           <p class="district-label">${districtLabel}</p>
-          <h3>${escapeHtml(mission.name)}</h3>
-          <p class="small">${escapeHtml(mission.description)}</p>
+          <h3>${escapeHtml(selectedMission.name)}</h3>
+          <p class="small">${escapeHtml(selectedMission.description)}</p>
           <div class="hotspot-meta">
             <span class="tag ${ROLE_CLASS[role] || 'warn'}">${escapeHtml(roleLabel(role))}</span>
-            <span class="small">Hub: ${escapeHtml(mission.hub || mission.area || 'City Hub')}</span>
+            <span class="small">Hub: ${escapeHtml(selectedMission.hub || selectedMission.area || 'City Hub')}</span>
           </div>
-          <button class="btn" data-mission-id="${escapeHtml(mission.id)}" aria-label="Enter mission: ${escapeHtml(mission.name)}">Enter Mission</button>
-        </article>
+          <button class="btn" data-mission-id="${escapeHtml(selectedMission.id)}" aria-label="Enter mission: ${escapeHtml(selectedMission.name)}">Enter Mission</button>
+        </section>
       `;
-    }).join('');
+    }
 
     const pipIndicator = state.pipVoluntaryIndicator
       ? '<p class="tag warn">Pip has a coaching update on district balance.</p>'
@@ -358,8 +385,9 @@
               ${districtLegendItems}
             </ul>
           </aside>
-          ${missionCards}
+          ${missionMarkers}
         </section>
+        ${missionDetailPanel}
       </section>
     `;
   }

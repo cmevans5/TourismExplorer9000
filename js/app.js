@@ -95,6 +95,7 @@
       state.offerSetMissionIds = [];
       state.offerSetRolesById = {};
       state.offerSetReasonsById = {};
+      state.selectedHotspotId = null;
       state.diagnosis = buildDiagnosis(state, SCORING_CONSTANTS, { offerMissionIds: [], rolesById: {}, reasonsById: {}, needs: null });
       return;
     }
@@ -111,6 +112,9 @@
     state.offerSetMissionIds = shuffledOfferMissionIds;
     state.offerSetRolesById = offer.rolesById;
     state.offerSetReasonsById = offer.reasonsById;
+    state.selectedHotspotId = shuffledOfferMissionIds.includes(state.selectedHotspotId)
+      ? state.selectedHotspotId
+      : (shuffledOfferMissionIds[0] || null);
     state.diagnosis = buildDiagnosis(state, SCORING_CONSTANTS, offer);
   }
 
@@ -124,6 +128,7 @@
       state.offerSetMissionIds = [];
       state.offerSetRolesById = {};
       state.offerSetReasonsById = {};
+      state.selectedHotspotId = null;
       state.casesCompletedThisRun = 0;
       state.selectedMissionId = null;
       state.lastMissionId = null;
@@ -218,6 +223,13 @@
       draft.impactPointsRemaining = SCORING_CONSTANTS.impactBudgetPerHotspot;
       clearDecisionDeltaIndicatorsOnSceneChange(draft, 'explore');
       draft.currentScreen = 'explore';
+    });
+  }
+
+  function selectHotspot(hotspotId) {
+    if (!(state.offerSetMissionIds || []).includes(hotspotId)) return;
+    commit(draft => {
+      draft.selectedHotspotId = hotspotId;
     });
   }
 
@@ -482,9 +494,10 @@
 
   function bindMainDelegatedEvents() {
     mainEl.addEventListener('click', event => {
-      const target = event.target.closest('button, [data-mission-id], [data-option-id]');
+      const target = event.target.closest('button, [data-hotspot-id], [data-mission-id], [data-option-id]');
       if (!target) return;
 
+      if (target.matches('[data-hotspot-id]')) return selectHotspot(target.getAttribute('data-hotspot-id'));
       if (target.matches('[data-mission-id]')) return selectMission(target.getAttribute('data-mission-id'));
       if (target.matches('#btnAskPipWhy')) return openPipOverlay(false);
       if (target.matches('#btnToDecision')) return navigate('decision');

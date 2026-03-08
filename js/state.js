@@ -22,6 +22,7 @@
     offerSetReasonsById: {},
     completedMissionIds: [],
     selectedMissionId: null,
+    selectedHotspotId: null,
     lastMissionId: null,
     lastMissionTags: [],
     lastChosenHub: null,
