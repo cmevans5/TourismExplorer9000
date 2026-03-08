@@ -64,6 +64,17 @@ Each mission contains:
 - `exploration`
 - `options[]` (A/B/C with cost, deltas, feedback, learningNote)
 
+
+### Mission authoring rules (merge-blocking expectations)
+Contributors adding or editing missions should follow these rules before opening a PR:
+- Keep player-facing default-visible text concise and readable (short sentences, avoid dense jargon).
+- Avoid duplicate `feedback` or duplicate `learningNote` phrases across options in the same mission.
+- Ensure option outcomes are contrastive (A/B/C should not have near-identical educational trade-offs).
+- Keep player-facing voice conversational: avoid over-formal phrasing (for example, "moreover", "pursuant to", "in accordance with").
+- Provide complete pedagogy metadata on every mission: `pedagogy.tags`, `pedagogy.reinforces`, `pedagogy.commonPitfalls`, `pedagogy.difficulty`.
+- Provide complete media metadata for required blocks (`hero`, `thumbnail`, `fallbackDistrictArt`) including `imagePath`, `alt`, `caption`, and `sourceLabel`.
+- Provide meaningful option coaching copy: each option must include non-empty `feedback` and `learningNote`.
+
 ## Run Locally
 
 ```bash
@@ -79,6 +90,7 @@ Run validation checks:
 ```bash
 python3 -m json.tool data/missions.json
 node --check js/app.js js/adaptation.js js/ui.js js/state.js js/scoring.js js/mission-validation.js
+node docs/qa/validate-missions.mjs
 node docs/qa/offer-set-audit.mjs
 node docs/qa/anti-cheese-learning-audit.mjs
 node docs/qa/prereq-audit.mjs
