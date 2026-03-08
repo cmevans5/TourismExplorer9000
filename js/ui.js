@@ -40,6 +40,14 @@
     'beachfront-zone': 'Beachfront Zone'
   };
 
+  const DISTRICT_STORYBOARD_ORDER = [
+    'downtown-waterfront',
+    'cultural-corridor',
+    'historic-ybor',
+    'eco-park',
+    'beachfront-zone'
+  ];
+
   function escapeHtml(value) {
     return String(value ?? '')
       .replace(/&/g, '&amp;')
@@ -130,6 +138,15 @@
       ? '<p class="tag warn">Options are shuffled each case—choose based on trade-offs, not the letter.</p>'
       : '';
 
+    const districtLegendItems = DISTRICT_STORYBOARD_ORDER
+      .map(districtKey => `
+        <li class="district-legend-item">
+          <span class="district-marker district-${districtKey}" aria-hidden="true"></span>
+          <span>${escapeHtml(DISTRICT_LABELS[districtKey])}</span>
+        </li>
+      `)
+      .join('');
+
     return `
       ${renderTokenDashboard(state)}
       <section class="console-shell card map-intro-card">
@@ -147,6 +164,12 @@
       <section class="console-shell card budget-card">
         <h2>Impact Budget</h2>
         <p>You receive <strong>${constants.impactBudgetPerHotspot} Impact Points</strong> per mission. Decisions exceeding remaining budget are blocked.</p>
+      </section>
+      <section class="console-shell district-legend" aria-label="District legend">
+        <h3>District Legend</h3>
+        <ul>
+          ${districtLegendItems}
+        </ul>
       </section>
       <section class="console-shell city-map-board" aria-label="Tampa map hotspots">
         ${missionCards}
