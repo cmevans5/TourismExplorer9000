@@ -78,6 +78,7 @@ body {
   background: rgba(7, 22, 34, 0.82);
   position: sticky;
   top: 0;
+  z-index: 40;
   box-shadow: var(--shadow-soft);
 }
 
@@ -277,6 +278,7 @@ h4 {
   min-height: 520px;
   position: relative;
   overflow: hidden;
+  isolation: isolate;
   margin-bottom: 1rem;
   background-image:
     linear-gradient(145deg, rgba(11, 47, 74, 0.54), rgba(6, 23, 37, 0.7)),
@@ -301,8 +303,26 @@ h4 {
 }
 
 .map-hotspot-marker {
+  --board-edge-pad: 0.6rem;
+  --card-max-width: min(250px, 28vw);
+  --district-anchor-x: 50%;
+  --district-anchor-y: 50%;
+  --district-offset-x: 0px;
+  --district-offset-y: 0px;
   position: absolute;
-  width: min(240px, 28vw);
+  width: min(var(--card-max-width), calc(100% - (var(--board-edge-pad) * 2)));
+  max-width: calc(100% - (var(--board-edge-pad) * 2));
+  left: clamp(
+    var(--board-edge-pad),
+    calc(var(--district-anchor-x) + var(--district-offset-x)),
+    calc(100% - var(--card-max-width) - var(--board-edge-pad))
+  );
+  top: clamp(
+    var(--board-edge-pad),
+    calc(var(--district-anchor-y) + var(--district-offset-y)),
+    calc(100% - 4.6rem)
+  );
+  right: auto;
   border: 1px solid var(--border);
   background: rgba(8, 30, 46, 0.9);
   padding: 0.6rem 0.7rem;
@@ -316,6 +336,7 @@ h4 {
   align-items: center;
   text-align: left;
   color: var(--text);
+  z-index: 5;
 }
 
 .marker-name {
@@ -380,11 +401,20 @@ h4 {
   margin: 0.45rem 0 0.7rem;
 }
 
-.district-downtown-waterfront { top: 7%; left: 6%; }
-.district-cultural-corridor { top: 8%; right: 6%; }
-.district-historic-ybor { top: 34%; left: 37%; }
-.district-eco-park { bottom: 9%; left: 9%; }
-.district-beachfront-zone { bottom: 8%; right: 8%; }
+.district-downtown-waterfront { --district-anchor-x: 6%; --district-anchor-y: 7%; }
+.district-cultural-corridor { --district-anchor-x: 71%; --district-anchor-y: 8%; }
+.district-historic-ybor { --district-anchor-x: 37%; --district-anchor-y: 34%; }
+.district-eco-park { --district-anchor-x: 9%; --district-anchor-y: 78%; }
+.district-beachfront-zone { --district-anchor-x: 70%; --district-anchor-y: 78%; }
+
+.district-downtown-waterfront-slot-1,
+.district-cultural-corridor-slot-1,
+.district-historic-ybor-slot-1,
+.district-eco-park-slot-1,
+.district-beachfront-zone-slot-1 {
+  --district-offset-x: 1rem;
+  --district-offset-y: 1.05rem;
+}
 
 
 .map-board-chrome {
@@ -454,11 +484,34 @@ h4 {
 .map-hotspot-marker.is-selected {
   border-color: var(--border-strong);
   box-shadow: 0 0 0 1px rgba(160, 228, 255, 0.5), 0 10px 20px rgba(4, 18, 31, 0.6);
+  z-index: 12;
 }
 
 .map-hotspot-marker:focus-visible {
   border-color: var(--focus);
   box-shadow: 0 0 0 2px rgba(255, 229, 138, 0.45), 0 10px 20px rgba(4, 18, 31, 0.6);
+  z-index: 14;
+}
+
+.map-hotspot-marker.is-selected {
+  z-index: 16;
+}
+
+.map-hotspot-marker.is-collapsed-chip:not(.is-selected) {
+  display: none;
+}
+
+.map-overflow-chip {
+  position: absolute;
+  left: clamp(var(--board-edge-pad, 0.6rem), calc(var(--district-anchor-x) + 1.1rem), calc(100% - 5rem));
+  top: clamp(var(--board-edge-pad, 0.6rem), calc(var(--district-anchor-y) + 1.1rem), calc(100% - 2.2rem));
+  z-index: 9;
+  padding: 0.16rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid rgba(217, 243, 255, 0.55);
+  background: rgba(6, 20, 33, 0.88);
+  font-size: 0.75rem;
+  color: #eaf8ff;
 }
 
 .tag {
@@ -952,7 +1005,16 @@ a:focus-visible {
   .map-hotspot-marker {
     position: static;
     width: 100%;
+    max-width: none;
+    left: auto;
+    top: auto;
     transform: none;
+  }
+
+  .map-overflow-chip {
+    position: static;
+    justify-self: start;
+    margin-top: -0.35rem;
   }
 
   .map-board-chrome ul {
