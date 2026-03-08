@@ -43,12 +43,19 @@
   let pendingReturnMissionId = null;
 
   function clearDecisionDeltaIndicatorsOnSceneChange(draft, nextScreen) {
+    if (nextScreen === 'decision') {
+      draft.lastDecisionDeltas = null;
+      draft.lastDecisionOutcomeText = '';
+      return;
+    }
+
     const isMajorSceneChange = draft.currentScreen !== nextScreen;
     const hasTransientDeltas = Boolean(draft.lastDecisionDeltas);
     const leavingDecisionScreen = draft.currentScreen === 'decision';
 
     if (isMajorSceneChange && hasTransientDeltas && !leavingDecisionScreen) {
       draft.lastDecisionDeltas = null;
+      draft.lastDecisionOutcomeText = '';
     }
   }
 
@@ -142,6 +149,7 @@
       state.patternGamingNudgeShownThisRun = false;
       state.showPatternGamingNudge = false;
       state.lastDecisionDeltas = null;
+      state.lastDecisionOutcomeText = '';
     }
 
     computeAndStoreMetrics();
@@ -386,6 +394,7 @@
       draft.missionSpendById = draft.missionSpendById || {};
       draft.missionSpendById[mission.id] = optionCost;
       draft.lastDecisionDeltas = { ...deltas };
+      draft.lastDecisionOutcomeText = feedbackOutcome;
       draft.decisionCount += 1;
       draft.decisionHistory = draft.decisionHistory || [];
       draft.decisionHistory.push({

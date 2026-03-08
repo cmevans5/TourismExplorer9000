@@ -204,12 +204,14 @@
 
   function renderTokenDashboard(state) {
     const decisionDeltas = state.lastDecisionDeltas || null;
+    const latestOutcomeText = String(state.lastDecisionOutcomeText || '').trim();
 
     function renderDeltaChip(value) {
       if (typeof value !== 'number' || value === 0) return '';
       const deltaClass = value > 0 ? 'plus' : 'minus';
       const deltaLabel = value > 0 ? `+${value}` : `${value}`;
-      return `<span class="token-delta-badge ${deltaClass}" aria-label="Recent token change ${escapeHtml(deltaLabel)}">${escapeHtml(deltaLabel)}</span>`;
+      const semanticClass = value > 0 ? 'good' : 'bad';
+      return `<span class="token-delta-chip ${deltaClass} ${semanticClass}" aria-label="Recent token change ${escapeHtml(deltaLabel)}">${escapeHtml(deltaLabel)}</span>`;
     }
 
     const tokenItems = Object.entries(state.categories)
@@ -227,6 +229,10 @@
       `)
       .join('');
 
+    const latestOutcomeStrip = latestOutcomeText
+      ? `<p class="token-latest-outcome warn" aria-live="polite"><strong>Latest Outcome:</strong> ${escapeHtml(latestOutcomeText)}</p>`
+      : '';
+
     return `
       <section class="console-shell token-dashboard" aria-label="Tourism Token Dashboard">
         <div class="token-row">${tokenItems}</div>
@@ -235,6 +241,7 @@
           <strong>${state.BII}</strong>
           <small>${escapeHtml(state.ratingBand)}</small>
         </div>
+        ${latestOutcomeStrip}
       </section>
     `;
   }
