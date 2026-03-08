@@ -246,6 +246,11 @@ h4 {
     repeating-linear-gradient(90deg, rgba(102, 161, 194, 0.08), rgba(102, 161, 194, 0.08) 1px, transparent 1px, transparent 48px);
 }
 
+.city-map-board:focus-within {
+  border-color: rgba(255, 229, 138, 0.78);
+  box-shadow: 0 0 0 2px rgba(255, 229, 138, 0.26), var(--shadow-panel);
+}
+
 .map-hotspot {
   position: absolute;
   width: min(280px, 32vw);
@@ -408,6 +413,11 @@ h4 {
 
 .decision-grid {
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.decision-card:focus-within {
+  border-color: rgba(255, 229, 138, 0.78);
+  box-shadow: 0 0 0 2px rgba(255, 229, 138, 0.26), var(--shadow-panel);
 }
 
 .decision-grid:focus-within {
@@ -688,14 +698,18 @@ a:focus-visible {
   .btn:hover,
   .btn:focus-visible {
     transform: none;
+    box-shadow: none;
   }
 
   .btn.choice {
     animation: none;
   }
 
-  .map-hotspot {
+  .map-hotspot,
+  .map-hotspot:hover,
+  .map-hotspot.highlighted {
     transition: none;
+    box-shadow: var(--shadow-soft);
   }
 }
 
