@@ -182,10 +182,6 @@
     return DISTRICT_BY_HUB[mission.hub] || 'historic-ybor';
   }
 
-  function getExplorationMedia(mission) {
-    const districtKey = getDistrictKey(mission);
-    return MISSION_MEDIA[mission.id] || DISTRICT_MEDIA[districtKey] || null;
-  }
 
   function renderTokenDashboard(state) {
     const decisionDeltas = state.lastDecisionDeltas || null;
@@ -346,22 +342,31 @@
         </article>
       `
       : '';
-    const media = getExplorationMedia(mission);
     const fallbackLabel = escapeHtml(mission.exploration.mediaLabel || 'Mission visual / source evidence panel');
-    const missionMediaAttrs = toResponsiveImageAttrs(media, '(max-width: 960px) 100vw, 480px');
-    const missionAlt = getMeaningfulAltText(media?.alt, `${mission.name} mission visual`);
-    const mediaPanel = media
+    const missionImage = typeof mission.exploration?.image === 'string' ? mission.exploration.image.trim() : '';
+    const missionMedia = {
+      src: missionImage,
+      srcset: mission.exploration?.srcset || ''
+    };
+    const missionMediaAttrs = toResponsiveImageAttrs(missionMedia, '(max-width: 960px) 100vw, 480px');
+    const missionAlt = getMeaningfulAltText(mission.exploration?.alt, `${mission.name} mission visual`);
+    const missionCaption = mission.exploration?.caption || mission.exploration?.mediaLabel || 'Mission visual evidence';
+    const missionSource = mission.exploration?.source;
+    const mediaPanel = missionImage
       ? `
         <figure class="mission-media" aria-label="Mission visual evidence">
           <img
-            src="${escapeHtml(media.src)}"
+            src="${escapeHtml(missionImage)}"
             ${missionMediaAttrs.srcset}
             ${missionMediaAttrs.sizes}
             alt="${escapeHtml(missionAlt)}"
             loading="lazy"
             onerror="this.closest('figure').outerHTML='&lt;div class=&quot;media-placeholder&quot; aria-label=&quot;Placeholder media panel&quot;&gt;${fallbackLabel}&lt;/div&gt;'"
           >
-          <figcaption>${fallbackLabel}</figcaption>
+          <figcaption>
+            <span class="mission-media-caption">${escapeHtml(missionCaption)}</span>
+            ${missionSource ? `<span class="mission-media-source">${escapeHtml(missionSource)}</span>` : ''}
+          </figcaption>
         </figure>
       `
       : `<div class="media-placeholder" aria-label="Placeholder media panel">${fallbackLabel}</div>`;
