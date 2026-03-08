@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">Cultural Corridor district category art</title>
+  <desc id="desc">Wayfinding corridor with transit and multilingual visitor signage motifs.</desc>
+  <rect width="1280" height="720" fill="#264c7a"/>
+  <rect y="480" width="1280" height="240" fill="#172b45"/>
+  <path d="M160 560h980" stroke="#f2c66d" stroke-width="14" stroke-dasharray="30 20"/>
+  <text x="70" y="120" fill="#f7fbff" font-family="Arial, sans-serif" font-size="54" font-weight="700">Cultural Corridor</text>
+  <text x="70" y="172" fill="#f5e7c8" font-family="Arial, sans-serif" font-size="30">District category fallback visual</text>
+</svg>

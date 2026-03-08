@@ -80,29 +80,33 @@ function checkMissionEvidence() {
   const missions = Array.isArray(missionsData.missions) ? missionsData.missions : [];
 
   missions.forEach((mission) => {
-    const visualEvidence = mission?.exploration?.visualEvidence;
-    if (!visualEvidence) return;
-
-    if (!String(visualEvidence.imagePath || '').trim()) {
-      warn(`Mission ${mission.id} visualEvidence is missing imagePath.`);
-    }
-
-    if (!String(visualEvidence.alt || '').trim()) {
-      warn(`Mission ${mission.id} visualEvidence is missing alt text.`);
-    }
+    const media = mission?.media || {};
+    ['hero', 'thumbnail', 'fallbackDistrictArt', 'evidenceChart'].forEach((blockKey) => {
+      const block = media?.[blockKey];
+      if (!block || typeof block !== 'object') return;
+      if (!String(block.imagePath || '').trim()) {
+        warn(`Mission ${mission.id} media.${blockKey} is missing imagePath.`);
+      }
+      if (!String(block.alt || '').trim()) {
+        warn(`Mission ${mission.id} media.${blockKey} is missing alt text.`);
+      }
+      if (!String(block.caption || '').trim()) {
+        warn(`Mission ${mission.id} media.${blockKey} is missing caption.`);
+      }
+    });
   });
 }
 
 function checkTemplateReferences(source) {
-  if (!source.includes('<div class="hotspot-thumbnail" aria-hidden="true">')) {
-    warn('Hotspot thumbnail container is expected to be aria-hidden for decorative thumbnails.');
+  if (!source.includes('class="hotspot-hero-strip" aria-hidden="true"')) {
+    warn('Map mission detail hero strip is expected to be aria-hidden (decorative context image).');
   }
 
   const decorativeThumbHasEmptyAlt = source.includes('alt=""');
   const decorativeThumbIsLazyLoaded = source.includes('loading="lazy"');
-  const decorativeThumbHasDimensions = source.includes('${thumbnailDimensions}');
+  const decorativeThumbHasDimensions = source.includes('${heroStripDimensions}') || source.includes('${thumbnailDimensions}');
   if (!decorativeThumbHasEmptyAlt || !decorativeThumbIsLazyLoaded || !decorativeThumbHasDimensions) {
-    warn('Decorative hotspot thumbnail image should include empty alt, lazy loading, and explicit width/height attrs.');
+    warn('Decorative hero-strip image should include empty alt, lazy loading, and explicit width/height attrs.');
   }
 
   if (!source.includes('alt="${escapeHtml(evidenceAlt)}"')) {

@@ -93,7 +93,38 @@
           "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
         }
       ],
-      "correctOptionId": "B"
+      "correctOptionId": "B",
+      "media": {
+        "hero": {
+          "imagePath": "assets/images/missions/riverwalk-mobility-surge.svg",
+          "srcset": "assets/images/missions/riverwalk-mobility-surge.svg 1x",
+          "alt": "Annotated map of Riverwalk curb and pedestrian chokepoints during weekend peaks.",
+          "caption": "Pedestrian chokepoints cluster around two curb segments during sunset arrivals.",
+          "sourceLabel": "Source: Tampa Mobility Ops Dashboard (Weekend Snapshot)"
+        },
+        "thumbnail": {
+          "imagePath": "assets/images/missions/riverwalk-mobility-surge.svg",
+          "srcset": "assets/images/missions/riverwalk-mobility-surge.svg 1x",
+          "alt": "Thumbnail preview: Annotated map of Riverwalk curb and pedestrian chokepoints during weekend peaks.",
+          "caption": "Thumbnail: Pedestrian chokepoints cluster around two curb segments during sunset arrivals.",
+          "sourceLabel": "Source: Tampa Mobility Ops Dashboard (Weekend Snapshot)"
+        },
+        "evidenceChart": {
+          "imagePath": "assets/images/missions/riverwalk-mobility-surge.svg",
+          "srcset": "assets/images/missions/riverwalk-mobility-surge.svg 1x",
+          "alt": "Annotated map of Riverwalk curb and pedestrian chokepoints during weekend peaks.",
+          "caption": "Pedestrian chokepoints cluster around two curb segments during sunset arrivals.",
+          "sourceLabel": "Source: Tampa Mobility Ops Dashboard (Weekend Snapshot)",
+          "type": "chart"
+        },
+        "fallbackDistrictArt": {
+          "imagePath": "assets/images/missions/district-downtown-waterfront-category.svg",
+          "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x",
+          "alt": "downtown waterfront district category art fallback.",
+          "caption": "Fallback district visual for Riverwalk Weekend Mobility Surge.",
+          "sourceLabel": "Source: Tampa District Storyboard"
+        }
+      }
     },
     {
       "id": "ybor-nightlife-balance",
@@ -188,7 +219,38 @@
           "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
         }
       ],
-      "correctOptionId": "B"
+      "correctOptionId": "B",
+      "media": {
+        "hero": {
+          "imagePath": "assets/images/missions/ybor-nightlife-balance.svg",
+          "srcset": "assets/images/missions/ybor-nightlife-balance.svg 1x",
+          "alt": "Trend graphic comparing nightlife permit growth with heritage venue utilization in Ybor.",
+          "caption": "Nighttime permit growth is outpacing heritage venue utilization on Fridays.",
+          "sourceLabel": "Source: Ybor Cultural Affairs + Permit Office"
+        },
+        "thumbnail": {
+          "imagePath": "assets/images/missions/ybor-nightlife-balance.svg",
+          "srcset": "assets/images/missions/ybor-nightlife-balance.svg 1x",
+          "alt": "Thumbnail preview: Trend graphic comparing nightlife permit growth with heritage venue utilization in Ybor.",
+          "caption": "Thumbnail: Nighttime permit growth is outpacing heritage venue utilization on Fridays.",
+          "sourceLabel": "Source: Ybor Cultural Affairs + Permit Office"
+        },
+        "evidenceChart": {
+          "imagePath": "assets/images/missions/ybor-nightlife-balance.svg",
+          "srcset": "assets/images/missions/ybor-nightlife-balance.svg 1x",
+          "alt": "Trend graphic comparing nightlife permit growth with heritage venue utilization in Ybor.",
+          "caption": "Nighttime permit growth is outpacing heritage venue utilization on Fridays.",
+          "sourceLabel": "Source: Ybor Cultural Affairs + Permit Office",
+          "type": "image"
+        },
+        "fallbackDistrictArt": {
+          "imagePath": "assets/images/missions/district-historic-ybor-category.svg",
+          "srcset": "assets/images/missions/district-historic-ybor-category.svg 1x",
+          "alt": "historic ybor district category art fallback.",
+          "caption": "Fallback district visual for Ybor Nightlife Identity Balance.",
+          "sourceLabel": "Source: Tampa District Storyboard"
+        }
+      }
     },
     {
       "id": "busch-queue-emissions",
@@ -220,7 +282,7 @@
         "bullets": [
           "Average queue time increased by 14 minutes.",
           "Diesel shuttle share is still 68%.",
-          "Repeat guests cite \u201csame experience, higher stress.\u201d"
+          "Repeat guests cite “same experience, higher stress.”"
         ],
         "visualEvidence": {
           "type": "chart",
@@ -283,7 +345,38 @@
           "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
         }
       ],
-      "correctOptionId": "B"
+      "correctOptionId": "B",
+      "media": {
+        "hero": {
+          "imagePath": "assets/images/missions/busch-queue-emissions.svg",
+          "srcset": "assets/images/missions/busch-queue-emissions.svg 1x",
+          "alt": "Composite chart linking queue duration increases with diesel shuttle share at the park.",
+          "caption": "Queue-time and diesel-share indicators rise together during peak afternoon blocks.",
+          "sourceLabel": "Source: Park Operations Telemetry"
+        },
+        "thumbnail": {
+          "imagePath": "assets/images/missions/busch-queue-emissions.svg",
+          "srcset": "assets/images/missions/busch-queue-emissions.svg 1x",
+          "alt": "Thumbnail preview: Composite chart linking queue duration increases with diesel shuttle share at the park.",
+          "caption": "Thumbnail: Queue-time and diesel-share indicators rise together during peak afternoon blocks.",
+          "sourceLabel": "Source: Park Operations Telemetry"
+        },
+        "evidenceChart": {
+          "imagePath": "assets/images/missions/busch-queue-emissions.svg",
+          "srcset": "assets/images/missions/busch-queue-emissions.svg 1x",
+          "alt": "Composite chart linking queue duration increases with diesel shuttle share at the park.",
+          "caption": "Queue-time and diesel-share indicators rise together during peak afternoon blocks.",
+          "sourceLabel": "Source: Park Operations Telemetry",
+          "type": "chart"
+        },
+        "fallbackDistrictArt": {
+          "imagePath": "assets/images/missions/district-eco-park-category.svg",
+          "srcset": "assets/images/missions/district-eco-park-category.svg 1x",
+          "alt": "eco park district category art fallback.",
+          "caption": "Fallback district visual for Busch Gardens Queue + Emissions Trade-off.",
+          "sourceLabel": "Source: Tampa District Storyboard"
+        }
+      }
     },
     {
       "id": "port-cruise-dispersal",
@@ -378,7 +471,38 @@
           "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
         }
       ],
-      "correctOptionId": "B"
+      "correctOptionId": "B",
+      "media": {
+        "hero": {
+          "imagePath": "assets/images/missions/port-cruise-dispersal.svg",
+          "srcset": "assets/images/missions/port-cruise-dispersal.svg 1x",
+          "alt": "Cruise dispersal route diagram showing timed coach releases and neighborhood protection buffers.",
+          "caption": "Overlapping disembarkation windows create localized curb and coach idling pressure.",
+          "sourceLabel": "Source: Port Tampa Mobility Coordination Unit"
+        },
+        "thumbnail": {
+          "imagePath": "assets/images/missions/port-cruise-dispersal.svg",
+          "srcset": "assets/images/missions/port-cruise-dispersal.svg 1x",
+          "alt": "Thumbnail preview: Cruise dispersal route diagram showing timed coach releases and neighborhood protection buffers.",
+          "caption": "Thumbnail: Overlapping disembarkation windows create localized curb and coach idling pressure.",
+          "sourceLabel": "Source: Port Tampa Mobility Coordination Unit"
+        },
+        "evidenceChart": {
+          "imagePath": "assets/images/missions/port-cruise-dispersal.svg",
+          "srcset": "assets/images/missions/port-cruise-dispersal.svg 1x",
+          "alt": "Cruise dispersal route diagram showing timed coach releases and neighborhood protection buffers.",
+          "caption": "Overlapping disembarkation windows create localized curb and coach idling pressure.",
+          "sourceLabel": "Source: Port Tampa Mobility Coordination Unit",
+          "type": "image"
+        },
+        "fallbackDistrictArt": {
+          "imagePath": "assets/images/missions/district-downtown-waterfront-category.svg",
+          "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x",
+          "alt": "downtown waterfront district category art fallback.",
+          "caption": "Fallback district visual for Port Tampa Cruise Dispersal Planning.",
+          "sourceLabel": "Source: Tampa District Storyboard"
+        }
+      }
     },
     {
       "id": "convention-pricing-pressure",
@@ -412,10 +536,11 @@
           "Worker lunch affordability index fell 11%.",
           "Delegate satisfaction stable but resident sentiment declined."
         ],
-        "image": null,
-        "alt": null,
-        "caption": null,
-        "source": null
+        "image": "assets/images/missions/district-downtown-waterfront-category.svg",
+        "alt": "Convention District Pricing Pressure visual anchor for downtown waterfront district.",
+        "caption": "ADR trendline + local sentiment pulse.",
+        "source": "Source: District field brief",
+        "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x"
       },
       "options": [
         {
@@ -464,7 +589,31 @@
           "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
         }
       ],
-      "correctOptionId": "B"
+      "correctOptionId": "B",
+      "media": {
+        "hero": {
+          "imagePath": "assets/images/missions/district-downtown-waterfront-category.svg",
+          "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x",
+          "alt": "Convention District Pricing Pressure visual anchor for downtown waterfront district.",
+          "caption": "ADR trendline + local sentiment pulse.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "thumbnail": {
+          "imagePath": "assets/images/missions/district-downtown-waterfront-category.svg",
+          "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x",
+          "alt": "Thumbnail preview: Convention District Pricing Pressure visual anchor for downtown waterfront district.",
+          "caption": "Thumbnail: ADR trendline + local sentiment pulse.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "evidenceChart": null,
+        "fallbackDistrictArt": {
+          "imagePath": "assets/images/missions/district-downtown-waterfront-category.svg",
+          "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x",
+          "alt": "downtown waterfront district category art fallback.",
+          "caption": "Fallback district visual for Convention District Pricing Pressure.",
+          "sourceLabel": "Source: Tampa District Storyboard"
+        }
+      }
     },
     {
       "id": "channelside-cruise-retail-mix",
@@ -498,10 +647,11 @@
           "Local eateries saw short dwell times.",
           "Guest ratings request clearer local recommendations."
         ],
-        "image": null,
-        "alt": null,
-        "caption": null,
-        "source": null
+        "image": "assets/images/missions/district-beachfront-zone-category.svg",
+        "alt": "Channelside Cruise-Day Retail Mix visual anchor for beachfront zone district.",
+        "caption": "Point-of-sale mix + footfall distribution map.",
+        "source": "Source: District field brief",
+        "srcset": "assets/images/missions/district-beachfront-zone-category.svg 1x"
       },
       "options": [
         {
@@ -550,7 +700,31 @@
           "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
         }
       ],
-      "correctOptionId": "B"
+      "correctOptionId": "B",
+      "media": {
+        "hero": {
+          "imagePath": "assets/images/missions/district-beachfront-zone-category.svg",
+          "srcset": "assets/images/missions/district-beachfront-zone-category.svg 1x",
+          "alt": "Channelside Cruise-Day Retail Mix visual anchor for beachfront zone district.",
+          "caption": "Point-of-sale mix + footfall distribution map.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "thumbnail": {
+          "imagePath": "assets/images/missions/district-beachfront-zone-category.svg",
+          "srcset": "assets/images/missions/district-beachfront-zone-category.svg 1x",
+          "alt": "Thumbnail preview: Channelside Cruise-Day Retail Mix visual anchor for beachfront zone district.",
+          "caption": "Thumbnail: Point-of-sale mix + footfall distribution map.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "evidenceChart": null,
+        "fallbackDistrictArt": {
+          "imagePath": "assets/images/missions/district-beachfront-zone-category.svg",
+          "srcset": "assets/images/missions/district-beachfront-zone-category.svg 1x",
+          "alt": "beachfront zone district category art fallback.",
+          "caption": "Fallback district visual for Channelside Cruise-Day Retail Mix.",
+          "sourceLabel": "Source: Tampa District Storyboard"
+        }
+      }
     },
     {
       "id": "airport-corridor-wayfinding",
@@ -584,10 +758,11 @@
           "Transfer uptake to downtown attractions is below target.",
           "Multilingual signage requests increased."
         ],
-        "image": null,
-        "alt": null,
-        "caption": null,
-        "source": null
+        "image": "assets/images/missions/district-cultural-corridor-category.svg",
+        "alt": "Airport Corridor First-Impression Wayfinding visual anchor for cultural corridor district.",
+        "caption": "Arrival survey panel + transfer conversion funnel.",
+        "source": "Source: District field brief",
+        "srcset": "assets/images/missions/district-cultural-corridor-category.svg 1x"
       },
       "options": [
         {
@@ -636,7 +811,31 @@
           "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
         }
       ],
-      "correctOptionId": "B"
+      "correctOptionId": "B",
+      "media": {
+        "hero": {
+          "imagePath": "assets/images/missions/district-cultural-corridor-category.svg",
+          "srcset": "assets/images/missions/district-cultural-corridor-category.svg 1x",
+          "alt": "Airport Corridor First-Impression Wayfinding visual anchor for cultural corridor district.",
+          "caption": "Arrival survey panel + transfer conversion funnel.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "thumbnail": {
+          "imagePath": "assets/images/missions/district-cultural-corridor-category.svg",
+          "srcset": "assets/images/missions/district-cultural-corridor-category.svg 1x",
+          "alt": "Thumbnail preview: Airport Corridor First-Impression Wayfinding visual anchor for cultural corridor district.",
+          "caption": "Thumbnail: Arrival survey panel + transfer conversion funnel.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "evidenceChart": null,
+        "fallbackDistrictArt": {
+          "imagePath": "assets/images/missions/district-cultural-corridor-category.svg",
+          "srcset": "assets/images/missions/district-cultural-corridor-category.svg 1x",
+          "alt": "cultural corridor district category art fallback.",
+          "caption": "Fallback district visual for Airport Corridor First-Impression Wayfinding.",
+          "sourceLabel": "Source: Tampa District Storyboard"
+        }
+      }
     },
     {
       "id": "southshore-eco-access",
@@ -670,10 +869,11 @@
           "Guided eco-tour bookings are up 31%.",
           "Community groups request stronger stewardship messaging."
         ],
-        "image": null,
-        "alt": null,
-        "caption": null,
-        "source": null
+        "image": "assets/images/missions/district-eco-park-category.svg",
+        "alt": "South Shore Eco-Access Capacity visual anchor for eco park district.",
+        "caption": "Trail erosion monitor + booking demand forecast.",
+        "source": "Source: District field brief",
+        "srcset": "assets/images/missions/district-eco-park-category.svg 1x"
       },
       "options": [
         {
@@ -722,7 +922,31 @@
           "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
         }
       ],
-      "correctOptionId": "B"
+      "correctOptionId": "B",
+      "media": {
+        "hero": {
+          "imagePath": "assets/images/missions/district-eco-park-category.svg",
+          "srcset": "assets/images/missions/district-eco-park-category.svg 1x",
+          "alt": "South Shore Eco-Access Capacity visual anchor for eco park district.",
+          "caption": "Trail erosion monitor + booking demand forecast.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "thumbnail": {
+          "imagePath": "assets/images/missions/district-eco-park-category.svg",
+          "srcset": "assets/images/missions/district-eco-park-category.svg 1x",
+          "alt": "Thumbnail preview: South Shore Eco-Access Capacity visual anchor for eco park district.",
+          "caption": "Thumbnail: Trail erosion monitor + booking demand forecast.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "evidenceChart": null,
+        "fallbackDistrictArt": {
+          "imagePath": "assets/images/missions/district-eco-park-category.svg",
+          "srcset": "assets/images/missions/district-eco-park-category.svg 1x",
+          "alt": "eco park district category art fallback.",
+          "caption": "Fallback district visual for South Shore Eco-Access Capacity.",
+          "sourceLabel": "Source: Tampa District Storyboard"
+        }
+      }
     },
     {
       "id": "riverwalk-vendor-equity",
@@ -754,12 +978,13 @@
         "bullets": [
           "Independent vendors lost 12% average weekend sales.",
           "Two national pop-ups requested premium frontage.",
-          "Visitor surveys request \u201cmore local flavor.\u201d"
+          "Visitor surveys request “more local flavor.”"
         ],
-        "image": null,
-        "alt": null,
-        "caption": null,
-        "source": null
+        "image": "assets/images/missions/district-downtown-waterfront-category.svg",
+        "alt": "Riverwalk Vendor Equity Friction visual anchor for downtown waterfront district.",
+        "caption": "Vendor placement map + permit revenue trend.",
+        "source": "Source: District field brief",
+        "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x"
       },
       "options": [
         {
@@ -808,7 +1033,31 @@
           "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
         }
       ],
-      "correctOptionId": "B"
+      "correctOptionId": "B",
+      "media": {
+        "hero": {
+          "imagePath": "assets/images/missions/district-downtown-waterfront-category.svg",
+          "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x",
+          "alt": "Riverwalk Vendor Equity Friction visual anchor for downtown waterfront district.",
+          "caption": "Vendor placement map + permit revenue trend.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "thumbnail": {
+          "imagePath": "assets/images/missions/district-downtown-waterfront-category.svg",
+          "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x",
+          "alt": "Thumbnail preview: Riverwalk Vendor Equity Friction visual anchor for downtown waterfront district.",
+          "caption": "Thumbnail: Vendor placement map + permit revenue trend.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "evidenceChart": null,
+        "fallbackDistrictArt": {
+          "imagePath": "assets/images/missions/district-downtown-waterfront-category.svg",
+          "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x",
+          "alt": "downtown waterfront district category art fallback.",
+          "caption": "Fallback district visual for Riverwalk Vendor Equity Friction.",
+          "sourceLabel": "Source: Tampa District Storyboard"
+        }
+      }
     },
     {
       "id": "ybor-late-night-mobility",
@@ -842,10 +1091,11 @@
           "Transit headways are inconsistent after 11pm.",
           "Residents report circling traffic on side streets."
         ],
-        "image": null,
-        "alt": null,
-        "caption": null,
-        "source": null
+        "image": "assets/images/missions/district-historic-ybor-category.svg",
+        "alt": "Ybor Late-Night Mobility Spillover visual anchor for historic ybor district.",
+        "caption": "Curb occupancy chart + transit reliability panel.",
+        "source": "Source: District field brief",
+        "srcset": "assets/images/missions/district-historic-ybor-category.svg 1x"
       },
       "options": [
         {
@@ -894,7 +1144,31 @@
           "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
         }
       ],
-      "correctOptionId": "B"
+      "correctOptionId": "B",
+      "media": {
+        "hero": {
+          "imagePath": "assets/images/missions/district-historic-ybor-category.svg",
+          "srcset": "assets/images/missions/district-historic-ybor-category.svg 1x",
+          "alt": "Ybor Late-Night Mobility Spillover visual anchor for historic ybor district.",
+          "caption": "Curb occupancy chart + transit reliability panel.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "thumbnail": {
+          "imagePath": "assets/images/missions/district-historic-ybor-category.svg",
+          "srcset": "assets/images/missions/district-historic-ybor-category.svg 1x",
+          "alt": "Thumbnail preview: Ybor Late-Night Mobility Spillover visual anchor for historic ybor district.",
+          "caption": "Thumbnail: Curb occupancy chart + transit reliability panel.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "evidenceChart": null,
+        "fallbackDistrictArt": {
+          "imagePath": "assets/images/missions/district-historic-ybor-category.svg",
+          "srcset": "assets/images/missions/district-historic-ybor-category.svg 1x",
+          "alt": "historic ybor district category art fallback.",
+          "caption": "Fallback district visual for Ybor Late-Night Mobility Spillover.",
+          "sourceLabel": "Source: Tampa District Storyboard"
+        }
+      }
     },
     {
       "id": "busch-workforce-inclusion",
@@ -928,10 +1202,11 @@
           "Partner orgs want apprenticeship slots.",
           "Guest ratings highlight inconsistent service warmth."
         ],
-        "image": null,
-        "alt": null,
-        "caption": null,
-        "source": null
+        "image": "assets/images/missions/district-eco-park-category.svg",
+        "alt": "Busch Workforce Inclusion Capacity visual anchor for eco park district.",
+        "caption": "Staff retention dashboard + partner org feedback.",
+        "source": "Source: District field brief",
+        "srcset": "assets/images/missions/district-eco-park-category.svg 1x"
       },
       "options": [
         {
@@ -980,7 +1255,31 @@
           "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
         }
       ],
-      "correctOptionId": "B"
+      "correctOptionId": "B",
+      "media": {
+        "hero": {
+          "imagePath": "assets/images/missions/district-eco-park-category.svg",
+          "srcset": "assets/images/missions/district-eco-park-category.svg 1x",
+          "alt": "Busch Workforce Inclusion Capacity visual anchor for eco park district.",
+          "caption": "Staff retention dashboard + partner org feedback.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "thumbnail": {
+          "imagePath": "assets/images/missions/district-eco-park-category.svg",
+          "srcset": "assets/images/missions/district-eco-park-category.svg 1x",
+          "alt": "Thumbnail preview: Busch Workforce Inclusion Capacity visual anchor for eco park district.",
+          "caption": "Thumbnail: Staff retention dashboard + partner org feedback.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "evidenceChart": null,
+        "fallbackDistrictArt": {
+          "imagePath": "assets/images/missions/district-eco-park-category.svg",
+          "srcset": "assets/images/missions/district-eco-park-category.svg 1x",
+          "alt": "eco park district category art fallback.",
+          "caption": "Fallback district visual for Busch Workforce Inclusion Capacity.",
+          "sourceLabel": "Source: Tampa District Storyboard"
+        }
+      }
     },
     {
       "id": "port-waterfront-resilience",
@@ -1010,14 +1309,15 @@
         "brief": "Capital planning asks for an intervention that supports both visitors and workers.",
         "mediaLabel": "Surface temperature scan + drainage incident log",
         "bullets": [
-          "Surface temp peaks exceed adjacent districts by 6\u00b0F.",
+          "Surface temp peaks exceed adjacent districts by 6°F.",
           "Stormwater pooling caused three dock delays.",
           "Workers request more shaded rest points."
         ],
-        "image": null,
-        "alt": null,
-        "caption": null,
-        "source": null
+        "image": "assets/images/missions/district-downtown-waterfront-category.svg",
+        "alt": "Port Waterfront Heat + Resilience Retrofit visual anchor for downtown waterfront district.",
+        "caption": "Surface temperature scan + drainage incident log.",
+        "source": "Source: District field brief",
+        "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x"
       },
       "options": [
         {
@@ -1066,7 +1366,31 @@
           "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
         }
       ],
-      "correctOptionId": "B"
+      "correctOptionId": "B",
+      "media": {
+        "hero": {
+          "imagePath": "assets/images/missions/district-downtown-waterfront-category.svg",
+          "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x",
+          "alt": "Port Waterfront Heat + Resilience Retrofit visual anchor for downtown waterfront district.",
+          "caption": "Surface temperature scan + drainage incident log.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "thumbnail": {
+          "imagePath": "assets/images/missions/district-downtown-waterfront-category.svg",
+          "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x",
+          "alt": "Thumbnail preview: Port Waterfront Heat + Resilience Retrofit visual anchor for downtown waterfront district.",
+          "caption": "Thumbnail: Surface temperature scan + drainage incident log.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "evidenceChart": null,
+        "fallbackDistrictArt": {
+          "imagePath": "assets/images/missions/district-downtown-waterfront-category.svg",
+          "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x",
+          "alt": "downtown waterfront district category art fallback.",
+          "caption": "Fallback district visual for Port Waterfront Heat + Resilience Retrofit.",
+          "sourceLabel": "Source: Tampa District Storyboard"
+        }
+      }
     },
     {
       "id": "convention-safety-flow",
@@ -1098,12 +1422,13 @@
         "bullets": [
           "Exit dwell times exceed safety target by 22%.",
           "Contractors report signage conflicts across halls.",
-          "Attendee comments cite \u201cunclear routes.\u201d"
+          "Attendee comments cite “unclear routes.”"
         ],
-        "image": null,
-        "alt": null,
-        "caption": null,
-        "source": null
+        "image": "assets/images/missions/district-downtown-waterfront-category.svg",
+        "alt": "Convention Crowd Safety + Wayfinding visual anchor for downtown waterfront district.",
+        "caption": "Ingress/egress camera counts + incident heatmap.",
+        "source": "Source: District field brief",
+        "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x"
       },
       "options": [
         {
@@ -1152,7 +1477,31 @@
           "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
         }
       ],
-      "correctOptionId": "B"
+      "correctOptionId": "B",
+      "media": {
+        "hero": {
+          "imagePath": "assets/images/missions/district-downtown-waterfront-category.svg",
+          "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x",
+          "alt": "Convention Crowd Safety + Wayfinding visual anchor for downtown waterfront district.",
+          "caption": "Ingress/egress camera counts + incident heatmap.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "thumbnail": {
+          "imagePath": "assets/images/missions/district-downtown-waterfront-category.svg",
+          "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x",
+          "alt": "Thumbnail preview: Convention Crowd Safety + Wayfinding visual anchor for downtown waterfront district.",
+          "caption": "Thumbnail: Ingress/egress camera counts + incident heatmap.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "evidenceChart": null,
+        "fallbackDistrictArt": {
+          "imagePath": "assets/images/missions/district-downtown-waterfront-category.svg",
+          "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x",
+          "alt": "downtown waterfront district category art fallback.",
+          "caption": "Fallback district visual for Convention Crowd Safety + Wayfinding.",
+          "sourceLabel": "Source: Tampa District Storyboard"
+        }
+      }
     },
     {
       "id": "channelside-night-transit",
@@ -1186,10 +1535,11 @@
           "Missed connections are concentrated near event close times.",
           "Service workers report unreliable return trips."
         ],
-        "image": null,
-        "alt": null,
-        "caption": null,
-        "source": null
+        "image": "assets/images/missions/district-beachfront-zone-category.svg",
+        "alt": "Channelside Night Transit Reliability visual anchor for beachfront zone district.",
+        "caption": "Headway variance chart + guest wait-time logs.",
+        "source": "Source: District field brief",
+        "srcset": "assets/images/missions/district-beachfront-zone-category.svg 1x"
       },
       "options": [
         {
@@ -1238,7 +1588,31 @@
           "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
         }
       ],
-      "correctOptionId": "B"
+      "correctOptionId": "B",
+      "media": {
+        "hero": {
+          "imagePath": "assets/images/missions/district-beachfront-zone-category.svg",
+          "srcset": "assets/images/missions/district-beachfront-zone-category.svg 1x",
+          "alt": "Channelside Night Transit Reliability visual anchor for beachfront zone district.",
+          "caption": "Headway variance chart + guest wait-time logs.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "thumbnail": {
+          "imagePath": "assets/images/missions/district-beachfront-zone-category.svg",
+          "srcset": "assets/images/missions/district-beachfront-zone-category.svg 1x",
+          "alt": "Thumbnail preview: Channelside Night Transit Reliability visual anchor for beachfront zone district.",
+          "caption": "Thumbnail: Headway variance chart + guest wait-time logs.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "evidenceChart": null,
+        "fallbackDistrictArt": {
+          "imagePath": "assets/images/missions/district-beachfront-zone-category.svg",
+          "srcset": "assets/images/missions/district-beachfront-zone-category.svg 1x",
+          "alt": "beachfront zone district category art fallback.",
+          "caption": "Fallback district visual for Channelside Night Transit Reliability.",
+          "sourceLabel": "Source: Tampa District Storyboard"
+        }
+      }
     },
     {
       "id": "airport-corridor-pricing-transparency",
@@ -1272,10 +1646,11 @@
           "Operators use inconsistent fee disclosures.",
           "Repeat visitors ask for standardized comparisons."
         ],
-        "image": null,
-        "alt": null,
-        "caption": null,
-        "source": null
+        "image": "assets/images/missions/district-cultural-corridor-category.svg",
+        "alt": "Airport Corridor Transfer Pricing Transparency visual anchor for cultural corridor district.",
+        "caption": "Transfer price matrix + complaint taxonomy.",
+        "source": "Source: District field brief",
+        "srcset": "assets/images/missions/district-cultural-corridor-category.svg 1x"
       },
       "options": [
         {
@@ -1310,7 +1685,7 @@
         },
         {
           "id": "C",
-          "title": "C) Create premium \u201call-in\u201d transfer products",
+          "title": "C) Create premium “all-in” transfer products",
           "description": "Market simplified premium bundles only.",
           "cost": 35,
           "deltas": {
@@ -1324,7 +1699,31 @@
           "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
         }
       ],
-      "correctOptionId": "B"
+      "correctOptionId": "B",
+      "media": {
+        "hero": {
+          "imagePath": "assets/images/missions/district-cultural-corridor-category.svg",
+          "srcset": "assets/images/missions/district-cultural-corridor-category.svg 1x",
+          "alt": "Airport Corridor Transfer Pricing Transparency visual anchor for cultural corridor district.",
+          "caption": "Transfer price matrix + complaint taxonomy.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "thumbnail": {
+          "imagePath": "assets/images/missions/district-cultural-corridor-category.svg",
+          "srcset": "assets/images/missions/district-cultural-corridor-category.svg 1x",
+          "alt": "Thumbnail preview: Airport Corridor Transfer Pricing Transparency visual anchor for cultural corridor district.",
+          "caption": "Thumbnail: Transfer price matrix + complaint taxonomy.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "evidenceChart": null,
+        "fallbackDistrictArt": {
+          "imagePath": "assets/images/missions/district-cultural-corridor-category.svg",
+          "srcset": "assets/images/missions/district-cultural-corridor-category.svg 1x",
+          "alt": "cultural corridor district category art fallback.",
+          "caption": "Fallback district visual for Airport Corridor Transfer Pricing Transparency.",
+          "sourceLabel": "Source: Tampa District Storyboard"
+        }
+      }
     },
     {
       "id": "southshore-community-benefits",
@@ -1351,17 +1750,18 @@
         "minDecisions": 2
       },
       "exploration": {
-        "brief": "You are drafting the district\u2019s tourism benefit agreement framework.",
+        "brief": "You are drafting the district’s tourism benefit agreement framework.",
         "mediaLabel": "Community workshop notes + labor participation trends",
         "bullets": [
           "Local vendor participation is uneven across operators.",
           "Youth workforce groups request paid pathways.",
           "Resident trust improved where benefits were codified."
         ],
-        "image": null,
-        "alt": null,
-        "caption": null,
-        "source": null
+        "image": "assets/images/missions/district-eco-park-category.svg",
+        "alt": "South Shore Community Benefit Agreements visual anchor for eco park district.",
+        "caption": "Community workshop notes + labor participation trends.",
+        "source": "Source: District field brief",
+        "srcset": "assets/images/missions/district-eco-park-category.svg 1x"
       },
       "options": [
         {
@@ -1410,7 +1810,31 @@
           "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
         }
       ],
-      "correctOptionId": "B"
+      "correctOptionId": "B",
+      "media": {
+        "hero": {
+          "imagePath": "assets/images/missions/district-eco-park-category.svg",
+          "srcset": "assets/images/missions/district-eco-park-category.svg 1x",
+          "alt": "South Shore Community Benefit Agreements visual anchor for eco park district.",
+          "caption": "Community workshop notes + labor participation trends.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "thumbnail": {
+          "imagePath": "assets/images/missions/district-eco-park-category.svg",
+          "srcset": "assets/images/missions/district-eco-park-category.svg 1x",
+          "alt": "Thumbnail preview: South Shore Community Benefit Agreements visual anchor for eco park district.",
+          "caption": "Thumbnail: Community workshop notes + labor participation trends.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "evidenceChart": null,
+        "fallbackDistrictArt": {
+          "imagePath": "assets/images/missions/district-eco-park-category.svg",
+          "srcset": "assets/images/missions/district-eco-park-category.svg 1x",
+          "alt": "eco park district category art fallback.",
+          "caption": "Fallback district visual for South Shore Community Benefit Agreements.",
+          "sourceLabel": "Source: Tampa District Storyboard"
+        }
+      }
     },
     {
       "id": "riverwalk-night-safety",
@@ -1445,10 +1869,11 @@
           "Lighting audits flagged three underlit segments.",
           "Operators report delayed response coordination."
         ],
-        "image": null,
-        "alt": null,
-        "caption": null,
-        "source": null
+        "image": "assets/images/missions/district-downtown-waterfront-category.svg",
+        "alt": "Riverwalk Night Safety Operations visual anchor for downtown waterfront district.",
+        "caption": "Incident timeline + patrol coverage map.",
+        "source": "Source: District field brief",
+        "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x"
       },
       "options": [
         {
@@ -1497,7 +1922,31 @@
           "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
         }
       ],
-      "correctOptionId": "B"
+      "correctOptionId": "B",
+      "media": {
+        "hero": {
+          "imagePath": "assets/images/missions/district-downtown-waterfront-category.svg",
+          "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x",
+          "alt": "Riverwalk Night Safety Operations visual anchor for downtown waterfront district.",
+          "caption": "Incident timeline + patrol coverage map.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "thumbnail": {
+          "imagePath": "assets/images/missions/district-downtown-waterfront-category.svg",
+          "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x",
+          "alt": "Thumbnail preview: Riverwalk Night Safety Operations visual anchor for downtown waterfront district.",
+          "caption": "Thumbnail: Incident timeline + patrol coverage map.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "evidenceChart": null,
+        "fallbackDistrictArt": {
+          "imagePath": "assets/images/missions/district-downtown-waterfront-category.svg",
+          "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x",
+          "alt": "downtown waterfront district category art fallback.",
+          "caption": "Fallback district visual for Riverwalk Night Safety Operations.",
+          "sourceLabel": "Source: Tampa District Storyboard"
+        }
+      }
     },
     {
       "id": "busch-pricing-fatigue",
@@ -1531,10 +1980,11 @@
           "Refund requests increased for peak days.",
           "Family segments report weak transparency."
         ],
-        "image": null,
-        "alt": null,
-        "caption": null,
-        "source": null
+        "image": "assets/images/missions/district-eco-park-category.svg",
+        "alt": "Busch Dynamic Pricing Fatigue visual anchor for eco park district.",
+        "caption": "Ticket mix dashboard + value perception survey.",
+        "source": "Source: District field brief",
+        "srcset": "assets/images/missions/district-eco-park-category.svg 1x"
       },
       "options": [
         {
@@ -1569,7 +2019,7 @@
         },
         {
           "id": "C",
-          "title": "C) Offer premium-only \u201cfrictionless day\u201d bundles",
+          "title": "C) Offer premium-only “frictionless day” bundles",
           "description": "Simplify options around premium bundles.",
           "cost": 35,
           "deltas": {
@@ -1583,7 +2033,31 @@
           "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
         }
       ],
-      "correctOptionId": "B"
+      "correctOptionId": "B",
+      "media": {
+        "hero": {
+          "imagePath": "assets/images/missions/district-eco-park-category.svg",
+          "srcset": "assets/images/missions/district-eco-park-category.svg 1x",
+          "alt": "Busch Dynamic Pricing Fatigue visual anchor for eco park district.",
+          "caption": "Ticket mix dashboard + value perception survey.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "thumbnail": {
+          "imagePath": "assets/images/missions/district-eco-park-category.svg",
+          "srcset": "assets/images/missions/district-eco-park-category.svg 1x",
+          "alt": "Thumbnail preview: Busch Dynamic Pricing Fatigue visual anchor for eco park district.",
+          "caption": "Thumbnail: Ticket mix dashboard + value perception survey.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "evidenceChart": null,
+        "fallbackDistrictArt": {
+          "imagePath": "assets/images/missions/district-eco-park-category.svg",
+          "srcset": "assets/images/missions/district-eco-park-category.svg 1x",
+          "alt": "eco park district category art fallback.",
+          "caption": "Fallback district visual for Busch Dynamic Pricing Fatigue.",
+          "sourceLabel": "Source: Tampa District Storyboard"
+        }
+      }
     }
   ]
 }

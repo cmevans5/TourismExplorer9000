@@ -59,6 +59,10 @@ function readStringProp(body, prop) {
   return match ? match[1].trim() : '';
 }
 
+function hasMeaningfulText(value) {
+  return typeof value === 'string' && value.trim().length >= 3;
+}
+
 function validateUiMappings() {
   const source = fs.readFileSync(uiFile, 'utf8');
   for (const blockName of ['MISSION_MEDIA', 'DISTRICT_MEDIA']) {
@@ -73,36 +77,76 @@ function validateUiMappings() {
         errors.push(`${blockName}.${key} references missing asset: ${src}`);
       }
 
-      if (!alt) {
+      if (!hasMeaningfulText(alt)) {
         errors.push(`${blockName}.${key} is missing a non-empty alt text key.`);
       }
     });
   }
 }
 
-function validateMissionEvidence() {
+function validateMissionMedia() {
   const missions = JSON.parse(fs.readFileSync(missionsFile, 'utf8')).missions || [];
+  const requiredBlocks = ['hero', 'thumbnail', 'fallbackDistrictArt'];
+
   missions.forEach((mission) => {
-    const evidence = mission?.exploration?.visualEvidence;
-    if (!evidence) return;
-
-    const imagePath = String(evidence.imagePath || '').trim();
-    const alt = String(evidence.alt || '').trim();
-
-    if (!imagePath) {
-      errors.push(`Mission ${mission.id} visualEvidence is missing imagePath.`);
-    } else if (!fileExists(imagePath)) {
-      errors.push(`Mission ${mission.id} visualEvidence references missing asset: ${imagePath}`);
+    const media = mission?.media;
+    if (!media || typeof media !== 'object') {
+      errors.push(`Mission ${mission.id} is missing media metadata object.`);
+      return;
     }
 
-    if (!alt) {
-      errors.push(`Mission ${mission.id} visualEvidence is missing alt metadata key.`);
+    requiredBlocks.forEach((blockKey) => {
+      const block = media[blockKey];
+      if (!block || typeof block !== 'object') {
+        errors.push(`Mission ${mission.id} media.${blockKey} is missing.`);
+        return;
+      }
+
+      const imagePath = String(block.imagePath || '').trim();
+      const alt = String(block.alt || '').trim();
+      const caption = String(block.caption || '').trim();
+      const sourceLabel = String(block.sourceLabel || '').trim();
+
+      if (!imagePath) {
+        errors.push(`Mission ${mission.id} media.${blockKey} is missing imagePath.`);
+      } else if (!fileExists(imagePath)) {
+        errors.push(`Mission ${mission.id} media.${blockKey} references missing asset: ${imagePath}`);
+      }
+
+      if (!hasMeaningfulText(alt)) {
+        errors.push(`Mission ${mission.id} media.${blockKey} is missing meaningful alt text.`);
+      }
+
+      if (!hasMeaningfulText(caption)) {
+        errors.push(`Mission ${mission.id} media.${blockKey} is missing meaningful caption.`);
+      }
+
+      if (!hasMeaningfulText(sourceLabel)) {
+        errors.push(`Mission ${mission.id} media.${blockKey} is missing meaningful sourceLabel.`);
+      }
+    });
+
+    const evidence = media.evidenceChart;
+    if (evidence && typeof evidence === 'object') {
+      const imagePath = String(evidence.imagePath || '').trim();
+      if (!imagePath) {
+        errors.push(`Mission ${mission.id} media.evidenceChart has no imagePath.`);
+      } else if (!fileExists(imagePath)) {
+        errors.push(`Mission ${mission.id} media.evidenceChart references missing asset: ${imagePath}`);
+      }
+
+      if (!hasMeaningfulText(String(evidence.alt || '').trim())) {
+        errors.push(`Mission ${mission.id} media.evidenceChart is missing meaningful alt text.`);
+      }
+      if (!hasMeaningfulText(String(evidence.caption || '').trim())) {
+        errors.push(`Mission ${mission.id} media.evidenceChart is missing meaningful caption.`);
+      }
     }
   });
 }
 
 validateUiMappings();
-validateMissionEvidence();
+validateMissionMedia();
 
 if (errors.length) {
   console.error('Image metadata QA checks failed:');
@@ -110,4 +154,4 @@ if (errors.length) {
   process.exit(1);
 }
 
-console.log('Image metadata QA checks passed (assets exist and alt metadata keys are present).');
+console.log('Image metadata QA checks passed (mission media metadata complete; assets and alt/caption/source present).');

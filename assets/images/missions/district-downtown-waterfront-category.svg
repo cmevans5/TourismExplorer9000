@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">Downtown Waterfront district category art</title>
+  <desc id="desc">Stylized skyline and riverfront promenade representing downtown waterfront tourism context.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f3d5c"/>
+      <stop offset="100%" stop-color="#1f86b3"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="720" fill="url(#bg)"/>
+  <rect y="500" width="1280" height="220" fill="#0a2438"/>
+  <circle cx="980" cy="165" r="80" fill="#bfe8ff" opacity="0.4"/>
+  <path d="M110 510h1060" stroke="#9ed9f5" stroke-width="8" opacity="0.7"/>
+  <text x="70" y="120" fill="#e9f7ff" font-family="Arial, sans-serif" font-size="54" font-weight="700">Downtown Waterfront</text>
+  <text x="70" y="172" fill="#d1ecfa" font-family="Arial, sans-serif" font-size="30">District category fallback visual</text>
+</svg>

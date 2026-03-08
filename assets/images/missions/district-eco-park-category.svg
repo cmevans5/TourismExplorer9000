@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">Eco-Park district category art</title>
+  <desc id="desc">Green mobility loop and tree canopy silhouette representing eco-park conditions.</desc>
+  <rect width="1280" height="720" fill="#1f5e3e"/>
+  <rect y="470" width="1280" height="250" fill="#194b31"/>
+  <path d="M90 470c150-210 310-210 460 0 150-210 310-210 460 0" fill="#2f8a5b"/>
+  <text x="70" y="120" fill="#effff5" font-family="Arial, sans-serif" font-size="54" font-weight="700">Eco-Park</text>
+  <text x="70" y="172" fill="#c9efd8" font-family="Arial, sans-serif" font-size="30">District category fallback visual</text>
+</svg>

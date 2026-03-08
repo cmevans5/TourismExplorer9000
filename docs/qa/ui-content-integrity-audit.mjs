@@ -46,6 +46,24 @@ function validateMissionMediaMetadata(missions) {
         warn(`${context} references a missing image asset: ${imagePath}`);
       }
     }
+
+    const media = mission?.media || {};
+    ['hero', 'thumbnail', 'fallbackDistrictArt', 'evidenceChart'].forEach((blockKey) => {
+      const block = media?.[blockKey];
+      if (!block || typeof block !== 'object') return;
+
+      const mediaPath = String(block.imagePath || '').trim();
+      const mediaAlt = String(block.alt || '').trim();
+      const mediaCaption = String(block.caption || '').trim();
+
+      if (mediaPath && !isMeaningfulText(mediaAlt)) {
+        warn(`${context} media.${blockKey} is missing meaningful alt text.`);
+      }
+
+      if (mediaPath && !isMeaningfulText(mediaCaption)) {
+        warn(`${context} media.${blockKey} is missing a meaningful caption.`);
+      }
+    });
   });
 }
 

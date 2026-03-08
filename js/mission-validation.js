@@ -15,6 +15,29 @@
     return bestCount === 1;
   }
 
+
+
+  function hasMeaningfulText(value) {
+    return typeof value === 'string' && value.trim().length >= 3;
+  }
+
+  function validateImageMetadataBlock(block, label, errors, { optional = false } = {}) {
+    if (!block) {
+      if (!optional) errors.push(`${label} is missing.`);
+      return;
+    }
+
+    const imagePath = String(block.imagePath || '').trim();
+    const alt = String(block.alt || '').trim();
+    const caption = String(block.caption || '').trim();
+    const sourceLabel = String(block.sourceLabel || '').trim();
+
+    if (!imagePath) errors.push(`${label}.imagePath is required.`);
+    if (!hasMeaningfulText(alt)) errors.push(`${label}.alt is required and must be meaningful.`);
+    if (!hasMeaningfulText(caption)) errors.push(`${label}.caption is required and must be meaningful.`);
+    if (!hasMeaningfulText(sourceLabel)) errors.push(`${label}.sourceLabel is required and must be meaningful.`);
+  }
+
   function validateMissions(missions) {
     const warnings = [];
     const errors = [];
@@ -67,6 +90,16 @@
           warnings.push(`${label}:${option?.id || optionIndex} missing learningNote.`);
         }
       });
+
+      const media = mission?.media;
+      if (!media || typeof media !== 'object') {
+        errors.push(`${label} is missing media metadata.`);
+      } else {
+        validateImageMetadataBlock(media.hero, `${label}.media.hero`, errors);
+        validateImageMetadataBlock(media.thumbnail, `${label}.media.thumbnail`, errors);
+        validateImageMetadataBlock(media.fallbackDistrictArt, `${label}.media.fallbackDistrictArt`, errors);
+        validateImageMetadataBlock(media.evidenceChart, `${label}.media.evidenceChart`, errors, { optional: true });
+      }
 
       if (!hasValidCorrectnessMarker(mission)) {
         errors.push(`${label} must define a valid correctOptionId or exactly one isBest option.`);

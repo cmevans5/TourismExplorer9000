@@ -122,6 +122,79 @@
     height: 360
   };
 
+  function getFallbackDistrictArt(districtKey) {
+    return DISTRICT_MEDIA[districtKey] || null;
+  }
+
+  function getMissionMediaBundle(mission) {
+    const districtKey = getDistrictKey(mission);
+    const fallbackDistrictArt = getFallbackDistrictArt(districtKey);
+    const missionMedia = mission?.media || {};
+
+    function normalizeImageMeta(primary, secondary, defaults = {}) {
+      const primaryImagePath = typeof primary?.imagePath === 'string' ? primary.imagePath.trim() : '';
+      const secondaryImagePath = typeof secondary?.imagePath === 'string' ? secondary.imagePath.trim() : '';
+      const imagePath = primaryImagePath || secondaryImagePath || defaults.imagePath || '';
+      return {
+        imagePath,
+        srcset: (typeof primary?.srcset === 'string' && primary.srcset.trim())
+          || (typeof secondary?.srcset === 'string' && secondary.srcset.trim())
+          || (imagePath ? `${imagePath} 1x` : ''),
+        alt: (typeof primary?.alt === 'string' && primary.alt.trim())
+          || (typeof secondary?.alt === 'string' && secondary.alt.trim())
+          || defaults.alt
+          || '',
+        caption: (typeof primary?.caption === 'string' && primary.caption.trim())
+          || (typeof secondary?.caption === 'string' && secondary.caption.trim())
+          || defaults.caption
+          || '',
+        sourceLabel: (typeof primary?.sourceLabel === 'string' && primary.sourceLabel.trim())
+          || (typeof secondary?.sourceLabel === 'string' && secondary.sourceLabel.trim())
+          || defaults.sourceLabel
+          || '',
+        type: (typeof primary?.type === 'string' && primary.type.trim()) || defaults.type || 'image'
+      };
+    }
+
+    const legacyExploration = mission?.exploration || {};
+    const legacyEvidence = legacyExploration.visualEvidence || {};
+    const legacyImage = typeof legacyExploration.image === 'string' ? legacyExploration.image.trim() : '';
+    const missionMediaMapEntry = MISSION_MEDIA[mission?.id] || null;
+
+    const hero = normalizeImageMeta(missionMedia.hero, {
+      imagePath: legacyImage || missionMediaMapEntry?.src || fallbackDistrictArt?.src || '',
+      srcset: legacyExploration.srcset || missionMediaMapEntry?.srcset || fallbackDistrictArt?.srcset || '',
+      alt: legacyExploration.alt || missionMediaMapEntry?.alt || fallbackDistrictArt?.alt || '',
+      caption: legacyExploration.caption || legacyExploration.mediaLabel || `${mission?.name || 'Mission'} visual`,
+      sourceLabel: legacyExploration.source || 'Source: District field briefing'
+    });
+
+    const thumbnail = normalizeImageMeta(missionMedia.thumbnail, missionMedia.hero, {
+      imagePath: hero.imagePath,
+      srcset: hero.srcset,
+      alt: hero.alt,
+      caption: hero.caption,
+      sourceLabel: hero.sourceLabel
+    });
+
+    const evidence = normalizeImageMeta(missionMedia.evidenceChart, legacyEvidence, {
+      imagePath: legacyEvidence.imagePath || '',
+      srcset: legacyEvidence.srcset || '',
+      alt: legacyEvidence.alt || hero.alt,
+      caption: legacyEvidence.caption || hero.caption,
+      sourceLabel: legacyEvidence.sourceLabel || hero.sourceLabel,
+      type: legacyEvidence.type || 'chart'
+    });
+
+    return {
+      districtKey,
+      fallbackDistrictArt,
+      hero,
+      thumbnail,
+      evidence
+    };
+  }
+
   function toResponsiveImageAttrs(media = {}, sizeHint) {
     const srcset = typeof media.srcset === 'string' ? media.srcset.trim() : '';
     const sizes = typeof sizeHint === 'string' && sizeHint.trim() ? sizeHint.trim() : '';
@@ -346,20 +419,27 @@
       const districtLabel = escapeHtml(DISTRICT_LABELS[districtKey]);
       const role = state.offerSetRolesById?.[selectedMission.id] || 'wildcard';
       const isSuggested = selectedMission.id === suggestedMissionId;
-      const missionMedia = MISSION_MEDIA[selectedMission.id] || DISTRICT_MEDIA[districtKey] || null;
-      const thumbnailAttrs = toResponsiveImageAttrs(missionMedia, '(max-width: 960px) 100vw, 360px');
-      const thumbnailDimensions = toImageDimensionAttrs(missionMedia);
-      const thumbnail = missionMedia
+      const missionVisuals = getMissionMediaBundle(selectedMission);
+      const heroStripMeta = {
+        src: missionVisuals.hero.imagePath || missionVisuals.fallbackDistrictArt?.src || '',
+        srcset: missionVisuals.hero.srcset || missionVisuals.fallbackDistrictArt?.srcset || '',
+        width: 1280,
+        height: 360
+      };
+      const heroStripAttrs = toResponsiveImageAttrs(heroStripMeta, '(max-width: 960px) 100vw, 360px');
+      const heroStripDimensions = toImageDimensionAttrs(heroStripMeta, { width: 1280, height: 360 });
+      const heroStripFallbackSrc = missionVisuals.fallbackDistrictArt?.src || '';
+      const heroStrip = heroStripMeta.src
         ? `
-          <div class="hotspot-thumbnail">
+          <div class="hotspot-hero-strip" aria-hidden="true">
             <img
-              src="${escapeHtml(missionMedia.src)}"
-              ${thumbnailAttrs.srcset}
-              ${thumbnailAttrs.sizes}
+              src="${escapeHtml(heroStripMeta.src)}"
+              ${heroStripAttrs.srcset}
+              ${heroStripAttrs.sizes}
               alt=""
               ${nonCriticalImageAttrs()}
-              ${thumbnailDimensions}
-              onerror="this.closest('.hotspot-thumbnail')?.remove()"
+              ${heroStripDimensions}
+              onerror="if(!this.dataset.fallbackApplied && '${escapeHtml(heroStripFallbackSrc)}'){this.dataset.fallbackApplied='1';this.src='${escapeHtml(heroStripFallbackSrc)}';this.srcset='${escapeHtml(missionVisuals.fallbackDistrictArt?.srcset || '')}';}else{this.closest('.hotspot-hero-strip')?.remove();}"
             >
           </div>
         `
@@ -369,7 +449,7 @@
 
       missionDetailPanel = `
         <section class="console-shell map-mission-detail ${selectedMission ? 'is-selected' : ''}" aria-live="polite" aria-label="Selected mission detail">
-          ${thumbnail}
+          ${heroStrip}
           <p class="district-label">${districtLabel}</p>
           <h3>${escapeHtml(selectedMission.name)}</h3>
           ${isSuggested ? '<p class="tag good">Suggested Next Move</p>' : ''}
@@ -473,24 +553,22 @@
   }
 
   function renderExploration(mission, state, runConfig) {
+    const missionVisuals = getMissionMediaBundle(mission);
     const points = (mission.exploration.bullets || mission.exploration.dataPoints || [])
       .map(point => `<li>${escapeHtml(point)}</li>`)
       .join('');
     const fallbackLabel = escapeHtml(mission.exploration.mediaLabel || 'Mission visual / source evidence panel');
-    const legacyEvidence = mission.exploration?.visualEvidence || {};
-    const evidenceImage = typeof mission.exploration?.image === 'string'
-      ? mission.exploration.image.trim()
-      : (typeof legacyEvidence.imagePath === 'string' ? legacyEvidence.imagePath.trim() : '');
-    const evidenceCaption = mission.exploration?.caption || legacyEvidence.caption || '';
-    const evidenceSource = mission.exploration?.source || legacyEvidence.sourceLabel || '';
-    const evidenceAlt = getMeaningfulAltText(mission.exploration?.alt || legacyEvidence.alt, evidenceCaption || mission.name);
-    const evidenceType = escapeHtml(legacyEvidence?.type || 'image');
+    const evidenceImage = missionVisuals.evidence.imagePath || missionVisuals.hero.imagePath;
+    const evidenceCaption = missionVisuals.evidence.caption || missionVisuals.hero.caption;
+    const evidenceSource = missionVisuals.evidence.sourceLabel || missionVisuals.hero.sourceLabel;
+    const evidenceAlt = getMeaningfulAltText(missionVisuals.evidence.alt || missionVisuals.hero.alt, evidenceCaption || mission.name);
+    const evidenceType = escapeHtml(missionVisuals.evidence.type || 'image');
     const evidenceMediaMeta = {
       src: evidenceImage,
-      srcset: mission.exploration?.srcset || legacyEvidence?.srcset || ''
+      srcset: missionVisuals.evidence.srcset || missionVisuals.hero.srcset || ''
     };
     const evidenceAttrs = toResponsiveImageAttrs(evidenceMediaMeta, '(max-width: 960px) 100vw, 360px');
-    const evidenceDimensions = toImageDimensionAttrs(mission.exploration || legacyEvidence || {});
+    const evidenceDimensions = toImageDimensionAttrs({ width: 1280, height: 720 });
     const evidenceCard = evidenceImage
       ? `
         <article class="evidence-card" aria-label="Mission evidence ${evidenceType}">
@@ -503,7 +581,7 @@
               alt="${escapeHtml(evidenceAlt)}"
               ${nonCriticalImageAttrs()}
               ${evidenceDimensions}
-              onerror="this.closest('.evidence-card').outerHTML='&lt;div class=&quot;media-placeholder evidence-placeholder&quot; aria-label=&quot;Placeholder media panel&quot;&gt;${fallbackLabel}&lt;/div&gt;'"
+              onerror="if(!this.dataset.fallbackApplied && '${escapeHtml(missionVisuals.fallbackDistrictArt?.src || '')}'){this.dataset.fallbackApplied='1';this.src='${escapeHtml(missionVisuals.fallbackDistrictArt?.src || '')}';this.srcset='${escapeHtml(missionVisuals.fallbackDistrictArt?.srcset || '')}';}else{this.closest('.evidence-card').outerHTML='&lt;div class=&quot;media-placeholder evidence-placeholder&quot; aria-label=&quot;Placeholder media panel&quot;&gt;${fallbackLabel}&lt;/div&gt;';}"
             >
             <span class="evidence-type-badge">${evidenceType}</span>
           </div>
@@ -512,16 +590,16 @@
         </article>
       `
       : `<div class="media-placeholder evidence-placeholder" aria-label="Placeholder media panel">${fallbackLabel}</div>`;
-    const missionImage = typeof mission.exploration?.image === 'string' ? mission.exploration.image.trim() : '';
+    const missionImage = missionVisuals.hero.imagePath;
     const missionMedia = {
       src: missionImage,
-      srcset: mission.exploration?.srcset || ''
+      srcset: missionVisuals.hero.srcset || ''
     };
     const missionMediaAttrs = toResponsiveImageAttrs(missionMedia, '(max-width: 960px) 100vw, 480px');
-    const missionMediaDimensions = toImageDimensionAttrs(mission.exploration || {});
-    const missionAlt = getMeaningfulAltText(mission.exploration?.alt, `${mission.name} mission visual`);
-    const missionCaption = mission.exploration?.caption || mission.exploration?.mediaLabel || 'Mission visual evidence';
-    const missionSource = mission.exploration?.source;
+    const missionMediaDimensions = toImageDimensionAttrs({ width: 1280, height: 720 });
+    const missionAlt = getMeaningfulAltText(missionVisuals.hero.alt, `${mission.name} mission visual`);
+    const missionCaption = missionVisuals.hero.caption || mission.exploration?.mediaLabel || 'Mission visual evidence';
+    const missionSource = missionVisuals.hero.sourceLabel;
     const mediaPanel = missionImage
       ? `
         <figure class="mission-media" aria-label="Mission visual evidence">
@@ -533,7 +611,7 @@
             loading="lazy"
             decoding="async"
             ${missionMediaDimensions}
-            onerror="this.closest('figure').outerHTML='&lt;div class=&quot;media-placeholder&quot; aria-label=&quot;Placeholder media panel&quot;&gt;${fallbackLabel}&lt;/div&gt;'"
+            onerror="if(!this.dataset.fallbackApplied && '${escapeHtml(missionVisuals.fallbackDistrictArt?.src || '')}'){this.dataset.fallbackApplied='1';this.src='${escapeHtml(missionVisuals.fallbackDistrictArt?.src || '')}';this.srcset='${escapeHtml(missionVisuals.fallbackDistrictArt?.srcset || '')}';}else{this.closest('figure').outerHTML='&lt;div class=&quot;media-placeholder&quot; aria-label=&quot;Placeholder media panel&quot;&gt;${fallbackLabel}&lt;/div&gt;';}"
           >
           <figcaption>
             <span class="mission-media-caption">${escapeHtml(missionCaption)}</span>
@@ -551,10 +629,10 @@
         <p><strong>Impact Points Remaining:</strong> ${state.impactPointsRemaining}</p>
         <div class="grid two">
           <div class="brief-panel">
+            ${evidenceCard}
             <h3>Current Situation</h3>
             <p>${escapeHtml(mission.exploration.brief)}</p>
             <ul>${points}</ul>
-            ${evidenceCard}
           </div>
           ${mediaPanel}
         </div>
