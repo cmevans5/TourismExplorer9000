@@ -48,6 +48,8 @@
   let optionsByMissionId = {};
   let lastFocusedEl = null;
   let pendingReturnMissionId = null;
+  let lastRenderedMapHotspotId = null;
+  let pendingCtaFocusMissionId = null;
 
   function clearDecisionDeltaIndicatorsOnSceneChange(draft, nextScreen) {
     if (nextScreen === 'decision') {
@@ -77,6 +79,34 @@
     return (state.offerSetMissionIds || []).map(id => missionById[id]).filter(Boolean);
   }
 
+  function getSuggestedMissionId(offerMissionIds = state.offerSetMissionIds || []) {
+    if (!offerMissionIds.length) return null;
+
+    const recommended = offerMissionIds.filter(id => state.offerSetRolesById?.[id] === 'recommended');
+    const candidateIds = recommended.length ? recommended : offerMissionIds;
+    const diagnosisIds = state.diagnosis?.remediationMissions || [];
+    const diagnosisMatch = diagnosisIds.find(id => candidateIds.includes(id));
+    if (diagnosisMatch) return diagnosisMatch;
+    return candidateIds[0];
+  }
+
+  function refreshTurnHeaderSignals() {
+    const goalByNeed = {
+      economic: 'Strengthen Economic Capital while protecting visitor experience.',
+      sustainability: 'Reduce emissions and strain while keeping service delivery reliable.',
+      culture: 'Improve Cultural Inclusion without destabilizing other categories.',
+      hospitality: 'Raise Hospitality through practical operations improvements.',
+      satisfaction: 'Boost Visitor Satisfaction while preserving long-term system balance.'
+    };
+    const orderedCategories = Object.entries(state.categories || {}).sort((left, right) => left[1] - right[1]);
+    const weakestCategory = orderedCategories[0]?.[0] || 'satisfaction';
+
+    state.turnGoal = goalByNeed[weakestCategory] || 'Pick a mission that stabilizes your weakest category first.';
+
+    const netDelta = Object.values(state.lastDecisionDeltas || {}).reduce((sum, value) => sum + value, 0);
+    state.riskTrend = netDelta < 0 ? 'up' : (netDelta > 0 ? 'down' : 'steady');
+  }
+
   function currentMission() {
     return state.selectedMissionId ? missionById[state.selectedMissionId] : null;
   }
@@ -102,6 +132,7 @@
       state.offerSetMissionIds = [];
       state.offerSetRolesById = {};
       state.offerSetReasonsById = {};
+      state.suggestedMissionId = null;
       state.selectedHotspotId = null;
       state.diagnosis = buildDiagnosis(state, SCORING_CONSTANTS, { offerMissionIds: [], rolesById: {}, reasonsById: {}, needs: null });
       return;
@@ -119,6 +150,7 @@
     state.offerSetMissionIds = shuffledOfferMissionIds;
     state.offerSetRolesById = offer.rolesById;
     state.offerSetReasonsById = offer.reasonsById;
+    state.suggestedMissionId = getSuggestedMissionId(shuffledOfferMissionIds);
     state.selectedHotspotId = shuffledOfferMissionIds.includes(state.selectedHotspotId)
       ? state.selectedHotspotId
       : (shuffledOfferMissionIds[0] || null);
@@ -135,6 +167,7 @@
       state.offerSetMissionIds = [];
       state.offerSetRolesById = {};
       state.offerSetReasonsById = {};
+      state.suggestedMissionId = null;
       state.selectedHotspotId = null;
       state.casesCompletedThisRun = 0;
       state.selectedMissionId = null;
@@ -162,10 +195,13 @@
       state.showPatternGamingNudge = false;
       state.lastDecisionDeltas = null;
       state.lastDecisionOutcomeText = '';
+      state.turnGoal = '';
+      state.riskTrend = 'steady';
     }
 
     computeAndStoreMetrics();
     refreshOfferSet();
+    refreshTurnHeaderSignals();
   }
 
   function navigate(screen) {
@@ -206,6 +242,7 @@
     }
     state.finalNarrative = getFinalNarrative();
     state.pipVoluntaryIndicator = !state.topGatePassed && state.casesCompletedThisRun >= 2;
+    refreshTurnHeaderSignals();
   }
 
   function evaluatePoorOutcome(deltas) {
@@ -233,11 +270,27 @@
     });
   }
 
-  function selectHotspot(hotspotId) {
+  function selectHotspot(hotspotId, { focusCta = false } = {}) {
     if (!(state.offerSetMissionIds || []).includes(hotspotId)) return;
+    const changed = state.selectedHotspotId !== hotspotId;
+    if (!changed) return;
+
+    if (focusCta) pendingCtaFocusMissionId = hotspotId;
     commit(draft => {
       draft.selectedHotspotId = hotspotId;
     });
+  }
+
+  function surprisePickMission() {
+    const offeredMissionIds = (state.offerSetMissionIds || []).filter(id => missionById[id]);
+    if (!offeredMissionIds.length) return;
+
+    const selectableIds = offeredMissionIds.filter(id => id !== state.selectedHotspotId);
+    const candidateIds = selectableIds.length ? selectableIds : offeredMissionIds;
+    const seed = `${state.runSeed}:${state.casesCompletedThisRun}:${state.decisionCount}:surprise`;
+    const rng = createRunRng(seed);
+    const chosenId = candidateIds[Math.floor(rng() * candidateIds.length)] || candidateIds[0];
+    selectHotspot(chosenId, { focusCta: true });
   }
 
   function getStoryboardOrderedHotspotIds() {
@@ -552,8 +605,9 @@
       const target = event.target.closest('button, [data-hotspot-id], [data-mission-id], [data-option-id]');
       if (!target) return;
 
-      if (target.matches('[data-hotspot-id]')) return selectHotspot(target.getAttribute('data-hotspot-id'));
+      if (target.matches('[data-hotspot-id]')) return selectHotspot(target.getAttribute('data-hotspot-id'), { focusCta: true });
       if (target.matches('[data-mission-id]')) return selectMission(target.getAttribute('data-mission-id'));
+      if (target.matches('[data-surprise-mission]')) return surprisePickMission();
       if (target.matches('#btnAskPipWhy')) return openPipOverlay(false);
       if (target.matches('[data-dismiss-map-onboarding]')) return commit(draft => { draft.mapOnboardingDismissed = true; });
       if (target.matches('#btnToDecision')) return navigate('decision');
@@ -570,7 +624,7 @@
 
       if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault();
-        return selectHotspot(hotspotId);
+        return selectHotspot(hotspotId, { focusCta: true });
       }
 
       if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
@@ -594,6 +648,28 @@
     if (state.currentScreen === 'map') {
       mainEl.innerHTML = UI.renderMap(state, getOfferedMissions(), SCORING_CONSTANTS, RUN_CONFIG);
       if (state.showPatternGamingNudge) commit(draft => { draft.showPatternGamingNudge = false; }, { renderAfter: false });
+
+      const selectedId = state.selectedHotspotId || null;
+      const detailPanel = mainEl.querySelector('.map-mission-detail');
+      if (detailPanel && selectedId && lastRenderedMapHotspotId && selectedId !== lastRenderedMapHotspotId && detailPanel.animate) {
+        detailPanel.animate(
+          [
+            { opacity: 0, transform: 'translateY(8px)' },
+            { opacity: 1, transform: 'translateY(0)' }
+          ],
+          { duration: 180, easing: 'ease-out' }
+        );
+      }
+
+      if (pendingCtaFocusMissionId && pendingCtaFocusMissionId === selectedId) {
+        requestAnimationFrame(() => {
+          const ctaButton = mainEl.querySelector('[data-primary-cta="enter-mission"]');
+          if (ctaButton) ctaButton.focus();
+        });
+        pendingCtaFocusMissionId = null;
+      }
+
+      lastRenderedMapHotspotId = selectedId;
     } else if (state.currentScreen === 'explore') {
       mainEl.innerHTML = UI.renderExploration(currentMission(), state, RUN_CONFIG);
     } else if (state.currentScreen === 'decision') {

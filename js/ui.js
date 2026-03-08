@@ -219,6 +219,22 @@
     return `<p class="sampling-progress"><strong>Tourism Sampling:</strong> Case ${caseNumber}/${runLength}</p>`;
   }
 
+  function renderTurnHeader(state, runLength) {
+    const caseNumber = Math.min(state.casesCompletedThisRun + 1, runLength);
+    const trend = state.riskTrend || 'steady';
+    const trendArrow = trend === 'up' ? '↗' : (trend === 'down' ? '↘' : '→');
+    const trendLabel = trend === 'up' ? 'Risk rising' : (trend === 'down' ? 'Risk easing' : 'Risk steady');
+    const goal = state.turnGoal || 'Pick a mission that improves your weakest category without overloading another.';
+
+    return `
+      <section class="console-shell card turn-header" aria-label="Turn status">
+        <p class="small"><strong>Case ${caseNumber}/${runLength}</strong></p>
+        <p class="small" aria-label="Risk trend">${trendArrow} ${escapeHtml(trendLabel)}</p>
+        <p class="small"><strong>Goal:</strong> ${escapeHtml(goal)}</p>
+      </section>
+    `;
+  }
+
   function getDistrictKey(mission) {
     return DISTRICT_BY_HUB[mission.hub] || 'historic-ybor';
   }
@@ -278,6 +294,9 @@
       ? state.selectedHotspotId
       : (offeredMissions[0]?.id || null);
     const selectedMission = offeredMissions.find(mission => mission.id === selectedHotspotId) || null;
+    const suggestedMissionId = offeredMissions.some(mission => mission.id === state.suggestedMissionId)
+      ? state.suggestedMissionId
+      : (offeredMissions[0]?.id || null);
 
     const missionMarkers = offeredMissions.map(mission => {
       const role = state.offerSetRolesById?.[mission.id] || 'wildcard';
@@ -291,10 +310,11 @@
       }
       const slotIndex = Math.min(stackIndex, MAX_VISIBLE_MARKERS_PER_DISTRICT - 1);
       const isSelected = selectedHotspotId === mission.id;
+      const isSuggested = suggestedMissionId === mission.id;
 
       return `
         <button
-          class="map-hotspot-marker district-${districtKey} district-${districtKey}-slot-${slotIndex} ${highlightIds.has(mission.id) ? 'highlighted' : ''} ${isSelected ? 'is-selected' : ''} ${shouldHideMarker ? 'is-collapsed-chip' : ''}"
+          class="map-hotspot-marker district-${districtKey} district-${districtKey}-slot-${slotIndex} ${highlightIds.has(mission.id) ? 'highlighted' : ''} ${isSelected ? 'is-selected' : ''} ${isSuggested ? 'is-suggested' : ''} ${shouldHideMarker ? 'is-collapsed-chip' : ''}"
           style="--stack-index:${stackIndex};"
           data-hotspot-id="${escapeHtml(mission.id)}"
           data-district-key="${escapeHtml(districtKey)}"
@@ -306,6 +326,7 @@
         >
           <span class="district-marker district-${districtKey}" aria-hidden="true"></span>
           <span class="marker-name">${escapeHtml(mission.name)}</span>
+          ${isSuggested ? '<span class="tag good">Suggested Next Move</span>' : ''}
           <span class="marker-role tag ${ROLE_CLASS[role] || 'warn'}">${escapeHtml(roleLabel(role))}</span>
         </button>
       `;
@@ -324,6 +345,7 @@
       const districtKey = getDistrictKey(selectedMission);
       const districtLabel = escapeHtml(DISTRICT_LABELS[districtKey]);
       const role = state.offerSetRolesById?.[selectedMission.id] || 'wildcard';
+      const isSuggested = selectedMission.id === suggestedMissionId;
       const missionMedia = MISSION_MEDIA[selectedMission.id] || DISTRICT_MEDIA[districtKey] || null;
       const thumbnailAttrs = toResponsiveImageAttrs(missionMedia, '(max-width: 960px) 100vw, 360px');
       const thumbnailDimensions = toImageDimensionAttrs(missionMedia);
@@ -350,8 +372,10 @@
           ${thumbnail}
           <p class="district-label">${districtLabel}</p>
           <h3>${escapeHtml(selectedMission.name)}</h3>
+          ${isSuggested ? '<p class="tag good">Suggested Next Move</p>' : ''}
           <p class="mission-objective">${escapeHtml(objectiveLine)}</p>
-          <button class="btn" data-mission-id="${escapeHtml(selectedMission.id)}" aria-label="Enter mission: ${escapeHtml(selectedMission.name)}">Enter Mission</button>
+          <button class="btn" data-mission-id="${escapeHtml(selectedMission.id)}" data-primary-cta="enter-mission" aria-label="Enter mission: ${escapeHtml(selectedMission.name)}">Enter Mission</button>
+          <button class="btn secondary" type="button" data-surprise-mission="true" aria-label="Surprise me with a mission">Surprise me</button>
           <p class="small mission-microcopy">Need details first? Expand a section below.</p>
           <details class="mission-detail-drawer">
             <summary>Mission Context</summary>
@@ -409,6 +433,7 @@
       ${renderTokenDashboard(state)}
       <section class="map-stage">
         <div class="map-overview-stack map-zone-status" aria-label="Run status">
+          ${renderTurnHeader(state, runConfig.RUN_LENGTH)}
           <section class="console-shell card map-intro-card" tabindex="0">
             <h2>Run Status</h2>
             ${renderRunProgress(state, runConfig.RUN_LENGTH)}
