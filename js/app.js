@@ -139,7 +139,13 @@
   }
 
   function navigate(screen) {
-    commit(draft => { draft.currentScreen = screen; });
+    commit(draft => {
+      const isMajorSceneChange = draft.currentScreen !== screen;
+      if (isMajorSceneChange && draft.lastDecisionDeltas && draft.currentScreen !== 'decision') {
+        draft.lastDecisionDeltas = null;
+      }
+      draft.currentScreen = screen;
+    });
   }
 
   function computeAndStoreMetrics() {
@@ -186,6 +192,9 @@
     commit(draft => {
       draft.selectedMissionId = missionId;
       draft.impactPointsRemaining = SCORING_CONSTANTS.impactBudgetPerHotspot;
+      if (draft.lastDecisionDeltas && draft.currentScreen !== 'decision') {
+        draft.lastDecisionDeltas = null;
+      }
       draft.currentScreen = 'explore';
     });
   }
@@ -480,10 +489,6 @@
     }
 
     mainEl.focus();
-
-    if (state.lastDecisionDeltas && state.currentScreen !== 'decision') {
-      commit(draft => { draft.lastDecisionDeltas = null; }, { renderAfter: false });
-    }
   }
 
   function buildMissionLookups(items) {
