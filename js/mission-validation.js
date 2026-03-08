@@ -21,6 +21,29 @@
     return typeof value === 'string' && value.trim().length >= 3;
   }
 
+  function validatePedagogyBlock(pedagogy, label, errors) {
+    if (!pedagogy || typeof pedagogy !== 'object') {
+      errors.push(`${label} is missing pedagogy metadata.`);
+      return;
+    }
+
+    if (!Array.isArray(pedagogy.tags) || pedagogy.tags.length === 0) {
+      errors.push(`${label}.tags must include at least one tag.`);
+    }
+
+    if (!Array.isArray(pedagogy.reinforces) || pedagogy.reinforces.length === 0) {
+      errors.push(`${label}.reinforces must include at least one reinforcement target.`);
+    }
+
+    if (!Array.isArray(pedagogy.commonPitfalls) || pedagogy.commonPitfalls.length === 0) {
+      errors.push(`${label}.commonPitfalls must include at least one pitfall.`);
+    }
+
+    if (!hasMeaningfulText(pedagogy.difficulty)) {
+      errors.push(`${label}.difficulty is required and must be meaningful.`);
+    }
+  }
+
   function validateImageMetadataBlock(block, label, errors, { optional = false } = {}) {
     if (!block) {
       if (!optional) errors.push(`${label} is missing.`);
@@ -62,6 +85,7 @@
 
       if (!mission?.hub) errors.push(`${label} is missing hub.`);
       if (!mission?.issueType) errors.push(`${label} is missing issueType.`);
+      validatePedagogyBlock(mission?.pedagogy, `${label}.pedagogy`, errors);
 
       if (!Array.isArray(mission?.options) || mission.options.length !== 3) {
         errors.push(`${label} must have exactly 3 options.`);
@@ -86,8 +110,12 @@
           });
         }
 
-        if (!String(option?.learningNote || '').trim()) {
-          warnings.push(`${label}:${option?.id || optionIndex} missing learningNote.`);
+        if (!hasMeaningfulText(option?.feedback)) {
+          errors.push(`${optionLabel} is missing meaningful feedback.`);
+        }
+
+        if (!hasMeaningfulText(option?.learningNote)) {
+          errors.push(`${optionLabel} is missing meaningful learningNote.`);
         }
       });
 
