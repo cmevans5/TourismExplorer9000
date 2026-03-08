@@ -250,6 +250,53 @@ h4 {
 .district-eco-park { bottom: 9%; left: 9%; }
 .district-beachfront-zone { bottom: 8%; right: 8%; }
 
+
+.district-legend {
+  margin-bottom: 1rem;
+  padding: 0.7rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: linear-gradient(165deg, rgba(20, 54, 82, 0.58), rgba(9, 31, 49, 0.76));
+}
+
+.district-legend h3 {
+  margin: 0 0 0.45rem;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.district-legend ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.9rem;
+}
+
+.district-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.38rem;
+  font-size: 0.82rem;
+  color: #dceaf6;
+}
+
+.district-marker {
+  width: 0.62rem;
+  height: 0.62rem;
+  border-radius: 50%;
+  border: 1px solid rgba(223, 245, 255, 0.45);
+  box-shadow: 0 0 0 1px rgba(4, 18, 31, 0.45);
+}
+
+.district-marker.district-downtown-waterfront { background: #56cde6; }
+.district-marker.district-cultural-corridor { background: #8fcb62; }
+.district-marker.district-historic-ybor { background: #ffd166; }
+.district-marker.district-eco-park { background: #58d59e; }
+.district-marker.district-beachfront-zone { background: #f59bc8; }
 .map-hotspot.highlighted,
 .map-hotspot:hover {
   border-color: var(--border-strong);
@@ -490,6 +537,10 @@ a:focus-visible {
     position: static;
     width: 100%;
     transform: none;
+  }
+
+  .district-legend {
+    display: none;
   }
 }
 
