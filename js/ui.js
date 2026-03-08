@@ -271,6 +271,8 @@
   function renderMap(state, missions, constants, runConfig) {
     const highlightIds = new Set(state.highlightMissionIds || []);
     const districtCounts = {};
+    const hiddenDistrictCounts = {};
+    const MAX_VISIBLE_MARKERS_PER_DISTRICT = 2;
     const offeredMissions = missions.slice(0, 4);
     const selectedHotspotId = offeredMissions.some(mission => mission.id === state.selectedHotspotId)
       ? state.selectedHotspotId
@@ -283,14 +285,20 @@
       const districtLabel = escapeHtml(DISTRICT_LABELS[districtKey]);
       districtCounts[districtKey] = (districtCounts[districtKey] || 0) + 1;
       const stackIndex = districtCounts[districtKey] - 1;
+      const shouldHideMarker = stackIndex >= MAX_VISIBLE_MARKERS_PER_DISTRICT;
+      if (shouldHideMarker) {
+        hiddenDistrictCounts[districtKey] = (hiddenDistrictCounts[districtKey] || 0) + 1;
+      }
+      const slotIndex = Math.min(stackIndex, MAX_VISIBLE_MARKERS_PER_DISTRICT - 1);
       const isSelected = selectedHotspotId === mission.id;
 
       return `
         <button
-          class="map-hotspot-marker district-${districtKey} ${highlightIds.has(mission.id) ? 'highlighted' : ''} ${isSelected ? 'is-selected' : ''}"
+          class="map-hotspot-marker district-${districtKey} district-${districtKey}-slot-${slotIndex} ${highlightIds.has(mission.id) ? 'highlighted' : ''} ${isSelected ? 'is-selected' : ''} ${shouldHideMarker ? 'is-collapsed-chip' : ''}"
           style="--stack-index:${stackIndex};"
           data-hotspot-id="${escapeHtml(mission.id)}"
           aria-pressed="${isSelected ? 'true' : 'false'}"
+          ${shouldHideMarker && !isSelected ? 'hidden' : ''}
           aria-label="View mission details: ${escapeHtml(mission.name)} in ${districtLabel}"
         >
           <span class="district-marker district-${districtKey}" aria-hidden="true"></span>
@@ -299,6 +307,14 @@
         </button>
       `;
     }).join('');
+
+    const districtOverflowChips = Object.entries(hiddenDistrictCounts)
+      .map(([districtKey, count]) => `
+        <div class="map-overflow-chip district-${districtKey} district-${districtKey}-slot-1" aria-hidden="true">
+          +${count} more
+        </div>
+      `)
+      .join('');
 
     let missionDetailPanel = '<section class="map-mission-detail card" aria-live="polite"><p class="small">No missions currently available.</p></section>';
     if (selectedMission) {
@@ -386,6 +402,7 @@
         </div>
         <section class="console-shell city-map-board" aria-label="Tampa map hotspots" role="group">
           ${missionMarkers}
+          ${districtOverflowChips}
         </section>
         ${missionDetailPanel}
       </section>
