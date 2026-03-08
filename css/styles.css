@@ -262,7 +262,7 @@ h4 {
 
 .map-stage {
   display: grid;
-  grid-template-columns: minmax(280px, 360px) minmax(0, 1fr);
+  grid-template-columns: minmax(260px, 340px) minmax(0, 1fr) minmax(280px, 340px);
   gap: 1rem;
   align-items: start;
 }
@@ -300,19 +300,40 @@ h4 {
   box-shadow: 0 0 0 2px rgba(255, 229, 138, 0.26), var(--shadow-panel);
 }
 
-.map-hotspot {
+.map-hotspot-marker {
   position: absolute;
-  width: min(280px, 32vw);
+  width: min(240px, 28vw);
   border: 1px solid var(--border);
-  background: var(--surface-3);
-  padding: var(--space-4);
+  background: rgba(8, 30, 46, 0.9);
+  padding: 0.6rem 0.7rem;
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-soft);
-  transform: translateY(calc(var(--stack-index, 0) * 16px));
-  transition: box-shadow 180ms ease, border-color 180ms ease;
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
+  transform: translateY(calc(var(--stack-index, 0) * 10px));
+  transition: box-shadow 180ms ease, border-color 180ms ease, background-color 180ms ease;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.45rem;
+  align-items: center;
+  text-align: left;
+  color: var(--text);
+}
+
+.marker-name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.marker-role {
+  margin-left: 0.25rem;
+}
+
+.map-mission-detail {
+  align-self: start;
+}
+
+.map-mission-detail h3 {
+  margin-bottom: 0.35rem;
 }
 
 
@@ -349,11 +370,6 @@ h4 {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin: 0 0 0.35rem;
-}
-
-.map-hotspot h3 {
-  font-size: 1rem;
-  margin-bottom: 0.35rem;
 }
 
 .hotspot-meta {
@@ -437,15 +453,16 @@ h4 {
 .district-marker.district-historic-ybor { background: #ffd166; }
 .district-marker.district-eco-park { background: #58d59e; }
 .district-marker.district-beachfront-zone { background: #f59bc8; }
-.map-hotspot.highlighted,
-.map-hotspot:hover {
+.map-hotspot-marker.highlighted,
+.map-hotspot-marker:hover,
+.map-hotspot-marker.is-selected {
   border-color: var(--border-strong);
-  box-shadow: 0 0 0 1px rgba(160, 228, 255, 0.5), 0 14px 28px rgba(4, 18, 31, 0.65);
+  box-shadow: 0 0 0 1px rgba(160, 228, 255, 0.5), 0 10px 20px rgba(4, 18, 31, 0.6);
 }
 
-.map-hotspot:focus-within {
+.map-hotspot-marker:focus-visible {
   border-color: var(--focus);
-  box-shadow: 0 0 0 2px rgba(255, 229, 138, 0.45), 0 14px 28px rgba(4, 18, 31, 0.65);
+  box-shadow: 0 0 0 2px rgba(255, 229, 138, 0.45), 0 10px 20px rgba(4, 18, 31, 0.6);
 }
 
 .tag {
@@ -939,7 +956,7 @@ a:focus-visible {
     margin: 0;
   }
 
-  .map-hotspot {
+  .map-hotspot-marker {
     position: static;
     width: 100%;
     transform: none;
@@ -1014,14 +1031,15 @@ a:focus-visible {
     box-shadow: 0 0 0 1px rgba(84, 216, 245, 0.24);
   }
 
-  .map-hotspot {
+  .map-hotspot-marker {
     transform: none;
     transition: border-color 120ms ease, box-shadow 120ms ease;
   }
 
-  .map-hotspot:hover,
-  .map-hotspot.highlighted,
-  .map-hotspot:focus-within {
+  .map-hotspot-marker:hover,
+  .map-hotspot-marker.highlighted,
+  .map-hotspot-marker.is-selected,
+  .map-hotspot-marker:focus-visible {
     box-shadow: var(--shadow-soft);
   }
 }
