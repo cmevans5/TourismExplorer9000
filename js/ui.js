@@ -261,9 +261,11 @@
     return projected;
   }
 
-  function computeProjectedBalanceRiskLabel(projectedCategories) {
+  function computeProjectedBalanceRisk(projectedCategories) {
     const values = Object.values(projectedCategories || {});
-    if (!values.length) return 'Moderate';
+    if (!values.length) {
+      return { label: 'Medium', minCategory: 0, variance: 0 };
+    }
 
     const projectedMinCategory = Math.min(...values);
     const projectedVariance = Math.max(...values) - projectedMinCategory;
@@ -271,15 +273,19 @@
     const minTarget = scoringConstants?.vMinCategoryTop ?? 2;
     const varianceTarget = scoringConstants?.vMaxVarianceTop ?? 2;
 
+    let label = 'Low';
+
     if (projectedMinCategory < 0 || projectedVariance > varianceTarget + 2 || projectedMinCategory < minTarget - 1) {
-      return 'High';
+      label = 'High';
+    } else if (projectedMinCategory < minTarget || projectedVariance > varianceTarget) {
+      label = 'Medium';
     }
 
-    if (projectedMinCategory < minTarget || projectedVariance > varianceTarget) {
-      return 'Moderate';
-    }
-
-    return 'Low';
+    return {
+      label,
+      minCategory: projectedMinCategory,
+      variance: projectedVariance
+    };
   }
 
   function renderDecision(mission, state, runConfig, displayOptions = []) {
@@ -289,7 +295,10 @@
         const afford = state.impactPointsRemaining >= optionCost;
         const displayTitle = stripOptionKeyPrefix(opt.title);
         const projectedCategories = computeProjectedCategories(state.categories, opt.deltas);
-        const projectedRisk = computeProjectedBalanceRiskLabel(projectedCategories);
+        const projectedRisk = computeProjectedBalanceRisk(projectedCategories);
+        const snapshotSummary = Object.entries(projectedCategories)
+          .map(([key, value]) => `${CATEGORY_ICONS[key]} ${value}`)
+          .join(' • ');
         return `
           <button class="btn choice ${afford ? '' : 'blocked'}" data-option-id="${escapeHtml(opt.displayLabel)}" aria-label="Select option ${escapeHtml(opt.displayLabel)}: ${escapeHtml(displayTitle)}" ${afford ? '' : 'disabled'}>
             <span class="choice-head">
@@ -298,7 +307,7 @@
             </span>
             <span class="small">${escapeHtml(opt.description)}</span>
             <span class="impact-row">${renderImpactPills(opt.deltas || {})}</span>
-            <span class="projected-balance-risk risk-${projectedRisk.toLowerCase()}">Projected Balance Risk: ${projectedRisk}</span>
+            <span class="projected-balance-risk risk-${projectedRisk.label.toLowerCase()}" title="Projected snapshot: ${escapeHtml(snapshotSummary)}">Projected Balance Risk: ${projectedRisk.label} · Min ${projectedRisk.minCategory}, Var ${projectedRisk.variance}</span>
             <span class="small">${afford ? `${state.impactPointsRemaining} points remaining before decision` : 'Insufficient budget'}</span>
           </button>
         `;
