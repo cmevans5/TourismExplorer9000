@@ -39,7 +39,12 @@
           "alt": "Annotated map of Riverwalk curb and pedestrian chokepoints during weekend peaks.",
           "caption": "Pedestrian chokepoints cluster around two curb segments during sunset arrivals.",
           "sourceLabel": "Source: Tampa Mobility Ops Dashboard (Weekend Snapshot)"
-        }
+        },
+        "image": "assets/images/missions/riverwalk-mobility-surge.svg",
+        "alt": "Annotated map of Riverwalk curb and pedestrian chokepoints during weekend peaks.",
+        "caption": "Pedestrian chokepoints cluster around two curb segments during sunset arrivals.",
+        "source": "Source: Tampa Mobility Ops Dashboard (Weekend Snapshot)",
+        "srcset": "assets/images/missions/riverwalk-mobility-surge.svg 1x"
       },
       "options": [
         {
@@ -129,7 +134,12 @@
           "alt": "Trend graphic comparing nightlife permit growth with heritage venue utilization in Ybor.",
           "caption": "Nighttime permit growth is outpacing heritage venue utilization on Fridays.",
           "sourceLabel": "Source: Ybor Cultural Affairs + Permit Office"
-        }
+        },
+        "image": "assets/images/missions/ybor-nightlife-balance.svg",
+        "alt": "Trend graphic comparing nightlife permit growth with heritage venue utilization in Ybor.",
+        "caption": "Nighttime permit growth is outpacing heritage venue utilization on Fridays.",
+        "source": "Source: Ybor Cultural Affairs + Permit Office",
+        "srcset": "assets/images/missions/ybor-nightlife-balance.svg 1x"
       },
       "options": [
         {
@@ -219,7 +229,12 @@
           "alt": "Composite chart linking queue duration increases with diesel shuttle share at the park.",
           "caption": "Queue-time and diesel-share indicators rise together during peak afternoon blocks.",
           "sourceLabel": "Source: Park Operations Telemetry"
-        }
+        },
+        "image": "assets/images/missions/busch-queue-emissions.svg",
+        "alt": "Composite chart linking queue duration increases with diesel shuttle share at the park.",
+        "caption": "Queue-time and diesel-share indicators rise together during peak afternoon blocks.",
+        "source": "Source: Park Operations Telemetry",
+        "srcset": "assets/images/missions/busch-queue-emissions.svg 1x"
       },
       "options": [
         {
@@ -309,7 +324,12 @@
           "alt": "Cruise dispersal route diagram showing timed coach releases and neighborhood protection buffers.",
           "caption": "Overlapping disembarkation windows create localized curb and coach idling pressure.",
           "sourceLabel": "Source: Port Tampa Mobility Coordination Unit"
-        }
+        },
+        "image": "assets/images/missions/port-cruise-dispersal.svg",
+        "alt": "Cruise dispersal route diagram showing timed coach releases and neighborhood protection buffers.",
+        "caption": "Overlapping disembarkation windows create localized curb and coach idling pressure.",
+        "source": "Source: Port Tampa Mobility Coordination Unit",
+        "srcset": "assets/images/missions/port-cruise-dispersal.svg 1x"
       },
       "options": [
         {
