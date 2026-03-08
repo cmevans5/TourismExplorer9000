@@ -442,9 +442,17 @@
 
   function computeProjectedCategories(categories, deltas = {}) {
     const projected = {};
-    Object.entries(categories || {}).forEach(([key, value]) => {
-      projected[key] = value + (deltas[key] || 0);
+    const categoryKeys = new Set([
+      ...Object.keys(categories || {}),
+      ...Object.keys(deltas || {})
+    ]);
+
+    categoryKeys.forEach((key) => {
+      const currentValue = Number(categories?.[key]) || 0;
+      const deltaValue = Number(deltas?.[key]) || 0;
+      projected[key] = currentValue + deltaValue;
     });
+
     return projected;
   }
 
@@ -486,6 +494,9 @@
         const snapshotSummary = Object.entries(projectedCategories)
           .map(([key, value]) => `${CATEGORY_ICONS[key]} ${value}`)
           .join(' • ');
+        const riskClass = projectedRisk.label.toLowerCase();
+        const riskText = `Risk: ${projectedRisk.label} (minCategory ${projectedRisk.minCategory}, variance ${projectedRisk.variance})`;
+
         return `
           <button class="btn choice ${afford ? '' : 'blocked'}" data-option-id="${escapeHtml(opt.displayLabel)}" aria-label="${escapeHtml(afford ? `Select option ${opt.displayLabel}: ${displayTitle}` : `Option ${opt.displayLabel}: ${displayTitle} unavailable due to insufficient budget`)}" ${afford ? '' : 'disabled'}>
             <span class="choice-head">
@@ -494,7 +505,7 @@
             </span>
             <span class="small">${escapeHtml(opt.description)}</span>
             <span class="impact-row">${renderImpactPills(opt.deltas || {})}</span>
-            <span class="projected-risk risk-${projectedRisk.label.toLowerCase()}" title="Projected snapshot: ${escapeHtml(snapshotSummary)}">Projected risk: ${projectedRisk.label} · Min ${projectedRisk.minCategory}, Var ${projectedRisk.variance}</span>
+            <span class="projected-risk risk-${riskClass}" title="Projected totals by category: ${escapeHtml(snapshotSummary)}">${escapeHtml(riskText)}</span>
             <span class="small">${afford ? `${state.impactPointsRemaining} points remaining before decision` : 'Insufficient budget'}</span>
           </button>
         `;
