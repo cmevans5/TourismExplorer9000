@@ -297,7 +297,10 @@
           class="map-hotspot-marker district-${districtKey} district-${districtKey}-slot-${slotIndex} ${highlightIds.has(mission.id) ? 'highlighted' : ''} ${isSelected ? 'is-selected' : ''} ${shouldHideMarker ? 'is-collapsed-chip' : ''}"
           style="--stack-index:${stackIndex};"
           data-hotspot-id="${escapeHtml(mission.id)}"
+          data-district-key="${escapeHtml(districtKey)}"
           aria-pressed="${isSelected ? 'true' : 'false'}"
+          aria-current="${isSelected ? 'location' : 'false'}"
+          role="button"
           ${shouldHideMarker && !isSelected ? 'hidden' : ''}
           aria-label="View mission details: ${escapeHtml(mission.name)} in ${districtLabel}"
         >
@@ -341,7 +344,7 @@
         : '';
 
       missionDetailPanel = `
-        <section class="console-shell map-mission-detail" aria-live="polite" aria-label="Selected mission detail">
+        <section class="console-shell map-mission-detail ${selectedMission ? 'is-selected' : ''}" aria-live="polite" aria-label="Selected mission detail">
           ${thumbnail}
           <p class="district-label">${districtLabel}</p>
           <h3>${escapeHtml(selectedMission.name)}</h3>
@@ -376,7 +379,7 @@
       ${renderTokenDashboard(state)}
       <section class="map-stage">
         <div class="map-overview-stack">
-          <section class="console-shell card map-intro-card">
+          <section class="console-shell card map-intro-card" tabindex="0">
             <h2>City Map Hub</h2>
             ${renderRunProgress(state, runConfig.RUN_LENGTH)}
             <p><strong>Role:</strong> Newly hired Tourism Analyst for the City of Tampa.</p>
@@ -392,7 +395,7 @@
             <h2>Impact Budget</h2>
             <p>You receive <strong>${constants.impactBudgetPerHotspot} Impact Points</strong> per mission. Decisions exceeding remaining budget are blocked.</p>
           </section>
-          <aside class="console-shell map-board-chrome" aria-label="Map legend and orientation cues">
+          <aside class="console-shell map-board-chrome" aria-label="Map legend and orientation cues" tabindex="0">
             <p class="map-board-cue" aria-hidden="true">🧭 North ↑ · Waterfront edge ≈ bay side</p>
             <h3>District Legend</h3>
             <ul>
@@ -400,6 +403,7 @@
             </ul>
           </aside>
         </div>
+        <p class="map-selection-helper">Select a district marker to load mission details.</p>
         <section class="console-shell city-map-board" aria-label="Tampa map hotspots" role="group">
           ${missionMarkers}
           ${districtOverflowChips}
