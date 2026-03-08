@@ -408,7 +408,7 @@
   function computeProjectedBalanceRisk(projectedCategories) {
     const values = Object.values(projectedCategories || {});
     if (!values.length) {
-      return { label: 'Medium', minCategory: 0, variance: 0 };
+      return { label: 'Moderate', minCategory: 0, variance: 0 };
     }
 
     const projectedMinCategory = Math.min(...values);
@@ -422,7 +422,7 @@
     if (projectedMinCategory < 0 || projectedVariance > varianceTarget + 2 || projectedMinCategory < minTarget - 1) {
       label = 'High';
     } else if (projectedMinCategory < minTarget || projectedVariance > varianceTarget) {
-      label = 'Medium';
+      label = 'Moderate';
     }
 
     return {
@@ -451,7 +451,7 @@
             </span>
             <span class="small">${escapeHtml(opt.description)}</span>
             <span class="impact-row">${renderImpactPills(opt.deltas || {})}</span>
-            <span class="projected-balance-risk risk-${projectedRisk.label.toLowerCase()}" title="Projected snapshot: ${escapeHtml(snapshotSummary)}">Projected Balance Risk: ${projectedRisk.label} · Min ${projectedRisk.minCategory}, Var ${projectedRisk.variance}</span>
+            <span class="projected-risk risk-${projectedRisk.label.toLowerCase()}" title="Projected snapshot: ${escapeHtml(snapshotSummary)}">Projected risk: ${projectedRisk.label} · Min ${projectedRisk.minCategory}, Var ${projectedRisk.variance}</span>
             <span class="small">${afford ? `${state.impactPointsRemaining} points remaining before decision` : 'Insufficient budget'}</span>
           </button>
         `;
