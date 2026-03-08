@@ -376,15 +376,15 @@
             <h2>Impact Budget</h2>
             <p>You receive <strong>${constants.impactBudgetPerHotspot} Impact Points</strong> per mission. Decisions exceeding remaining budget are blocked.</p>
           </section>
-        </div>
-        <section class="console-shell city-map-board" aria-label="Tampa map hotspots" role="group">
-          <aside class="map-board-chrome" aria-label="Map legend and orientation cues">
+          <aside class="console-shell map-board-chrome" aria-label="Map legend and orientation cues">
             <p class="map-board-cue" aria-hidden="true">🧭 North ↑ · Waterfront edge ≈ bay side</p>
             <h3>District Legend</h3>
             <ul>
               ${districtLegendItems}
             </ul>
           </aside>
+        </div>
+        <section class="console-shell city-map-board" aria-label="Tampa map hotspots" role="group">
           ${missionMarkers}
         </section>
         ${missionDetailPanel}

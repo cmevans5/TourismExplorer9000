@@ -388,12 +388,8 @@ h4 {
 
 
 .map-board-chrome {
-  position: absolute;
-  top: var(--space-4);
-  left: var(--space-4);
-  z-index: 2;
-  width: min(230px, calc(100% - (var(--space-4) * 2)));
-  margin-bottom: 0;
+  width: 100%;
+  margin: 0;
   padding: 0.9rem 1rem;
   border-radius: var(--radius-md);
   border: 1px solid rgba(151, 211, 245, 0.42);
@@ -944,16 +940,13 @@ a:focus-visible {
     min-height: auto;
     display: grid;
     gap: var(--space-4);
-    padding-top: 5.1rem;
     background-size: 100% 100%, 40px 40px, 40px 40px, contain;
     background-position: center, center, center, center top;
   }
 
 
   .map-board-chrome {
-    position: static;
     width: 100%;
-    margin: 0;
   }
 
   .map-hotspot-marker {
