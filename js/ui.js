@@ -48,6 +48,48 @@
     'beachfront-zone'
   ];
 
+  const DISTRICT_MEDIA = {
+    'downtown-waterfront': {
+      src: 'assets/images/districts/downtown-waterfront.svg',
+      alt: 'Riverwalk redevelopment zone with mixed-use pedestrian corridor and coordinated curb management.'
+    },
+    'cultural-corridor': {
+      src: 'assets/images/districts/cultural-corridor.svg',
+      alt: 'Airport cultural corridor showing multilingual wayfinding, transit links, and visitor service touchpoints.'
+    },
+    'historic-ybor': {
+      src: 'assets/images/districts/historic-ybor.svg',
+      alt: 'Historic Ybor entertainment district balancing nightlife activity with heritage storefront preservation.'
+    },
+    'eco-park': {
+      src: 'assets/images/districts/eco-park.svg',
+      alt: 'Eco-park mobility loop with shaded paths, low-emission shuttles, and community recreation access.'
+    },
+    'beachfront-zone': {
+      src: 'assets/images/districts/beachfront-zone.svg',
+      alt: 'Beachfront district transit transfer node linking cruise arrivals to waterfront retail and public access.'
+    }
+  };
+
+  const MISSION_MEDIA = {
+    'riverwalk-mobility-surge': {
+      src: 'assets/images/missions/riverwalk-mobility-surge.svg',
+      alt: 'Riverwalk intersection showing pedestrian crowding, curb conflicts, and temporary circulation controls.'
+    },
+    'ybor-nightlife-balance': {
+      src: 'assets/images/missions/ybor-nightlife-balance.svg',
+      alt: 'Ybor nightlife corridor with heritage venues, noise mitigation zones, and permit-management checkpoints.'
+    },
+    'busch-queue-emissions': {
+      src: 'assets/images/missions/busch-queue-emissions.svg',
+      alt: 'Theme-park queue network with shuttle electrification staging and wait-time pressure points.'
+    },
+    'port-cruise-dispersal': {
+      src: 'assets/images/missions/port-cruise-dispersal.svg',
+      alt: 'Cruise terminal exit plan illustrating staggered coach routing and neighborhood-sensitive dispersal paths.'
+    }
+  };
+
   function escapeHtml(value) {
     return String(value ?? '')
       .replace(/&/g, '&amp;')
@@ -113,6 +155,11 @@
 
   function getDistrictKey(mission) {
     return DISTRICT_BY_HUB[mission.hub] || 'historic-ybor';
+  }
+
+  function getExplorationMedia(mission) {
+    const districtKey = getDistrictKey(mission);
+    return MISSION_MEDIA[mission.id] || DISTRICT_MEDIA[districtKey] || null;
   }
 
   function renderTokenDashboard(state) {
@@ -228,6 +275,21 @@
     const points = (mission.exploration.bullets || mission.exploration.dataPoints || [])
       .map(point => `<li>${escapeHtml(point)}</li>`)
       .join('');
+    const media = getExplorationMedia(mission);
+    const fallbackLabel = escapeHtml(mission.exploration.mediaLabel || 'Mission visual / source evidence panel');
+    const mediaPanel = media
+      ? `
+        <figure class="mission-media" aria-label="Mission visual evidence">
+          <img
+            src="${escapeHtml(media.src)}"
+            alt="${escapeHtml(media.alt)}"
+            loading="lazy"
+            onerror="this.closest('figure').outerHTML='&lt;div class=&quot;media-placeholder&quot; aria-label=&quot;Placeholder media panel&quot;&gt;${fallbackLabel}&lt;/div&gt;'"
+          >
+          <figcaption>${fallbackLabel}</figcaption>
+        </figure>
+      `
+      : `<div class="media-placeholder" aria-label="Placeholder media panel">${fallbackLabel}</div>`;
 
     return `
       ${renderTokenDashboard(state)}
@@ -241,9 +303,7 @@
             <p>${escapeHtml(mission.exploration.brief)}</p>
             <ul>${points}</ul>
           </div>
-          <div class="media-placeholder" aria-label="Placeholder media panel">
-            ${escapeHtml(mission.exploration.mediaLabel || 'Mission visual / source evidence panel')}
-          </div>
+          ${mediaPanel}
         </div>
         <button id="btnToDecision" class="btn">Proceed to Decision</button>
       </section>

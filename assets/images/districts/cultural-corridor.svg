@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-labelledby="title desc">
+  <title id="title">Cultural Corridor</title>
+  <desc id="desc">Stylized airport-adjacent corridor with wayfinding pylons and transit links.</desc>
+  <rect width="800" height="450" fill="#14293b"/>
+  <rect x="0" y="290" width="800" height="160" fill="#204761"/>
+  <path d="M60 300 L400 180 L740 300" fill="none" stroke="#86d0ff" stroke-width="26"/>
+  <rect x="160" y="150" width="50" height="140" fill="#f7c95f"/>
+  <rect x="375" y="115" width="50" height="175" fill="#f7c95f"/>
+  <rect x="590" y="150" width="50" height="140" fill="#f7c95f"/>
+  <rect x="180" y="175" width="10" height="85" fill="#0f2940"/>
+  <rect x="395" y="140" width="10" height="120" fill="#0f2940"/>
+  <rect x="610" y="175" width="10" height="85" fill="#0f2940"/>
+  <circle cx="80" cy="90" r="48" fill="#2d6b8e"/>
+  <polygon points="80,50 100,88 60,88" fill="#d9f1ff"/>
+</svg>
