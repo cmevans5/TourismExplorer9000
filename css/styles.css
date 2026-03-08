@@ -310,13 +310,13 @@ h4 {
 
 .map-hotspot-marker {
   --board-edge-pad: 0.6rem;
-  --card-max-width: min(250px, 28vw);
+  --card-max-width: clamp(16.5rem, 19vw + 1rem, 20.5rem);
   --district-anchor-x: 50%;
   --district-anchor-y: 50%;
   --district-offset-x: 0px;
   --district-offset-y: 0px;
   position: absolute;
-  width: min(var(--card-max-width), calc(100% - (var(--board-edge-pad) * 2)));
+  width: min(var(--card-max-width), calc(100% - (var(--board-edge-pad) * 2.2)));
   max-width: calc(100% - (var(--board-edge-pad) * 2));
   left: clamp(
     var(--board-edge-pad),
@@ -326,19 +326,19 @@ h4 {
   top: clamp(
     var(--board-edge-pad),
     calc(var(--district-anchor-y) + var(--district-offset-y)),
-    calc(100% - 4.6rem)
+    calc(100% - 5.55rem)
   );
   right: auto;
   border: 1px solid var(--border);
-  background: rgba(8, 30, 46, 0.9);
-  padding: 0.6rem 0.7rem;
+  background: rgba(8, 30, 46, 0.84);
+  padding: 0.68rem 0.78rem;
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-soft);
   transform: translateY(calc(var(--stack-index, 0) * 10px));
   transition: box-shadow 180ms ease, border-color 180ms ease, background-color 180ms ease;
   display: grid;
   grid-template-columns: auto 1fr auto;
-  gap: 0.45rem;
+  gap: 0.5rem;
   align-items: center;
   text-align: left;
   color: var(--text);
@@ -348,7 +348,15 @@ h4 {
 .marker-name {
   font-size: 0.9rem;
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.32;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: auto;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
 }
 
 .marker-role {
@@ -522,7 +530,7 @@ h4 {
 .map-hotspot-marker.is-selected {
   z-index: 16;
   border-color: var(--accent-cyan);
-  background: linear-gradient(180deg, rgba(19, 72, 104, 0.95), rgba(9, 38, 58, 0.96));
+  background: linear-gradient(180deg, rgba(19, 72, 104, 0.94), rgba(9, 38, 58, 0.95));
 }
 
 .map-hotspot-marker[aria-current="location"] .marker-name {
