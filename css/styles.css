@@ -20,6 +20,8 @@
   --radius-lg: 20px;
   --shadow-panel: 0 12px 32px rgba(1, 10, 18, 0.45);
   --shadow-soft: 0 8px 20px rgba(5, 16, 29, 0.3);
+  --image-overlay-min: rgba(5, 18, 29, 0.42);
+  --image-overlay-strong: rgba(5, 18, 29, 0.68);
   --space-2: 0.5rem;
   --space-3: 0.75rem;
   --space-4: 1rem;
@@ -292,7 +294,7 @@ h4 {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(7, 20, 32, 0.08), rgba(7, 20, 32, 0.36));
+  background: linear-gradient(180deg, var(--image-overlay-min), var(--image-overlay-strong));
   pointer-events: none;
 }
 
@@ -625,6 +627,7 @@ a:focus-visible {
 }
 
 .evidence-type-badge {
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
   position: absolute;
   top: 0.45rem;
   left: 0.45rem;
@@ -659,6 +662,19 @@ a:focus-visible {
   background: rgba(16, 48, 68, 0.7);
 }
 
+
+.mission-media {
+  position: relative;
+}
+
+.mission-media::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 56%, var(--image-overlay-min) 76%, var(--image-overlay-strong) 100%);
+  pointer-events: none;
+}
+
 .mission-media img {
   width: 100%;
   min-height: 190px;
@@ -668,7 +684,9 @@ a:focus-visible {
 }
 
 .mission-media figcaption {
-  color: #d9edf7;
+  position: relative;
+  color: #f5fbff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.65);
   font-weight: 600;
   text-align: center;
   padding: 0.75rem 0.9rem;

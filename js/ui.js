@@ -51,22 +51,27 @@
   const DISTRICT_MEDIA = {
     'downtown-waterfront': {
       src: 'assets/images/districts/downtown-waterfront.svg',
+      srcset: 'assets/images/districts/downtown-waterfront.svg 1x',
       alt: 'Riverwalk redevelopment zone with mixed-use pedestrian corridor and coordinated curb management.'
     },
     'cultural-corridor': {
       src: 'assets/images/districts/cultural-corridor.svg',
+      srcset: 'assets/images/districts/cultural-corridor.svg 1x',
       alt: 'Airport cultural corridor showing multilingual wayfinding, transit links, and visitor service touchpoints.'
     },
     'historic-ybor': {
       src: 'assets/images/districts/historic-ybor.svg',
+      srcset: 'assets/images/districts/historic-ybor.svg 1x',
       alt: 'Historic Ybor entertainment district balancing nightlife activity with heritage storefront preservation.'
     },
     'eco-park': {
       src: 'assets/images/districts/eco-park.svg',
+      srcset: 'assets/images/districts/eco-park.svg 1x',
       alt: 'Eco-park mobility loop with shaded paths, low-emission shuttles, and community recreation access.'
     },
     'beachfront-zone': {
       src: 'assets/images/districts/beachfront-zone.svg',
+      srcset: 'assets/images/districts/beachfront-zone.svg 1x',
       alt: 'Beachfront district transit transfer node linking cruise arrivals to waterfront retail and public access.'
     }
   };
@@ -74,21 +79,41 @@
   const MISSION_MEDIA = {
     'riverwalk-mobility-surge': {
       src: 'assets/images/missions/riverwalk-mobility-surge.svg',
+      srcset: 'assets/images/missions/riverwalk-mobility-surge.svg 1x',
       alt: 'Riverwalk intersection showing pedestrian crowding, curb conflicts, and temporary circulation controls.'
     },
     'ybor-nightlife-balance': {
       src: 'assets/images/missions/ybor-nightlife-balance.svg',
+      srcset: 'assets/images/missions/ybor-nightlife-balance.svg 1x',
       alt: 'Ybor nightlife corridor with heritage venues, noise mitigation zones, and permit-management checkpoints.'
     },
     'busch-queue-emissions': {
       src: 'assets/images/missions/busch-queue-emissions.svg',
+      srcset: 'assets/images/missions/busch-queue-emissions.svg 1x',
       alt: 'Theme-park queue network with shuttle electrification staging and wait-time pressure points.'
     },
     'port-cruise-dispersal': {
       src: 'assets/images/missions/port-cruise-dispersal.svg',
+      srcset: 'assets/images/missions/port-cruise-dispersal.svg 1x',
       alt: 'Cruise terminal exit plan illustrating staggered coach routing and neighborhood-sensitive dispersal paths.'
     }
   };
+
+  function toResponsiveImageAttrs(media = {}, sizeHint) {
+    const srcset = typeof media.srcset === 'string' ? media.srcset.trim() : '';
+    const sizes = typeof sizeHint === 'string' && sizeHint.trim() ? sizeHint.trim() : '';
+    return {
+      srcset: srcset ? ` srcset="${escapeHtml(srcset)}"` : '',
+      sizes: srcset && sizes ? ` sizes="${escapeHtml(sizes)}"` : ''
+    };
+  }
+
+  function getMeaningfulAltText(rawAlt, fallbackAlt) {
+    const candidate = typeof rawAlt === 'string' ? rawAlt.trim() : '';
+    if (candidate) return candidate;
+    const fallback = typeof fallbackAlt === 'string' ? fallbackAlt.trim() : '';
+    return fallback || 'Mission image';
+  }
 
   function escapeHtml(value) {
     return String(value ?? '')
@@ -208,11 +233,14 @@
       const districtKey = getDistrictKey(mission);
       const districtLabel = escapeHtml(DISTRICT_LABELS[districtKey]);
       const missionMedia = MISSION_MEDIA[mission.id] || DISTRICT_MEDIA[districtKey] || null;
+      const thumbnailAttrs = toResponsiveImageAttrs(missionMedia, '(max-width: 960px) 100vw, 280px');
       const thumbnail = missionMedia
         ? `
           <div class="hotspot-thumbnail" aria-hidden="true">
             <img
               src="${escapeHtml(missionMedia.src)}"
+              ${thumbnailAttrs.srcset}
+              ${thumbnailAttrs.sizes}
               alt=""
               loading="lazy"
               onerror="this.closest('.hotspot-thumbnail')?.remove()"
@@ -291,13 +319,17 @@
       .join('');
     const visualEvidence = mission.exploration?.visualEvidence;
     const evidenceType = escapeHtml(visualEvidence?.type || 'image');
+    const evidenceAttrs = toResponsiveImageAttrs(visualEvidence, '(max-width: 960px) 100vw, 360px');
+    const evidenceAlt = getMeaningfulAltText(visualEvidence?.alt, visualEvidence?.caption || mission.name);
     const evidenceMedia = visualEvidence?.imagePath
       ? `
         <div class="evidence-media-wrap">
           <img
             class="evidence-media"
             src="${escapeHtml(visualEvidence.imagePath)}"
-            alt="${escapeHtml(visualEvidence.caption || 'Mission evidence panel')}"
+            ${evidenceAttrs.srcset}
+            ${evidenceAttrs.sizes}
+            alt="${escapeHtml(evidenceAlt)}"
             loading="lazy"
             onerror="this.closest('.evidence-media-wrap')?.remove()"
           >
@@ -316,12 +348,16 @@
       : '';
     const media = getExplorationMedia(mission);
     const fallbackLabel = escapeHtml(mission.exploration.mediaLabel || 'Mission visual / source evidence panel');
+    const missionMediaAttrs = toResponsiveImageAttrs(media, '(max-width: 960px) 100vw, 480px');
+    const missionAlt = getMeaningfulAltText(media?.alt, `${mission.name} mission visual`);
     const mediaPanel = media
       ? `
         <figure class="mission-media" aria-label="Mission visual evidence">
           <img
             src="${escapeHtml(media.src)}"
-            alt="${escapeHtml(media.alt)}"
+            ${missionMediaAttrs.srcset}
+            ${missionMediaAttrs.sizes}
+            alt="${escapeHtml(missionAlt)}"
             loading="lazy"
             onerror="this.closest('figure').outerHTML='&lt;div class=&quot;media-placeholder&quot; aria-label=&quot;Placeholder media panel&quot;&gt;${fallbackLabel}&lt;/div&gt;'"
           >
