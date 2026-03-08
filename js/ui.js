@@ -635,6 +635,16 @@
   }
 
   function renderFeedback(feedback, state) {
+    const categoryDeltaChips = Object.entries(feedback.deltas)
+      .filter(([, value]) => typeof value === 'number' && value !== 0)
+      .map(([key, value]) => {
+        const directionIcon = value > 0 ? '▲' : '▼';
+        const directionClass = value > 0 ? 'up' : 'down';
+        const magnitude = value > 0 ? `+${value}` : String(value);
+        return `<li class="feedback-delta-chip ${directionClass}"><span aria-hidden="true">${directionIcon}</span> <strong>${CATEGORY_ICONS[key]}</strong> ${escapeHtml(magnitude)}</li>`;
+      })
+      .join('');
+
     const deltaItems = Object.entries(feedback.deltas)
       .map(([key, value]) => `<li>${CATEGORY_LABELS[key]}: <strong>${deltaText(value)}</strong></li>`)
       .join('');
@@ -642,10 +652,24 @@
     return `
       <section class="console-shell card feedback-card" tabindex="-1">
         <h2>Outcome Feedback</h2>
-        <p>${escapeHtml(feedback.text)}</p>
-        <p><strong>Learning note:</strong> ${escapeHtml(feedback.learningNote)}</p>
-        <p><strong>System insight:</strong> ${escapeHtml(feedback.systemInsight)}</p>
-        <p><strong>Trade-off spotlight:</strong> ${escapeHtml(feedback.tradeoffSpotlight)}</p>
+        <p class="feedback-summary"><strong>Outcome in 1 sentence:</strong> ${escapeHtml(feedback.text)}</p>
+        <ul class="feedback-delta-header" aria-label="Category movement summary">${categoryDeltaChips || '<li class="feedback-delta-chip neutral">No category changes</li>'}</ul>
+        <details class="feedback-accordion" open>
+          <summary>Why this happened</summary>
+          <p>${escapeHtml(feedback.systemInsight)}</p>
+        </details>
+        <details class="feedback-accordion">
+          <summary>Trade-off</summary>
+          <p>${escapeHtml(feedback.tradeoffSpotlight)}</p>
+        </details>
+        <details class="feedback-accordion">
+          <summary>What to try next</summary>
+          <p>${escapeHtml(feedback.whatToTryNext)}</p>
+        </details>
+        <details class="feedback-accordion feedback-learn-more">
+          <summary>Learn more</summary>
+          <p>${escapeHtml(feedback.learningNote)}</p>
+        </details>
         <ul class="delta-list">${deltaItems}</ul>
         <p><strong>Impact Cost:</strong> ${feedback.impactCost}</p>
         <p><strong>Remaining Impact Points:</strong> ${state.impactPointsRemaining}</p>

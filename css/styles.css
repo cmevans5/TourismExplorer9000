@@ -970,6 +970,49 @@ a:focus-visible {
   font-size: 0.9rem;
 }
 
+
+.feedback-summary {
+  margin-bottom: 0.65rem;
+}
+
+.feedback-delta-header {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  padding: 0;
+  margin: 0 0 0.75rem;
+}
+
+.feedback-delta-chip {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.2rem 0.55rem;
+  background: rgba(16, 44, 68, 0.5);
+  font-size: 0.84rem;
+}
+
+.feedback-delta-chip.up {
+  border-color: rgba(86, 213, 148, 0.5);
+  color: #bdf7d8;
+}
+
+.feedback-delta-chip.down {
+  border-color: rgba(245, 118, 118, 0.5);
+  color: #ffd0d0;
+}
+
+.feedback-accordion {
+  border-top: 1px dashed rgba(151, 197, 231, 0.35);
+  padding-top: 0.45rem;
+  margin-top: 0.45rem;
+}
+
+.feedback-accordion summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
 .delta-list li { margin-bottom: 0.3rem; }
 
 .end-rating {
