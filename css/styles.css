@@ -187,27 +187,27 @@ h4 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 2.2rem;
-  padding: 0.08rem 0.42rem;
+  min-width: 1.9rem;
+  padding: 0.04rem 0.36rem;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.32);
-  font-size: 0.74rem;
-  line-height: 1.25;
-  font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.46);
+  font-size: 0.68rem;
+  line-height: 1.15;
+  font-weight: 800;
   letter-spacing: 0.01em;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.45);
+  text-shadow: none;
 }
 
 .token-delta-badge.plus {
-  color: #e7fff3;
-  background: rgba(49, 149, 102, 0.9);
-  border-color: rgba(149, 255, 211, 0.65);
+  color: #032110;
+  background: #8dffc4;
+  border-color: #c9ffe4;
 }
 
 .token-delta-badge.minus {
-  color: #fff0f0;
-  background: rgba(170, 62, 62, 0.92);
-  border-color: rgba(255, 175, 175, 0.72);
+  color: #2b0202;
+  background: #ffadad;
+  border-color: #ffd6d6;
 }
 
 .composite-score {
@@ -613,9 +613,9 @@ a:focus-visible {
   }
 
   .token-delta-badge {
-    font-size: 0.7rem;
-    min-width: 2rem;
-    padding-inline: 0.36rem;
+    font-size: 0.64rem;
+    min-width: 1.75rem;
+    padding-inline: 0.3rem;
   }
 
   .composite-score {
