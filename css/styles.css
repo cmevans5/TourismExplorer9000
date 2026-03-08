@@ -272,6 +272,37 @@ h4 {
   box-shadow: var(--shadow-soft);
   transform: translateY(calc(var(--stack-index, 0) * 16px));
   transition: box-shadow 180ms ease, border-color 180ms ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+
+.hotspot-thumbnail {
+  position: relative;
+  height: 68px;
+  border-radius: 9px;
+  overflow: hidden;
+  border: 1px solid rgba(143, 200, 236, 0.4);
+  background: rgba(12, 39, 60, 0.75);
+  margin-bottom: 0.15rem;
+}
+
+.hotspot-thumbnail::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(7, 20, 32, 0.08), rgba(7, 20, 32, 0.36));
+  pointer-events: none;
+}
+
+.hotspot-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 16 / 9;
+  display: block;
+  filter: saturate(0.88) brightness(0.88);
 }
 
 .district-label {

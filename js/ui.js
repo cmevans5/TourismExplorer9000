@@ -207,11 +207,25 @@
       const role = state.offerSetRolesById?.[mission.id] || 'wildcard';
       const districtKey = getDistrictKey(mission);
       const districtLabel = escapeHtml(DISTRICT_LABELS[districtKey]);
+      const missionMedia = MISSION_MEDIA[mission.id] || DISTRICT_MEDIA[districtKey] || null;
+      const thumbnail = missionMedia
+        ? `
+          <div class="hotspot-thumbnail" aria-hidden="true">
+            <img
+              src="${escapeHtml(missionMedia.src)}"
+              alt=""
+              loading="lazy"
+              onerror="this.closest('.hotspot-thumbnail')?.remove()"
+            >
+          </div>
+        `
+        : '';
       districtCounts[districtKey] = (districtCounts[districtKey] || 0) + 1;
       const stackIndex = districtCounts[districtKey] - 1;
 
       return `
         <article class="map-hotspot district-${districtKey} ${highlightIds.has(mission.id) ? 'highlighted' : ''}" style="--stack-index:${stackIndex};">
+          ${thumbnail}
           <p class="district-label">${districtLabel}</p>
           <h3>${escapeHtml(mission.name)}</h3>
           <p class="small">${escapeHtml(mission.description)}</p>
