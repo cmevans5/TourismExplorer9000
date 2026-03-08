@@ -42,6 +42,16 @@
   let lastFocusedEl = null;
   let pendingReturnMissionId = null;
 
+  function clearDecisionDeltaIndicatorsOnSceneChange(draft, nextScreen) {
+    const isMajorSceneChange = draft.currentScreen !== nextScreen;
+    const hasTransientDeltas = Boolean(draft.lastDecisionDeltas);
+    const leavingDecisionScreen = draft.currentScreen === 'decision';
+
+    if (isMajorSceneChange && hasTransientDeltas && !leavingDecisionScreen) {
+      draft.lastDecisionDeltas = null;
+    }
+  }
+
   function commit(mutator, { renderAfter = true, recomputeMetrics = false } = {}) {
     mutator(state);
     if (recomputeMetrics) computeAndStoreMetrics();
@@ -140,10 +150,7 @@
 
   function navigate(screen) {
     commit(draft => {
-      const isMajorSceneChange = draft.currentScreen !== screen;
-      if (isMajorSceneChange && draft.lastDecisionDeltas && draft.currentScreen !== 'decision') {
-        draft.lastDecisionDeltas = null;
-      }
+      clearDecisionDeltaIndicatorsOnSceneChange(draft, screen);
       draft.currentScreen = screen;
     });
   }
@@ -192,9 +199,7 @@
     commit(draft => {
       draft.selectedMissionId = missionId;
       draft.impactPointsRemaining = SCORING_CONSTANTS.impactBudgetPerHotspot;
-      if (draft.lastDecisionDeltas && draft.currentScreen !== 'decision') {
-        draft.lastDecisionDeltas = null;
-      }
+      clearDecisionDeltaIndicatorsOnSceneChange(draft, 'explore');
       draft.currentScreen = 'explore';
     });
   }
@@ -368,7 +373,7 @@
       draft.impactPointsSpent += optionCost;
       draft.missionSpendById = draft.missionSpendById || {};
       draft.missionSpendById[mission.id] = optionCost;
-      draft.lastDecisionDeltas = deltas;
+      draft.lastDecisionDeltas = { ...deltas };
       draft.decisionCount += 1;
       draft.decisionHistory = draft.decisionHistory || [];
       draft.decisionHistory.push({
