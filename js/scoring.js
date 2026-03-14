@@ -1,13 +1,8 @@
 (function () {
   const SCORING_CONSTANTS = {
     // Top-tier gate thresholds
-<<<<<<< HEAD
     vMinCategoryTop: 1,
     vMaxVarianceTop: 3,
-=======
-    vMinCategoryTop: 2,
-    vMaxVarianceTop: 2,
->>>>>>> ea033dd51f9a8cbdb8d01403efc3877c6b86f04c
     vNoNegativesTop: true,
 
     // BII model
@@ -18,26 +13,15 @@
 
     // Impact Points (finite resource budget)
     impactBudgetPerHotspot: 100,
-<<<<<<< HEAD
     budgetReserveTarget: 25,
-=======
-    budgetReserveTarget: 20,
->>>>>>> ea033dd51f9a8cbdb8d01403efc3877c6b86f04c
     reservePenaltyMultiplier: 0.25,
     minAverageRemainingPerHotspot: 10,
 
     ratingThresholds: {
-<<<<<<< HEAD
       bronze: 42,
       silver: 58,
       gold: 74,
       top: 88
-=======
-      bronze: 40,
-      silver: 60,
-      gold: 80,
-      top: 92
->>>>>>> ea033dd51f9a8cbdb8d01403efc3877c6b86f04c
     }
   };
 
