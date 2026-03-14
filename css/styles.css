@@ -933,6 +933,29 @@ a:focus-visible {
   width: min(520px, 92vw);
 }
 
+.scene-modal {
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.scene-modal-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.85rem;
+}
+
+#sceneOverlayContent {
+  overflow-y: auto;
+  padding-right: 0.25rem;
+}
+
+#sceneOverlayContent > :last-child {
+  margin-bottom: 0;
+}
+
 .system-modal-message {
   margin: 0.5rem 0 1rem;
   color: var(--text-main);

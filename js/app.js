@@ -2,6 +2,8 @@
   const mainEl = document.getElementById('mainContent');
   const dashboardPanel = document.getElementById('dashboardPanel');
   const dashboardContent = document.getElementById('dashboardContent');
+  const sceneOverlay = document.getElementById('sceneOverlay');
+  const sceneOverlayContent = document.getElementById('sceneOverlayContent');
   const pipOverlay = document.getElementById('pipOverlay');
   const pipPanelContent = document.getElementById('pipPanelContent');
   const systemModalOverlay = document.getElementById('systemModalOverlay');
@@ -299,6 +301,39 @@
     enterMission(nextMission.id, 'explore');
   }
 
+  function selectedOrFirstVisibleMission() {
+    return missionById[state.selectedHotspotId] || getVisibleMissions()[0] || null;
+  }
+
+  function openSelectedMissionScene() {
+    const mission = selectedOrFirstVisibleMission();
+    if (!mission) return;
+    enterMission(mission.id, 'explore');
+  }
+
+  function closeSceneOverlay() {
+    sceneOverlay.classList.add('hidden');
+    sceneOverlayContent.innerHTML = '';
+  }
+
+  function renderSceneOverlay() {
+    const mission = activeMission() || selectedOrFirstVisibleMission();
+
+    if (state.currentScreen === 'explore' && mission) {
+      sceneOverlayContent.innerHTML = UI.renderExploration(mission, state, RUN_CONFIG);
+      sceneOverlay.classList.remove('hidden');
+      return;
+    }
+
+    if (state.currentScreen === 'decision' && mission) {
+      sceneOverlayContent.innerHTML = UI.renderDecision(mission, state, RUN_CONFIG, getDecisionOptionsForMission(mission));
+      sceneOverlay.classList.remove('hidden');
+      return;
+    }
+
+    closeSceneOverlay();
+  }
+
   function getDecisionOptionsForMission(mission) {
     if (!mission) return [];
     state.decisionShuffleByMissionId = state.decisionShuffleByMissionId || {};
@@ -426,8 +461,10 @@
 
     pendingReturnMissionId = mission.id;
     const feedbackHtml = UI.renderFeedback(state.currentFeedback, state);
-    document.getElementById('feedbackContainer').innerHTML = feedbackHtml;
-    const feedbackCard = document.querySelector('#feedbackContainer section');
+    const feedbackContainer = sceneOverlayContent.querySelector('#feedbackContainer') || document.getElementById('feedbackContainer');
+    if (!feedbackContainer) return;
+    feedbackContainer.innerHTML = feedbackHtml;
+    const feedbackCard = feedbackContainer.querySelector('section');
     if (feedbackCard) feedbackCard.focus();
   }
 
@@ -590,13 +627,22 @@
       dashboardPanel.classList.remove('hidden');
     });
 
+    document.getElementById('btnOpenCase').addEventListener('click', openSelectedMissionScene);
+
     document.getElementById('btnDashboardClose').addEventListener('click', () => {
       dashboardPanel.classList.add('hidden');
+    });
+
+    document.getElementById('btnSceneOverlayClose').addEventListener('click', () => {
+      navigate('map');
     });
 
     document.getElementById('btnReset').addEventListener('click', startNewRun);
     pipOverlay.addEventListener('click', (event) => {
       if (event.target === pipOverlay) closePipOverlay();
+    });
+    sceneOverlay.addEventListener('click', (event) => {
+      if (event.target === sceneOverlay) navigate('map');
     });
     systemModalOverlay.addEventListener('click', (event) => {
       if (event.target === systemModalOverlay && systemModalActions.querySelector('#btnSystemModalCancel')) {
@@ -734,6 +780,12 @@
     } else {
       state.currentScreen = 'map';
       mainEl.innerHTML = UI.renderMap(state, getVisibleMissions(), SCORING_CONSTANTS, RUN_CONFIG);
+    }
+
+    if (state.currentScreen === 'explore' || state.currentScreen === 'decision') {
+      renderSceneOverlay();
+    } else {
+      closeSceneOverlay();
     }
 
   }
