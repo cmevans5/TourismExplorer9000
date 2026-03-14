@@ -214,21 +214,39 @@
 
     return `
       ${renderTokenDashboard(state)}
-      <section class="console-shell card mission-briefing">
-        <h2>${escapeHtml(mission.name)}</h2>
-        ${renderRunProgress(state, runConfig.RUN_LENGTH)}
-        <p class="pedagogy-objective"><strong>Learning objectives:</strong> ${escapeHtml(mission.learningObjectives.join(' '))}</p>
-        <p>${escapeHtml(mission.exploration?.brief || mission.description)}</p>
-        <div class="summary-grid">
-          ${evidence}
+      <section class="console-shell card mission-briefing scene-transition scene-briefing">
+        <div class="scene-shell-header">
+          <div>
+            <p class="district-label">Case Briefing</p>
+            <h2>${escapeHtml(mission.name)}</h2>
+            ${renderRunProgress(state, runConfig.RUN_LENGTH)}
+          </div>
+          <p class="scene-shell-kicker"><strong>Learning objectives:</strong> ${escapeHtml(mission.learningObjectives.join(' '))}</p>
         </div>
-        <h3>Stakeholder perspectives</h3>
-        <div class="summary-grid">${stakeholders}</div>
-        <h3>Constraints</h3>
-        <ul class="stakeholder-list">${constraints}</ul>
-        <div class="inline-actions">
-          <button type="button" id="btnBackMap" class="btn secondary">Back to Map</button>
-          <button type="button" id="btnToDecision" class="btn">Move to Decision and Rationale</button>
+        <div class="briefing-layout">
+          <div class="briefing-main">
+            <p class="briefing-lead">${escapeHtml(mission.exploration?.brief || mission.description)}</p>
+            <section class="briefing-group">
+              <h3>Evidence to notice</h3>
+              <div class="summary-grid briefing-evidence-grid">
+                ${evidence}
+              </div>
+            </section>
+          </div>
+          <aside class="briefing-sidebar">
+            <section class="briefing-group">
+              <h3>Stakeholder perspectives</h3>
+              <div class="summary-grid briefing-sidebar-grid">${stakeholders}</div>
+            </section>
+            <section class="briefing-group">
+              <h3>Constraints</h3>
+              <ul class="stakeholder-list compact-list">${constraints}</ul>
+            </section>
+            <div class="scene-actions">
+              <button type="button" id="btnBackMap" class="btn secondary">Back to Map</button>
+              <button type="button" id="btnToDecision" class="btn">Move to Decision and Rationale</button>
+            </div>
+          </aside>
         </div>
       </section>
     `;
@@ -266,48 +284,66 @@
 
     return `
       ${renderTokenDashboard(state)}
-      <section class="console-shell card decision-card">
-        <h2>Decision and Rationale</h2>
-        ${renderRunProgress(state, runConfig.RUN_LENGTH)}
-        <p>Before choosing an intervention, commit to a stakeholder priority, cite one evidence point, and explain the trade-off you expect.</p>
-        <section class="rationale-panel">
-          <div class="grid two">
-            <label class="form-field">
-              <span>Priority stakeholder</span>
-              <select data-rationale-field="stakeholderId">
-                <option value="">Select one stakeholder</option>
-                ${stakeholderOptions}
-              </select>
-            </label>
-            <label class="form-field">
-              <span>Evidence point to cite</span>
-              <select data-rationale-field="evidenceId">
-                <option value="">Select one evidence point</option>
-                ${evidenceOptions}
-              </select>
-            </label>
+      <section class="console-shell card decision-card scene-transition scene-decision">
+        <div class="scene-shell-header">
+          <div>
+            <p class="district-label">Decision Studio</p>
+            <h2>Decision and Rationale</h2>
+            ${renderRunProgress(state, runConfig.RUN_LENGTH)}
           </div>
-          <label class="form-field">
-            <span>Expected trade-off</span>
-            <textarea data-rationale-field="tradeoff" rows="4" placeholder="Explain what your option improves and what pressure it may create elsewhere.">${escapeHtml(draft.tradeoff || '')}</textarea>
-          </label>
-          <div class="summary-grid">
-            <article class="summary-card">
-              <h4>Rubric cue 1</h4>
-              <p>${escapeHtml(rubric.stakeholderFocus || '')}</p>
-            </article>
-            <article class="summary-card">
-              <h4>Rubric cue 2</h4>
-              <p>${escapeHtml(rubric.evidenceUse || '')}</p>
-            </article>
-            <article class="summary-card">
-              <h4>Rubric cue 3</h4>
-              <p>${escapeHtml(rubric.tradeoffReasoning || '')}</p>
-            </article>
+          <p class="scene-shell-kicker">Before choosing an intervention, commit to a stakeholder priority, cite one evidence point, and explain the trade-off you expect.</p>
+        </div>
+        <div class="decision-layout">
+          <aside class="decision-sidebar">
+            <section class="rationale-panel">
+              <div class="grid two">
+                <label class="form-field">
+                  <span>Priority stakeholder</span>
+                  <select data-rationale-field="stakeholderId">
+                    <option value="">Select one stakeholder</option>
+                    ${stakeholderOptions}
+                  </select>
+                </label>
+                <label class="form-field">
+                  <span>Evidence point to cite</span>
+                  <select data-rationale-field="evidenceId">
+                    <option value="">Select one evidence point</option>
+                    ${evidenceOptions}
+                  </select>
+                </label>
+              </div>
+              <label class="form-field">
+                <span>Expected trade-off</span>
+                <textarea data-rationale-field="tradeoff" rows="3" placeholder="Explain what your option improves and what pressure it may create elsewhere.">${escapeHtml(draft.tradeoff || '')}</textarea>
+              </label>
+              <div class="summary-grid decision-rubric-grid">
+                <article class="summary-card">
+                  <h4>Rubric cue 1</h4>
+                  <p>${escapeHtml(rubric.stakeholderFocus || '')}</p>
+                </article>
+                <article class="summary-card">
+                  <h4>Rubric cue 2</h4>
+                  <p>${escapeHtml(rubric.evidenceUse || '')}</p>
+                </article>
+                <article class="summary-card">
+                  <h4>Rubric cue 3</h4>
+                  <p>${escapeHtml(rubric.tradeoffReasoning || '')}</p>
+                </article>
+              </div>
+            </section>
+            <div class="scene-actions">
+              <button type="button" id="btnBackMap" class="btn secondary">Back to Map</button>
+            </div>
+          </aside>
+          <div class="decision-main">
+            <div class="decision-status">
+              <p><strong>Impact budget remaining:</strong> ${escapeHtml(state.impactPointsRemaining)}</p>
+              <p>Choose one intervention card after completing the rationale fields.</p>
+            </div>
+            <div class="grid decision-grid" role="group" aria-label="Decision options">
+              ${renderOptionCards(displayOptions, state)}
+            </div>
           </div>
-        </section>
-        <div class="grid decision-grid" role="group" aria-label="Decision options">
-          ${renderOptionCards(displayOptions, state)}
         </div>
       </section>
     `;
@@ -337,7 +373,13 @@
 
     return `
       <section class="console-shell card feedback-card scene-transition scene-feedback" tabindex="-1">
-        <h2>Outcome and Debrief</h2>
+        <div class="scene-shell-header">
+          <div>
+            <p class="district-label">Decision Debrief</p>
+            <h2>Outcome and Debrief</h2>
+          </div>
+          <p class="scene-shell-kicker">Review what changed, who benefited, and what pressure your strategy created before returning to the map.</p>
+        </div>
         <p class="feedback-summary"><strong>Immediate outcome:</strong> ${escapeHtml(feedback.text)}</p>
         <p class="feedback-flavor">${escapeHtml(feedback.systemInsight)}</p>
         <div class="summary-grid">
@@ -374,7 +416,7 @@
           <p>${escapeHtml(feedback.reflectionPrompt)}</p>
         </details>
         ${state.topGateLockReason ? `<p class="small">Top Analyst currently blocked because: ${escapeHtml(state.topGateLockReason)}.</p>` : ''}
-        <div class="inline-actions">
+        <div class="scene-actions sticky-action-bar">
           <button type="button" id="btnReturnMap" class="btn">Return to Map</button>
         </div>
       </section>
