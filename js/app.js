@@ -269,6 +269,15 @@
     });
   }
 
+  function openFirstMissionInQueue() {
+    const nextMission = getVisibleMissions()[0];
+    if (!nextMission) {
+      navigate('map');
+      return;
+    }
+    selectMission(nextMission.id);
+  }
+
   function getDecisionOptionsForMission(mission) {
     if (!mission) return [];
     state.decisionShuffleByMissionId = state.decisionShuffleByMissionId || {};
@@ -475,7 +484,7 @@
       onConfirm: () => {
         state = clearState();
         initializeRun(true);
-        navigate('map');
+        openFirstMissionInQueue();
       }
     });
   }
