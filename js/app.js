@@ -151,6 +151,40 @@
     state.diagnosis = buildDiagnosis(state, SCORING_CONSTANTS, offer);
   }
 
+  function ensurePlayableQueue() {
+    if (!missions.length || runCompleted()) return;
+
+    const offeredMissions = getOfferedMissions();
+    if (offeredMissions.length) return;
+
+    refreshOfferSet();
+    if (getOfferedMissions().length) return;
+
+    const fallbackMissionIds = missions
+      .filter((mission) => !(state.completedMissionIds || []).includes(mission.id))
+      .slice(0, RUN_CONFIG.RUN_LENGTH)
+      .map((mission) => mission.id);
+
+    state.offerSetMissionIds = fallbackMissionIds;
+    state.offerSetRolesById = {};
+    state.offerSetReasonsById = {};
+    fallbackMissionIds.forEach((missionId, index) => {
+      const mission = missionById[missionId];
+      state.offerSetRolesById[missionId] = index === 0 ? 'current' : (index === 1 ? 'next' : 'later');
+      state.offerSetReasonsById[missionId] = [
+        mission?.tourismDomain,
+        mission?.learningObjectives?.[0] || 'Practice tourism systems reasoning.',
+        mission?.constraints?.[0] || 'Balance destination outcomes and stakeholder needs.'
+      ].filter(Boolean);
+    });
+    state.suggestedMissionId = fallbackMissionIds[0] || null;
+    state.selectedHotspotId = fallbackMissionIds[0] || null;
+    state.diagnosis = buildDiagnosis(state, SCORING_CONSTANTS, {
+      offerMissionIds: fallbackMissionIds
+    });
+    saveState(state);
+  }
+
   function sanitizeStateAfterMissionLoad() {
     const validMissionIds = new Set(missions.map((mission) => mission.id));
     const completedMissionIds = (state.completedMissionIds || []).filter((id) => validMissionIds.has(id));
@@ -189,6 +223,7 @@
     sanitizeStateAfterMissionLoad();
     computeAndStoreMetrics();
     refreshOfferSet();
+    ensurePlayableQueue();
     saveState(state);
   }
 
@@ -594,7 +629,10 @@
     }
 
     if (state.currentScreen === 'map') {
-      mainEl.innerHTML = UI.renderMap(state, getOfferedMissions(), SCORING_CONSTANTS, RUN_CONFIG);
+      const displayedMissions = getOfferedMissions().length
+        ? getOfferedMissions()
+        : missions.filter((mission) => !(state.completedMissionIds || []).includes(mission.id)).slice(0, RUN_CONFIG.RUN_LENGTH);
+      mainEl.innerHTML = UI.renderMap(state, displayedMissions, SCORING_CONSTANTS, RUN_CONFIG);
     } else if (state.currentScreen === 'explore') {
       mainEl.innerHTML = UI.renderExploration(currentMission(), state, RUN_CONFIG);
     } else if (state.currentScreen === 'decision') {
@@ -603,7 +641,10 @@
       mainEl.innerHTML = UI.renderGameComplete(state);
     } else {
       state.currentScreen = 'map';
-      mainEl.innerHTML = UI.renderMap(state, getOfferedMissions(), SCORING_CONSTANTS, RUN_CONFIG);
+      const displayedMissions = getOfferedMissions().length
+        ? getOfferedMissions()
+        : missions.filter((mission) => !(state.completedMissionIds || []).includes(mission.id)).slice(0, RUN_CONFIG.RUN_LENGTH);
+      mainEl.innerHTML = UI.renderMap(state, displayedMissions, SCORING_CONSTANTS, RUN_CONFIG);
     }
 
     mainEl.focus();
