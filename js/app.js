@@ -4,6 +4,10 @@
   const dashboardContent = document.getElementById('dashboardContent');
   const pipOverlay = document.getElementById('pipOverlay');
   const pipPanelContent = document.getElementById('pipPanelContent');
+  const systemModalOverlay = document.getElementById('systemModalOverlay');
+  const systemModalTitle = document.getElementById('systemModalTitle');
+  const systemModalMessage = document.getElementById('systemModalMessage');
+  const systemModalActions = document.getElementById('systemModalActions');
 
   const {
     SCORING_CONSTANTS,
@@ -40,6 +44,7 @@
   let optionsByMissionId = {};
   let pendingReturnMissionId = null;
   let lastFocusedEl = null;
+  let systemModalState = null;
 
   function commit(mutator, { renderAfter = true, recomputeMetrics = false } = {}) {
     mutator(state);
@@ -281,7 +286,11 @@
   function validateRationale(mission, draft) {
     const result = scoreRationale(mission, draft);
     if (!result.stakeholderLabel || !result.evidenceLabel || result.tradeoff.length < 30) {
-      window.alert('Before choosing an option, select a stakeholder, cite one evidence point, and write a brief trade-off explanation of at least 30 characters.');
+      openSystemModal({
+        title: 'Decision Guidance',
+        message: 'Before choosing an option, select a stakeholder, cite one evidence point, and write a brief trade-off explanation of at least 30 characters.',
+        confirmLabel: 'Back to Briefing'
+      });
       return null;
     }
     return result;
@@ -400,7 +409,11 @@
     const responses = state.reflectionResponses || {};
     const values = Object.values(responses).map((value) => String(value || '').trim());
     if (values.some((value) => value.length < 20)) {
-      window.alert('Please answer all three reflection prompts with short, complete responses before finalizing.');
+      openSystemModal({
+        title: 'Reflection Incomplete',
+        message: 'Please answer all three reflection prompts with short, complete responses before finalizing.',
+        confirmLabel: 'Continue Writing'
+      });
       return;
     }
 
@@ -410,11 +423,59 @@
   }
 
   function startNewRun() {
-    const confirmed = window.confirm('Start a new academic prototype run? This resets all decisions and reflection notes.');
-    if (!confirmed) return;
-    state = clearState();
-    initializeRun(true);
-    navigate('map');
+    openSystemModal({
+      title: 'Start New Run?',
+      message: 'This resets all decisions and reflection notes for the current academic prototype run.',
+      confirmLabel: 'Start Fresh',
+      cancelLabel: 'Stay Here',
+      tone: 'danger',
+      onConfirm: () => {
+        state = clearState();
+        initializeRun(true);
+        navigate('map');
+      }
+    });
+  }
+
+  function closeSystemModal() {
+    systemModalOverlay.classList.add('hidden');
+    systemModalActions.innerHTML = '';
+    systemModalState = null;
+    if (lastFocusedEl) lastFocusedEl.focus();
+  }
+
+  function openSystemModal({
+    title,
+    message,
+    confirmLabel = 'Continue',
+    cancelLabel = '',
+    tone = '',
+    onConfirm = null
+  }) {
+    systemModalState = { onConfirm };
+    systemModalTitle.textContent = title;
+    systemModalMessage.textContent = message;
+    systemModalActions.innerHTML = '';
+
+    const confirmButton = document.createElement('button');
+    confirmButton.type = 'button';
+    confirmButton.id = 'btnSystemModalConfirm';
+    confirmButton.className = `btn ${tone}`.trim();
+    confirmButton.textContent = confirmLabel;
+    systemModalActions.appendChild(confirmButton);
+
+    if (cancelLabel) {
+      const cancelButton = document.createElement('button');
+      cancelButton.type = 'button';
+      cancelButton.id = 'btnSystemModalCancel';
+      cancelButton.className = 'btn secondary';
+      cancelButton.textContent = cancelLabel;
+      systemModalActions.appendChild(cancelButton);
+    }
+
+    lastFocusedEl = document.activeElement;
+    systemModalOverlay.classList.remove('hidden');
+    confirmButton.focus();
   }
 
   function getPipExplanation() {
@@ -464,6 +525,16 @@
     pipOverlay.addEventListener('click', (event) => {
       if (event.target === pipOverlay) closePipOverlay();
     });
+    systemModalOverlay.addEventListener('click', (event) => {
+      if (event.target === systemModalOverlay && systemModalActions.querySelector('#btnSystemModalCancel')) {
+        closeSystemModal();
+      }
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !systemModalOverlay.classList.contains('hidden')) {
+        closeSystemModal();
+      }
+    });
   }
 
   function bindMainEvents() {
@@ -499,6 +570,20 @@
       const target = event.target.closest('button');
       if (!target) return;
       if (target.matches('#btnPipClose')) closePipOverlay();
+    });
+
+    systemModalOverlay.addEventListener('click', (event) => {
+      const target = event.target.closest('button');
+      if (!target) return;
+      if (target.matches('#btnSystemModalCancel')) {
+        closeSystemModal();
+        return;
+      }
+      if (target.matches('#btnSystemModalConfirm')) {
+        const onConfirm = systemModalState?.onConfirm;
+        closeSystemModal();
+        if (typeof onConfirm === 'function') onConfirm();
+      }
     });
   }
 
