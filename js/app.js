@@ -2,8 +2,6 @@
   const mainEl = document.getElementById('mainContent');
   const dashboardPanel = document.getElementById('dashboardPanel');
   const dashboardContent = document.getElementById('dashboardContent');
-  const sceneOverlay = document.getElementById('sceneOverlay');
-  const sceneOverlayContent = document.getElementById('sceneOverlayContent');
   const pipOverlay = document.getElementById('pipOverlay');
   const pipPanelContent = document.getElementById('pipPanelContent');
   const systemModalOverlay = document.getElementById('systemModalOverlay');
@@ -24,7 +22,6 @@
     RUN_CONFIG,
     getRunSeed,
     createRunId,
-    createRunRng,
     generateOfferSet,
     buildDiagnosis,
     buildOfferSetExplanation
@@ -43,7 +40,6 @@
   let state = loadState();
   let missions = [];
   let missionById = {};
-  let optionsByMissionId = {};
   let pendingReturnMissionId = null;
   let lastFocusedEl = null;
   let systemModalState = null;
@@ -227,7 +223,7 @@
     state.highlightMissionIds = (state.highlightMissionIds || []).filter((id) => validMissionIds.has(id));
     state.casesCompletedThisRun = Math.min(completedMissionIds.length, RUN_CONFIG.RUN_LENGTH);
 
-    if ((state.currentScreen === 'explore' || state.currentScreen === 'decision') && !state.selectedMissionId) {
+    if ((state.currentScreen === 'explore' || state.currentScreen === 'decision' || state.currentScreen === 'feedback') && !state.selectedMissionId) {
       state.currentScreen = 'map';
     }
   }
@@ -250,6 +246,27 @@
   }
 
   function navigate(screen) {
+    if (screen === 'decision') {
+      const mission = activeMission() || selectedOrFirstVisibleMission();
+      if (!mission) {
+        commit((draft) => {
+          draft.currentScreen = 'map';
+        });
+        return;
+      }
+
+      commit((draft) => {
+        draft.selectedHotspotId = mission.id;
+        draft.currentScreen = 'decision';
+        draft.currentFeedback = null;
+        if (!draft.impactPointsRemaining) {
+          draft.impactPointsRemaining = SCORING_CONSTANTS.impactBudgetPerHotspot;
+        }
+        ensureMissionDraft(draft, mission.id);
+      });
+      return;
+    }
+
     commit((draft) => {
       draft.currentScreen = screen;
     });
@@ -271,25 +288,18 @@
     };
   }
 
-  function enterMission(missionId, screen = 'explore') {
-    const mission = missionById[missionId];
-    if (!mission) return;
+  function selectMission(missionId) {
+    if (!missionById[missionId]) return;
     if ((state.completedMissionIds || []).includes(missionId)) return;
 
     commit((draft) => {
-      draft.selectedMissionId = missionId;
       draft.selectedHotspotId = missionId;
-      draft.currentScreen = screen;
-      draft.impactPointsRemaining = SCORING_CONSTANTS.impactBudgetPerHotspot;
+      draft.selectedMissionId = null;
       draft.currentFeedback = null;
       draft.lastDecisionDeltas = null;
       draft.lastDecisionOutcomeText = '';
-      ensureMissionDraft(draft, missionId);
-    });
-  }
-
-  function selectMission(missionId) {
-    enterMission(missionId, 'explore');
+    }, { renderAfter: false });
+    navigate('explore');
   }
 
   function openFirstMissionInQueue() {
@@ -298,61 +308,18 @@
       navigate('map');
       return;
     }
-    enterMission(nextMission.id, 'explore');
+    selectMission(nextMission.id);
   }
 
   function selectedOrFirstVisibleMission() {
     return missionById[state.selectedHotspotId] || getVisibleMissions()[0] || null;
   }
 
-  function openSelectedMissionScene() {
-    const mission = selectedOrFirstVisibleMission();
-    if (!mission) return;
-    enterMission(mission.id, 'explore');
-  }
-
-  function closeSceneOverlay() {
-    sceneOverlay.classList.add('hidden');
-    sceneOverlayContent.innerHTML = '';
-  }
-
-  function renderSceneOverlay() {
-    const mission = activeMission() || selectedOrFirstVisibleMission();
-
-    if (state.currentScreen === 'explore' && mission) {
-      sceneOverlayContent.innerHTML = UI.renderExploration(mission, state, RUN_CONFIG);
-      sceneOverlay.classList.remove('hidden');
-      return;
-    }
-
-    if (state.currentScreen === 'decision' && mission) {
-      sceneOverlayContent.innerHTML = UI.renderDecision(mission, state, RUN_CONFIG, getDecisionOptionsForMission(mission));
-      sceneOverlay.classList.remove('hidden');
-      return;
-    }
-
-    closeSceneOverlay();
-  }
-
   function getDecisionOptionsForMission(mission) {
-    if (!mission) return [];
-    state.decisionShuffleByMissionId = state.decisionShuffleByMissionId || {};
-    let order = state.decisionShuffleByMissionId[mission.id];
-
-    if (!Array.isArray(order) || order.length !== mission.options.length) {
-      const ids = mission.options.map((option) => option.id);
-      const rng = createRunRng(`${state.runSeed}:${mission.id}:options`);
-      for (let index = ids.length - 1; index > 0; index -= 1) {
-        const swapIndex = Math.floor(rng() * (index + 1));
-        [ids[index], ids[swapIndex]] = [ids[swapIndex], ids[index]];
-      }
-      order = ids;
-      state.decisionShuffleByMissionId[mission.id] = order;
-    }
-
-    return order.map((id, index) => ({
-      ...optionsByMissionId[mission.id][id],
-      originalKey: id,
+    if (!mission || !Array.isArray(mission.options)) return [];
+    return mission.options.filter(Boolean).map((option, index) => ({
+      ...option,
+      originalKey: option.id,
       displayLabel: String.fromCharCode(65 + index)
     }));
   }
@@ -404,16 +371,30 @@
     return result;
   }
 
-  function applyDecision(displayLabel) {
+  function readRationaleDraftFromDom() {
+    const stakeholderField = mainEl.querySelector('[data-rationale-field="stakeholderId"]');
+    const evidenceField = mainEl.querySelector('[data-rationale-field="evidenceId"]');
+    const tradeoffField = mainEl.querySelector('[data-rationale-field="tradeoff"]');
+    return {
+      stakeholderId: stakeholderField?.value || '',
+      evidenceId: evidenceField?.value || '',
+      tradeoff: tradeoffField?.value || ''
+    };
+  }
+
+  function applyDecision(optionId) {
     const mission = activeMission();
     if (!mission) return;
 
-    const draft = getRationaleDraft(mission.id);
+    const draft = {
+      ...getRationaleDraft(mission.id),
+      ...readRationaleDraftFromDom()
+    };
     const rationale = validateRationale(mission, draft);
     if (!rationale) return;
 
     const displayOptions = getDecisionOptionsForMission(mission);
-    const option = displayOptions.find((item) => item.displayLabel === displayLabel);
+    const option = displayOptions.find((item) => item.id === optionId);
     if (!option) return;
     const optionCost = option.cost ?? option.impactCost;
     if (!canAffordDecision(state.impactPointsRemaining, optionCost)) return;
@@ -427,6 +408,7 @@
       Object.keys(deltas).forEach((key) => {
         draftState.categories[key] += deltas[key];
       });
+      draftState.currentScreen = 'feedback';
       draftState.lastDecisionDeltas = { ...deltas };
       draftState.lastDecisionOutcomeText = feedbackOutcome;
       draftState.impactPointsRemaining -= optionCost;
@@ -437,6 +419,8 @@
       draftState.poorStreak = poorOutcome ? draftState.poorStreak + 1 : 0;
       draftState.pipEnabled = draftState.poorStreak >= 2;
       if (isCorrect) draftState.correctCount += 1;
+      draftState.rationaleDraftsByMissionId = draftState.rationaleDraftsByMissionId || {};
+      draftState.rationaleDraftsByMissionId[mission.id] = draft;
       draftState.currentFeedback = {
         text: option.feedback,
         systemInsight: buildSystemInsight(mission, deltas, option),
@@ -457,24 +441,16 @@
         rationaleScore: rationale.score,
         feedbackOutcome
       });
-    }, { renderAfter: false, recomputeMetrics: true });
+    }, { renderAfter: true, recomputeMetrics: true });
 
     pendingReturnMissionId = mission.id;
-    const feedbackHtml = UI.renderFeedback(state.currentFeedback, state);
-    const feedbackContainer = sceneOverlayContent.querySelector('#feedbackContainer') || document.getElementById('feedbackContainer');
-    if (!feedbackContainer) return;
-    feedbackContainer.innerHTML = feedbackHtml;
-    const feedbackCard = feedbackContainer.querySelector('section');
-    if (feedbackCard) feedbackCard.focus();
   }
 
   function handleReturnToMap() {
-    const missionId = pendingReturnMissionId || state.selectedMissionId || state.selectedHotspotId;
-    const mission = missionById[missionId];
-    if (!mission) return;
+    const mission = activeMission() || missionById[pendingReturnMissionId] || selectedOrFirstVisibleMission();
 
     commit((draft) => {
-      if (!draft.completedMissionIds.includes(mission.id)) {
+      if (mission && !draft.completedMissionIds.includes(mission.id)) {
         draft.completedMissionIds.push(mission.id);
         draft.casesCompletedThisRun += 1;
         draft.lastMissionId = mission.id;
@@ -484,14 +460,12 @@
       draft.selectedMissionId = null;
       draft.currentFeedback = null;
       refreshOfferSet();
+      draft.currentScreen = draft.casesCompletedThisRun >= RUN_CONFIG.RUN_LENGTH ? 'complete' : 'map';
     }, { renderAfter: false, recomputeMetrics: true });
 
     pendingReturnMissionId = null;
-    if (state.pipEnabled) {
-      openPipOverlay(true);
-      return;
-    }
-    navigate(runCompleted() ? 'complete' : 'map');
+    state.pipForceOpen = false;
+    render();
   }
 
   function updateRationaleField(field, value) {
@@ -542,7 +516,7 @@
       onConfirm: () => {
         state = clearState();
         initializeRun(true);
-        openFirstMissionInQueue();
+        navigate('explore');
       }
     });
   }
@@ -627,22 +601,13 @@
       dashboardPanel.classList.remove('hidden');
     });
 
-    document.getElementById('btnOpenCase').addEventListener('click', openSelectedMissionScene);
-
     document.getElementById('btnDashboardClose').addEventListener('click', () => {
       dashboardPanel.classList.add('hidden');
-    });
-
-    document.getElementById('btnSceneOverlayClose').addEventListener('click', () => {
-      navigate('map');
     });
 
     document.getElementById('btnReset').addEventListener('click', startNewRun);
     pipOverlay.addEventListener('click', (event) => {
       if (event.target === pipOverlay) closePipOverlay();
-    });
-    sceneOverlay.addEventListener('click', (event) => {
-      if (event.target === sceneOverlay) navigate('map');
     });
     systemModalOverlay.addEventListener('click', (event) => {
       if (event.target === systemModalOverlay && systemModalActions.querySelector('#btnSystemModalCancel')) {
@@ -657,81 +622,6 @@
   }
 
   function bindMainEvents() {
-    mainEl.addEventListener('click', (event) => {
-      const actionTarget = event.target.closest('button, a');
-      if (!actionTarget || !mainEl.contains(actionTarget)) return;
-
-      const hotspotId = actionTarget.getAttribute('data-hotspot-id');
-      const missionId = actionTarget.getAttribute('data-mission-id');
-      const optionId = actionTarget.getAttribute('data-option-id');
-      const isSceneAction = Boolean(
-        hotspotId ||
-        missionId ||
-        optionId ||
-        actionTarget.matches('#btnToDecision, #btnBackMap, #btnAskPipWhy, #btnReturnMap, #btnSubmitReflection, #btnPrintReport')
-      );
-
-      if (!isSceneAction) return;
-      event.preventDefault();
-
-      if (hotspotId) {
-        selectHotspot(hotspotId);
-        return;
-      }
-
-      if (missionId) {
-        selectMission(missionId);
-        return;
-      }
-
-      if (optionId) {
-        applyDecision(optionId);
-        return;
-      }
-
-      if (actionTarget.matches('#btnToDecision')) {
-        navigate('decision');
-        return;
-      }
-
-      if (actionTarget.matches('#btnBackMap')) {
-        navigate('map');
-        return;
-      }
-
-      if (actionTarget.matches('#btnAskPipWhy')) {
-        openPipOverlay(false);
-        return;
-      }
-
-      if (actionTarget.matches('#btnReturnMap')) {
-        handleReturnToMap();
-        return;
-      }
-
-      if (actionTarget.matches('#btnSubmitReflection')) {
-        submitReflection();
-        return;
-      }
-
-      if (actionTarget.matches('#btnPrintReport')) {
-        window.print();
-      }
-    });
-
-    mainEl.addEventListener('input', (event) => {
-      const rationaleField = event.target.getAttribute('data-rationale-field');
-      if (rationaleField) {
-        updateRationaleField(rationaleField, event.target.value);
-        return;
-      }
-
-      const reflectionField = event.target.getAttribute('data-reflection-field');
-      if (reflectionField) {
-        updateReflectionField(reflectionField, event.target.value);
-      }
-    });
-
     pipOverlay.addEventListener('click', (event) => {
       const target = event.target.closest('button');
       if (!target) return;
@@ -754,7 +644,75 @@
   }
 
   function bindRenderedScreenEvents() {
-    // Screen actions are handled by one delegated click listener on mainEl.
+    mainEl.querySelectorAll('[data-hotspot-id]').forEach((button) => {
+      button.addEventListener('click', () => {
+        selectHotspot(button.getAttribute('data-hotspot-id'));
+      });
+    });
+
+    mainEl.querySelectorAll('[data-mission-id]').forEach((button) => {
+      button.addEventListener('click', () => {
+        selectMission(button.getAttribute('data-mission-id'));
+      });
+    });
+
+    mainEl.querySelectorAll('[data-option-id]').forEach((button) => {
+      button.addEventListener('click', () => {
+        applyDecision(button.getAttribute('data-option-id'));
+      });
+    });
+
+    mainEl.querySelectorAll('[data-rationale-field]').forEach((field) => {
+      const syncField = () => updateRationaleField(field.getAttribute('data-rationale-field'), field.value);
+      field.addEventListener('input', syncField);
+      field.addEventListener('change', syncField);
+    });
+
+    mainEl.querySelectorAll('[data-reflection-field]').forEach((field) => {
+      const syncField = () => updateReflectionField(field.getAttribute('data-reflection-field'), field.value);
+      field.addEventListener('input', syncField);
+      field.addEventListener('change', syncField);
+    });
+
+    const backMapButton = mainEl.querySelector('#btnBackMap');
+    if (backMapButton) {
+      backMapButton.addEventListener('click', () => navigate('map'));
+    }
+
+    const toDecisionButton = mainEl.querySelector('#btnToDecision');
+    if (toDecisionButton) {
+      toDecisionButton.addEventListener('click', () => navigate('decision'));
+    }
+
+    const pipButton = mainEl.querySelector('#btnAskPipWhy');
+    if (pipButton) {
+      pipButton.addEventListener('click', () => openPipOverlay(false));
+    }
+
+    const startSelectedCaseButton = mainEl.querySelector('#btnStartSelectedCase');
+    if (startSelectedCaseButton) {
+      startSelectedCaseButton.addEventListener('click', () => navigate('explore'));
+    }
+
+    const openBriefingButton = mainEl.querySelector('#btnOpenBriefing');
+    if (openBriefingButton) {
+      openBriefingButton.addEventListener('click', () => navigate('explore'));
+    }
+
+    const returnMapButton = mainEl.querySelector('#btnReturnMap');
+    if (returnMapButton) {
+      returnMapButton.addEventListener('click', handleReturnToMap);
+    }
+
+    const submitReflectionButton = mainEl.querySelector('#btnSubmitReflection');
+    if (submitReflectionButton) {
+      submitReflectionButton.addEventListener('click', submitReflection);
+    }
+
+    const printButton = mainEl.querySelector('#btnPrintReport');
+    if (printButton) {
+      printButton.addEventListener('click', () => window.print());
+    }
   }
 
   function renderScreen() {
@@ -775,17 +733,15 @@
       mainEl.innerHTML = mission
         ? UI.renderDecision(mission, state, RUN_CONFIG, getDecisionOptionsForMission(mission))
         : UI.renderMap(state, getVisibleMissions(), SCORING_CONSTANTS, RUN_CONFIG);
+    } else if (state.currentScreen === 'feedback') {
+      mainEl.innerHTML = mission && state.currentFeedback
+        ? UI.renderFeedbackScreen(mission, state, RUN_CONFIG)
+        : UI.renderMap(state, getVisibleMissions(), SCORING_CONSTANTS, RUN_CONFIG);
     } else if (state.currentScreen === 'complete') {
       mainEl.innerHTML = UI.renderGameComplete(state);
     } else {
       state.currentScreen = 'map';
       mainEl.innerHTML = UI.renderMap(state, getVisibleMissions(), SCORING_CONSTANTS, RUN_CONFIG);
-    }
-
-    if (state.currentScreen === 'explore' || state.currentScreen === 'decision') {
-      renderSceneOverlay();
-    } else {
-      closeSceneOverlay();
     }
 
   }
@@ -795,6 +751,10 @@
       renderScreen();
     } catch (error) {
       console.error('Scene render failed.', error);
+      window.__TE9000LastRenderError = {
+        message: error?.message || 'Unknown render error',
+        stack: error?.stack || ''
+      };
       state.currentScreen = 'map';
       mainEl.innerHTML = `
         <section class="console-shell card">
@@ -812,6 +772,13 @@
 
     bindRenderedScreenEvents();
     mainEl.scrollTop = 0;
+    if (state.currentScreen === 'feedback') {
+      const feedbackCard = mainEl.querySelector('.scene-feedback');
+      if (feedbackCard && typeof feedbackCard.focus === 'function') {
+        feedbackCard.focus();
+        return;
+      }
+    }
     if (typeof mainEl.focus === 'function') {
       try {
         mainEl.focus({ preventScroll: true });
@@ -823,13 +790,8 @@
 
   function buildLookups(items) {
     missionById = {};
-    optionsByMissionId = {};
     items.forEach((mission) => {
       missionById[mission.id] = mission;
-      optionsByMissionId[mission.id] = {};
-      (mission.options || []).forEach((option) => {
-        optionsByMissionId[mission.id][option.id] = option;
-      });
     });
   }
 

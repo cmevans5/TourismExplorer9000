@@ -70,6 +70,7 @@
           <strong>${escapeHtml(state.BII)}</strong>
           <small>${escapeHtml(state.ratingBand)}</small>
           <small>Learning Evidence ${escapeHtml(state.learningScore)}/${Math.max(state.decisionCount * 3, 1)}</small>
+          <small>Goal: keep the system balanced across all five categories.</small>
         </div>
       </section>
     `;
@@ -93,7 +94,6 @@
           type="button"
           class="mission-queue-card ${isSelected ? 'is-selected' : ''} ${highlightIds.has(mission.id) ? 'highlighted' : ''}"
           data-hotspot-id="${escapeHtml(mission.id)}"
-          onclick="window.TE9000App && window.TE9000App.selectHotspot('${escapeHtml(mission.id)}'); return false;"
           aria-pressed="${isSelected ? 'true' : 'false'}"
         >
           <div class="mission-queue-head">
@@ -130,20 +130,20 @@
         <p class="district-label">Tampa Tourism Learning Studio</p>
         <h2>Junior Destination Strategy Analyst</h2>
         ${renderRunProgress(state, runConfig.RUN_LENGTH)}
-        <p class="intro-lead">Use evidence, choose a stakeholder priority, explain the trade-off, and defend your tourism recommendation across four Tampa cases.</p>
+        <p class="intro-lead">Interpret tourism data, weigh stakeholder trade-offs, and defend balanced planning decisions across four Tampa destination cases.</p>
         ${selectedMission ? `
           <section class="summary-card map-start-card">
             <p class="district-label">Selected Case</p>
             <h3>${escapeHtml(selectedMission.name)}</h3>
             <p class="small">${escapeHtml(selectedMission.tourismDomain)}</p>
             <div class="inline-actions">
-              <button type="button" class="btn" data-mission-id="${escapeHtml(selectedMission.id)}" onclick="window.TE9000App && window.TE9000App.selectMission('${escapeHtml(selectedMission.id)}'); return false;">${completed.has(selectedMission.id) ? 'Review Completed Case' : 'Start Selected Case'}</button>
+              <button type="button" id="btnStartSelectedCase" class="btn">${completed.has(selectedMission.id) ? 'Review Completed Case' : 'Start Selected Case'}</button>
               <span class="tag ${selectedRole === 'current' ? 'good' : 'warn'}">${escapeHtml(ROLE_LABELS[selectedRole] || 'Case')}</span>
             </div>
           </section>
         ` : ''}
         <div class="inline-actions">
-          <button type="button" id="btnAskPipWhy" class="btn secondary" onclick="window.TE9000App && window.TE9000App.openPipOverlay(); return false;">Ask Pip for Coaching</button>
+          <button type="button" id="btnAskPipWhy" class="btn secondary">Ask Pip for Coaching</button>
         </div>
       </section>
       <section class="map-stage">
@@ -175,7 +175,7 @@
             <h3>${escapeHtml(selectedMission.name)}</h3>
             <p class="mission-objective"><strong>Tourism domain:</strong> ${escapeHtml(selectedMission.tourismDomain)}</p>
             <div class="inline-actions">
-              <button type="button" class="btn" data-mission-id="${escapeHtml(selectedMission.id)}" onclick="window.TE9000App && window.TE9000App.selectMission('${escapeHtml(selectedMission.id)}'); return false;" ${completed.has(selectedMission.id) ? 'disabled' : ''}>${completed.has(selectedMission.id) ? 'Completed' : 'Open Briefing'}</button>
+              <button type="button" id="btnOpenBriefing" class="btn" ${completed.has(selectedMission.id) ? 'disabled' : ''}>${completed.has(selectedMission.id) ? 'Completed' : 'Open Briefing'}</button>
             </div>
             <p>${escapeHtml(selectedMission.description)}</p>
             <details class="mission-detail-drawer" open>
@@ -227,8 +227,8 @@
         <h3>Constraints</h3>
         <ul class="stakeholder-list">${constraints}</ul>
         <div class="inline-actions">
-          <button type="button" id="btnBackMap" class="btn secondary" onclick="window.TE9000App && window.TE9000App.navigate('map'); return false;">Back to Map</button>
-          <button type="button" id="btnToDecision" class="btn" onclick="window.TE9000App && window.TE9000App.navigate('decision'); return false;">Move to Decision and Rationale</button>
+          <button type="button" id="btnBackMap" class="btn secondary">Back to Map</button>
+          <button type="button" id="btnToDecision" class="btn">Move to Decision and Rationale</button>
         </div>
       </section>
     `;
@@ -242,7 +242,7 @@
         .map(([key, value]) => `<span class="impact-pill ${value >= 0 ? 'plus' : 'minus'}">${CATEGORY_ICONS[key]} ${value > 0 ? '+' : ''}${escapeHtml(value)}</span>`)
         .join('');
       return `
-        <button type="button" class="btn choice ${disabled ? 'blocked' : ''}" data-option-id="${escapeHtml(option.displayLabel)}" onclick="window.TE9000App && window.TE9000App.applyDecision('${escapeHtml(option.displayLabel)}'); return false;" ${disabled ? 'disabled' : ''}>
+        <button type="button" class="btn choice ${disabled ? 'blocked' : ''}" data-option-id="${escapeHtml(option.id)}" ${disabled ? 'disabled' : ''}>
           <span class="choice-head">
             <strong>${escapeHtml(option.displayLabel)}) ${escapeHtml(stripOptionKeyPrefix(option.title))}</strong>
             <span class="choice-cost">Cost ${escapeHtml(cost)}</span>
@@ -310,7 +310,20 @@
           ${renderOptionCards(displayOptions, state)}
         </div>
       </section>
-      <section id="feedbackContainer"></section>
+    `;
+  }
+
+  function renderFeedbackScreen(mission, state, runConfig) {
+    return `
+      ${renderTokenDashboard(state)}
+      <section class="console-shell card mission-briefing">
+        <p class="district-label">Decision Debrief</p>
+        <h2>${escapeHtml(mission.name)}</h2>
+        ${renderRunProgress(state, runConfig.RUN_LENGTH)}
+        <p class="pedagogy-objective"><strong>What this case tested:</strong> ${escapeHtml(mission.learningObjectives.join(' '))}</p>
+        <p>Review what changed, who was affected, and what to watch before you enter the next case.</p>
+      </section>
+      ${renderFeedback(state.currentFeedback, state)}
     `;
   }
 
@@ -362,7 +375,7 @@
         </details>
         ${state.topGateLockReason ? `<p class="small">Top Analyst currently blocked because: ${escapeHtml(state.topGateLockReason)}.</p>` : ''}
         <div class="inline-actions">
-          <button type="button" id="btnReturnMap" class="btn" onclick="window.TE9000App && window.TE9000App.handleReturnToMap(); return false;">Return to Map</button>
+          <button type="button" id="btnReturnMap" class="btn">Return to Map</button>
         </div>
       </section>
     `;
@@ -390,7 +403,7 @@
       <ul class="stakeholder-list">${summaryBullets}</ul>
       <div class="summary-grid">${focusCards}</div>
       <div class="inline-actions">
-        <button type="button" id="btnPipClose" class="btn" onclick="window.TE9000App && window.TE9000App.closePipOverlay(); return false;">Continue</button>
+        <button type="button" id="btnPipClose" class="btn">Continue</button>
       </div>
     `;
   }
@@ -434,7 +447,7 @@
           <textarea data-reflection-field="revisitTradeoff" rows="4">${escapeHtml(responses.revisitTradeoff || '')}</textarea>
         </label>
         <div class="inline-actions">
-          <button type="button" id="btnSubmitReflection" class="btn" onclick="window.TE9000App && window.TE9000App.submitReflection(); return false;">${state.reflectionSubmitted ? 'Update Reflection' : 'Finalize Reflection'}</button>
+          <button type="button" id="btnSubmitReflection" class="btn">${state.reflectionSubmitted ? 'Update Reflection' : 'Finalize Reflection'}</button>
         </div>
       </section>
     `;
@@ -480,8 +493,8 @@
           <p><strong>Trade-off to revisit:</strong> ${escapeHtml(state.reflectionResponses?.revisitTradeoff || 'Not provided yet')}</p>
         </section>
         <div class="inline-actions">
-          <button type="button" id="btnBackMap" class="btn secondary" onclick="window.TE9000App && window.TE9000App.navigate('map'); return false;">Review Map</button>
-          <button type="button" id="btnPrintReport" class="btn" onclick="window.print(); return false;">Print Summary</button>
+          <button type="button" id="btnBackMap" class="btn secondary">Review Map</button>
+          <button type="button" id="btnPrintReport" class="btn">Print Summary</button>
         </div>
       </section>
     `;
@@ -504,6 +517,7 @@
     renderMap,
     renderExploration,
     renderDecision,
+    renderFeedbackScreen,
     renderFeedback,
     renderPipPanel,
     renderGameComplete,

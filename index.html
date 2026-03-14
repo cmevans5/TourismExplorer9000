@@ -13,22 +13,11 @@
     <h1>Tourism Explorer 9000</h1>
     <div class="topbar-actions">
       <button type="button" id="btnDashboard" class="btn secondary" aria-label="Open dashboard">Dashboard</button>
-      <button type="button" id="btnOpenCase" class="btn" aria-label="Open the selected case">Open Selected Case</button>
       <button type="button" id="btnReset" class="btn danger" aria-label="Start a new run">Start New Run</button>
     </div>
   </header>
 
   <main id="mainContent" tabindex="-1" role="main" aria-live="polite"></main>
-
-  <div id="sceneOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="sceneOverlayTitle">
-    <div class="modal wide scene-modal">
-      <div class="scene-modal-topbar">
-        <p class="district-label">Playable Case Scene</p>
-        <button type="button" id="btnSceneOverlayClose" class="btn secondary">Close Scene</button>
-      </div>
-      <div id="sceneOverlayContent"></div>
-    </div>
-  </div>
 
   <div id="pipOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="pipTitle">
     <div class="modal">
