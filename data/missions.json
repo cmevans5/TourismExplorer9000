@@ -5,6 +5,7 @@
       "name": "Riverwalk Weekend Mobility Surge",
       "hub": "Riverwalk",
       "issueType": "Mobility",
+<<<<<<< HEAD
       "tourismDomain": "Destination mobility and curb management",
       "description": "Tampa's Riverwalk is absorbing more event traffic, ride-share pickups, and resident complaints than the curb network can handle on peak weekends.",
       "pedagogy": {
@@ -47,10 +48,53 @@
           "Ride-share dwell violations increased at sunset.",
           "Resident complaints cite blocked sidewalks and unsafe crossings."
         ]
+=======
+      "description": "Pedestrian congestion and curb conflicts are slowing visitor circulation and frustrating nearby residents.",
+      "pedagogy": {
+        "tags": [
+          "remediation",
+          "variance-control",
+          "mobility"
+        ],
+        "reinforces": [
+          "sustainability",
+          "hospitality"
+        ],
+        "commonPitfalls": [
+          "over-index-on-revenue"
+        ],
+        "difficulty": "easy"
+      },
+      "prerequisites": {
+        "minDecisions": 0
+      },
+      "exploration": {
+        "brief": "You are advising on immediate crowd flow controls before peak season weekends.",
+        "mediaLabel": "Pedestrian heatmap + curb turnover snapshot",
+        "bullets": [
+          "Pedestrian dwell time rose 24% near two choke points.",
+          "Ride-share dwell violations increased at sunset.",
+          "Resident complaints cite blocked sidewalks."
+        ],
+        "visualEvidence": {
+          "type": "chart",
+          "imagePath": "assets/images/missions/riverwalk-mobility-surge.svg",
+          "srcset": "assets/images/missions/riverwalk-mobility-surge.svg 1x",
+          "alt": "Annotated map of Riverwalk curb and pedestrian chokepoints during weekend peaks.",
+          "caption": "Pedestrian chokepoints cluster around two curb segments during sunset arrivals.",
+          "sourceLabel": "Source: Tampa Mobility Ops Dashboard (Weekend Snapshot)"
+        },
+        "image": "assets/images/missions/riverwalk-mobility-surge.svg",
+        "alt": "Annotated map of Riverwalk curb and pedestrian chokepoints during weekend peaks.",
+        "caption": "Pedestrian chokepoints cluster around two curb segments during sunset arrivals.",
+        "source": "Source: Tampa Mobility Ops Dashboard (Weekend Snapshot)",
+        "srcset": "assets/images/missions/riverwalk-mobility-surge.svg 1x"
+>>>>>>> ea033dd51f9a8cbdb8d01403efc3877c6b86f04c
       },
       "options": [
         {
           "id": "A",
+<<<<<<< HEAD
           "title": "Timed curb windows plus pedestrian marshals",
           "description": "Create timed pickup windows, add temporary marshals, and hold premium curb access to fixed periods instead of open-ended use.",
           "cost": 36,
@@ -93,34 +137,104 @@
         }
       ],
       "correctOptionId": "A",
+=======
+          "title": "A) Expand paid valet and event loading zones",
+          "description": "Prioritize premium curb usage to reduce queueing for high-spend guests.",
+          "cost": 40,
+          "deltas": {
+            "economic": 2,
+            "sustainability": -1,
+            "culture": 0,
+            "hospitality": 1,
+            "satisfaction": 0
+          },
+          "feedback": "Spending climbs, but congestion and emissions rise in adjacent blocks.",
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
+        },
+        {
+          "id": "B",
+          "title": "B) Balanced systems package",
+          "description": "Fund a cross-agency package that prioritizes weakest indicators first.",
+          "cost": 30,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 2,
+            "culture": 0,
+            "hospitality": 1,
+            "satisfaction": 2
+          },
+          "feedback": "Performance improves across the board, though headline growth is moderate.",
+          "learningNote": "This balanced mobility package prioritizes cleaner circulation and visitor experience while holding revenue growth steady."
+        },
+        {
+          "id": "C",
+          "title": "C) Launch concierge shortcut lanes",
+          "description": "Offer paid fast-lanes through the busiest sections.",
+          "cost": 35,
+          "deltas": {
+            "economic": 1,
+            "sustainability": -1,
+            "culture": -1,
+            "hospitality": 0,
+            "satisfaction": 2
+          },
+          "feedback": "Some guests are happier, but equity concerns and crowding persist.",
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
+        }
+      ],
+      "correctOptionId": "B",
+>>>>>>> ea033dd51f9a8cbdb8d01403efc3877c6b86f04c
       "media": {
         "hero": {
           "imagePath": "assets/images/missions/riverwalk-mobility-surge.svg",
           "srcset": "assets/images/missions/riverwalk-mobility-surge.svg 1x",
+<<<<<<< HEAD
           "alt": "Annotated Riverwalk map showing curb conflict points and heavy pedestrian dwell zones.",
           "caption": "Riverwalk peaks now combine visitor congestion with blocked resident access.",
           "sourceLabel": "Source: Tampa Mobility Ops classroom briefing"
+=======
+          "alt": "Annotated map of Riverwalk curb and pedestrian chokepoints during weekend peaks.",
+          "caption": "Pedestrian chokepoints cluster around two curb segments during sunset arrivals.",
+          "sourceLabel": "Source: Tampa Mobility Ops Dashboard (Weekend Snapshot)"
+>>>>>>> ea033dd51f9a8cbdb8d01403efc3877c6b86f04c
         },
         "thumbnail": {
           "imagePath": "assets/images/missions/riverwalk-mobility-surge.svg",
           "srcset": "assets/images/missions/riverwalk-mobility-surge.svg 1x",
+<<<<<<< HEAD
           "alt": "Thumbnail of Riverwalk mobility heatmap and curb conflict clusters.",
           "caption": "Riverwalk crowd and curb pressure snapshot.",
           "sourceLabel": "Source: Tampa Mobility Ops classroom briefing"
+=======
+          "alt": "Thumbnail preview: Annotated map of Riverwalk curb and pedestrian chokepoints during weekend peaks.",
+          "caption": "Thumbnail: Pedestrian chokepoints cluster around two curb segments during sunset arrivals.",
+          "sourceLabel": "Source: Tampa Mobility Ops Dashboard (Weekend Snapshot)"
+>>>>>>> ea033dd51f9a8cbdb8d01403efc3877c6b86f04c
         },
         "evidenceChart": {
           "imagePath": "assets/images/missions/riverwalk-mobility-surge.svg",
           "srcset": "assets/images/missions/riverwalk-mobility-surge.svg 1x",
+<<<<<<< HEAD
           "alt": "Evidence chart showing Riverwalk dwell-time spikes and ride-share curb conflicts.",
           "caption": "Heatmap evidence links curb dwell and foot-traffic slowdown.",
           "sourceLabel": "Source: Tampa Mobility Ops classroom briefing",
+=======
+          "alt": "Annotated map of Riverwalk curb and pedestrian chokepoints during weekend peaks.",
+          "caption": "Pedestrian chokepoints cluster around two curb segments during sunset arrivals.",
+          "sourceLabel": "Source: Tampa Mobility Ops Dashboard (Weekend Snapshot)",
+>>>>>>> ea033dd51f9a8cbdb8d01403efc3877c6b86f04c
           "type": "chart"
         },
         "fallbackDistrictArt": {
           "imagePath": "assets/images/missions/district-downtown-waterfront-category.svg",
           "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x",
+<<<<<<< HEAD
           "alt": "Downtown waterfront district art used if Riverwalk mission media fails to load.",
           "caption": "Downtown waterfront fallback art.",
+=======
+          "alt": "downtown waterfront district category art fallback.",
+          "caption": "Fallback district visual for Riverwalk Weekend Mobility Surge.",
+>>>>>>> ea033dd51f9a8cbdb8d01403efc3877c6b86f04c
           "sourceLabel": "Source: Tampa District Storyboard"
         }
       }
@@ -129,6 +243,7 @@
       "id": "ybor-nightlife-balance",
       "name": "Ybor Nightlife Identity Balance",
       "hub": "Ybor",
+<<<<<<< HEAD
       "issueType": "Cultural Stewardship",
       "tourismDomain": "Nightlife governance and cultural heritage protection",
       "description": "Nightlife growth is strengthening Ybor's visitor economy, but local artists and heritage advocates say the district is losing the identity that makes it worth visiting.",
@@ -172,10 +287,54 @@
           "Heritage venues report lower Friday bookings.",
           "Resident and artist groups are asking for identity protections, not shutdowns."
         ]
+=======
+      "issueType": "CulturalInclusion",
+      "description": "Entertainment growth is outpacing heritage programming, creating backlash from residents and artists.",
+      "pedagogy": {
+        "tags": [
+          "variety",
+          "culture",
+          "consequence-followup"
+        ],
+        "reinforces": [
+          "culture",
+          "sustainability"
+        ],
+        "commonPitfalls": [
+          "license-overexpansion"
+        ],
+        "difficulty": "medium"
+      },
+      "prerequisites": {
+        "minDecisions": 0
+      },
+      "exploration": {
+        "brief": "Officials need a policy that protects district identity while managing demand spikes.",
+        "mediaLabel": "Permit queue + heritage venue utilization",
+        "bullets": [
+          "Night permits rose 21% YoY.",
+          "Heritage venues report lower weekend bookings.",
+          "Resident association requested a noise mitigation plan."
+        ],
+        "visualEvidence": {
+          "type": "image",
+          "imagePath": "assets/images/missions/ybor-nightlife-balance.svg",
+          "srcset": "assets/images/missions/ybor-nightlife-balance.svg 1x",
+          "alt": "Trend graphic comparing nightlife permit growth with heritage venue utilization in Ybor.",
+          "caption": "Nighttime permit growth is outpacing heritage venue utilization on Fridays.",
+          "sourceLabel": "Source: Ybor Cultural Affairs + Permit Office"
+        },
+        "image": "assets/images/missions/ybor-nightlife-balance.svg",
+        "alt": "Trend graphic comparing nightlife permit growth with heritage venue utilization in Ybor.",
+        "caption": "Nighttime permit growth is outpacing heritage venue utilization on Fridays.",
+        "source": "Source: Ybor Cultural Affairs + Permit Office",
+        "srcset": "assets/images/missions/ybor-nightlife-balance.svg 1x"
+>>>>>>> ea033dd51f9a8cbdb8d01403efc3877c6b86f04c
       },
       "options": [
         {
           "id": "A",
+<<<<<<< HEAD
           "title": "Heritage night bundles plus mobility and noise controls",
           "description": "Co-fund heritage programming, set mobility controls, and attach noise-management expectations to peak-night permits.",
           "cost": 38,
@@ -218,34 +377,231 @@
         }
       ],
       "correctOptionId": "A",
+=======
+          "title": "A) Fast-track additional nightlife licenses",
+          "description": "Approve more high-volume venues ahead of festival season.",
+          "cost": 50,
+          "deltas": {
+            "economic": 3,
+            "sustainability": -2,
+            "culture": -2,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "Top-line growth improves, but trust in district stewardship falls.",
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
+        },
+        {
+          "id": "B",
+          "title": "B) Fund heritage-night bundles + mobility controls",
+          "description": "Co-fund heritage events and coordinated transit/noise controls.",
+          "cost": 35,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 1,
+            "culture": 3,
+            "hospitality": 1,
+            "satisfaction": 0
+          },
+          "feedback": "Identity indicators recover while visitor friction drops.",
+          "learningNote": "Use this when your weakest category needs quick support without a major downside."
+        },
+        {
+          "id": "C",
+          "title": "C) Build paid VIP festival corridor",
+          "description": "Concentrate demand in a paid premium corridor.",
+          "cost": 45,
+          "deltas": {
+            "economic": 2,
+            "sustainability": -1,
+            "culture": -1,
+            "hospitality": 2,
+            "satisfaction": 1
+          },
+          "feedback": "Service quality rises for some guests, but exclusion concerns rise.",
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
+        }
+      ],
+      "correctOptionId": "B",
+>>>>>>> ea033dd51f9a8cbdb8d01403efc3877c6b86f04c
       "media": {
         "hero": {
           "imagePath": "assets/images/missions/ybor-nightlife-balance.svg",
           "srcset": "assets/images/missions/ybor-nightlife-balance.svg 1x",
+<<<<<<< HEAD
           "alt": "Ybor district graphic comparing nightlife permit growth to heritage venue use.",
           "caption": "Ybor demand is growing, but heritage use is not keeping pace.",
           "sourceLabel": "Source: Ybor cultural affairs classroom briefing"
+=======
+          "alt": "Trend graphic comparing nightlife permit growth with heritage venue utilization in Ybor.",
+          "caption": "Nighttime permit growth is outpacing heritage venue utilization on Fridays.",
+          "sourceLabel": "Source: Ybor Cultural Affairs + Permit Office"
+>>>>>>> ea033dd51f9a8cbdb8d01403efc3877c6b86f04c
         },
         "thumbnail": {
           "imagePath": "assets/images/missions/ybor-nightlife-balance.svg",
           "srcset": "assets/images/missions/ybor-nightlife-balance.svg 1x",
+<<<<<<< HEAD
           "alt": "Thumbnail of Ybor nightlife and heritage trend comparison.",
           "caption": "Ybor permit and heritage snapshot.",
           "sourceLabel": "Source: Ybor cultural affairs classroom briefing"
+=======
+          "alt": "Thumbnail preview: Trend graphic comparing nightlife permit growth with heritage venue utilization in Ybor.",
+          "caption": "Thumbnail: Nighttime permit growth is outpacing heritage venue utilization on Fridays.",
+          "sourceLabel": "Source: Ybor Cultural Affairs + Permit Office"
+>>>>>>> ea033dd51f9a8cbdb8d01403efc3877c6b86f04c
         },
         "evidenceChart": {
           "imagePath": "assets/images/missions/ybor-nightlife-balance.svg",
           "srcset": "assets/images/missions/ybor-nightlife-balance.svg 1x",
+<<<<<<< HEAD
           "alt": "Evidence chart for Ybor nightlife permits and heritage venue utilization.",
           "caption": "Permit growth and heritage utilization trend chart.",
           "sourceLabel": "Source: Ybor cultural affairs classroom briefing",
           "type": "chart"
+=======
+          "alt": "Trend graphic comparing nightlife permit growth with heritage venue utilization in Ybor.",
+          "caption": "Nighttime permit growth is outpacing heritage venue utilization on Fridays.",
+          "sourceLabel": "Source: Ybor Cultural Affairs + Permit Office",
+          "type": "image"
+>>>>>>> ea033dd51f9a8cbdb8d01403efc3877c6b86f04c
         },
         "fallbackDistrictArt": {
           "imagePath": "assets/images/missions/district-historic-ybor-category.svg",
           "srcset": "assets/images/missions/district-historic-ybor-category.svg 1x",
+<<<<<<< HEAD
           "alt": "Historic Ybor district art fallback image.",
           "caption": "Historic Ybor fallback art.",
+=======
+          "alt": "historic ybor district category art fallback.",
+          "caption": "Fallback district visual for Ybor Nightlife Identity Balance.",
+          "sourceLabel": "Source: Tampa District Storyboard"
+        }
+      }
+    },
+    {
+      "id": "busch-queue-emissions",
+      "name": "Busch Gardens Queue + Emissions Trade-off",
+      "hub": "BuschGardens",
+      "issueType": "Sustainability",
+      "description": "Peak queues are up and diesel shuttle usage is drawing criticism from repeat visitors.",
+      "pedagogy": {
+        "tags": [
+          "remediation",
+          "sustainability",
+          "high-impact"
+        ],
+        "reinforces": [
+          "sustainability",
+          "hospitality"
+        ],
+        "commonPitfalls": [
+          "premium-only-lanes"
+        ],
+        "difficulty": "medium"
+      },
+      "prerequisites": {
+        "minDecisions": 0
+      },
+      "exploration": {
+        "brief": "Leadership wants a plan that preserves spend while lowering operational strain.",
+        "mediaLabel": "Queue heatmap + shuttle emissions monitor",
+        "bullets": [
+          "Average queue time increased by 14 minutes.",
+          "Diesel shuttle share is still 68%.",
+          "Repeat guests cite “same experience, higher stress.”"
+        ],
+        "visualEvidence": {
+          "type": "chart",
+          "imagePath": "assets/images/missions/busch-queue-emissions.svg",
+          "srcset": "assets/images/missions/busch-queue-emissions.svg 1x",
+          "alt": "Composite chart linking queue duration increases with diesel shuttle share at the park.",
+          "caption": "Queue-time and diesel-share indicators rise together during peak afternoon blocks.",
+          "sourceLabel": "Source: Park Operations Telemetry"
+        },
+        "image": "assets/images/missions/busch-queue-emissions.svg",
+        "alt": "Composite chart linking queue duration increases with diesel shuttle share at the park.",
+        "caption": "Queue-time and diesel-share indicators rise together during peak afternoon blocks.",
+        "source": "Source: Park Operations Telemetry",
+        "srcset": "assets/images/missions/busch-queue-emissions.svg 1x"
+      },
+      "options": [
+        {
+          "id": "A",
+          "title": "A) Scale premium fast-pass lanes",
+          "description": "Convert additional capacity to paid fast-pass products.",
+          "cost": 55,
+          "deltas": {
+            "economic": 3,
+            "sustainability": -2,
+            "culture": -1,
+            "hospitality": 2,
+            "satisfaction": 1
+          },
+          "feedback": "Revenue improves quickly, but fairness and emissions optics worsen.",
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
+        },
+        {
+          "id": "B",
+          "title": "B) Electrify shuttle loops + local maker pop-ups",
+          "description": "Bundle low-emission transport and local co-branded activations.",
+          "cost": 40,
+          "deltas": {
+            "economic": 0,
+            "sustainability": 3,
+            "culture": 2,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "Flow and trust metrics improve with broad portfolio gains.",
+          "learningNote": "Use this to quickly stabilize sustainability while supporting your weakest category."
+        },
+        {
+          "id": "C",
+          "title": "C) Run thrill-campaign attendance push",
+          "description": "Drive more attendance through social campaigns and late events.",
+          "cost": 35,
+          "deltas": {
+            "economic": 2,
+            "sustainability": -1,
+            "culture": 0,
+            "hospitality": 1,
+            "satisfaction": 2
+          },
+          "feedback": "Excitement rises, but core bottlenecks remain.",
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
+        }
+      ],
+      "correctOptionId": "B",
+      "media": {
+        "hero": {
+          "imagePath": "assets/images/missions/busch-queue-emissions.svg",
+          "srcset": "assets/images/missions/busch-queue-emissions.svg 1x",
+          "alt": "Composite chart linking queue duration increases with diesel shuttle share at the park.",
+          "caption": "Queue-time and diesel-share indicators rise together during peak afternoon blocks.",
+          "sourceLabel": "Source: Park Operations Telemetry"
+        },
+        "thumbnail": {
+          "imagePath": "assets/images/missions/busch-queue-emissions.svg",
+          "srcset": "assets/images/missions/busch-queue-emissions.svg 1x",
+          "alt": "Thumbnail preview: Composite chart linking queue duration increases with diesel shuttle share at the park.",
+          "caption": "Thumbnail: Queue-time and diesel-share indicators rise together during peak afternoon blocks.",
+          "sourceLabel": "Source: Park Operations Telemetry"
+        },
+        "evidenceChart": {
+          "imagePath": "assets/images/missions/busch-queue-emissions.svg",
+          "srcset": "assets/images/missions/busch-queue-emissions.svg 1x",
+          "alt": "Composite chart linking queue duration increases with diesel shuttle share at the park.",
+          "caption": "Queue-time and diesel-share indicators rise together during peak afternoon blocks.",
+          "sourceLabel": "Source: Park Operations Telemetry",
+          "type": "chart"
+        },
+        "fallbackDistrictArt": {
+          "imagePath": "assets/images/missions/district-eco-park-category.svg",
+          "srcset": "assets/images/missions/district-eco-park-category.svg 1x",
+          "alt": "eco park district category art fallback.",
+          "caption": "Fallback district visual for Busch Gardens Queue + Emissions Trade-off.",
+>>>>>>> ea033dd51f9a8cbdb8d01403efc3877c6b86f04c
           "sourceLabel": "Source: Tampa District Storyboard"
         }
       }
@@ -254,6 +610,7 @@
       "id": "port-cruise-dispersal",
       "name": "Port Tampa Cruise Dispersal Planning",
       "hub": "PortTampa",
+<<<<<<< HEAD
       "issueType": "Dispersal",
       "tourismDomain": "Cruise dispersal, arrival management, and resident protection",
       "description": "Overlapping cruise arrivals are overwhelming nearby streets and reducing the quality of the Tampa arrival experience for both visitors and local neighborhoods.",
@@ -297,10 +654,54 @@
           "Coach idle time exceeds target by 19%.",
           "Downtown businesses perform better when dispersal reaches multiple entry zones."
         ]
+=======
+      "issueType": "Mobility",
+      "description": "Disembarkation surges overwhelm local streets and reduce time-in-destination quality.",
+      "pedagogy": {
+        "tags": [
+          "mobility",
+          "consequence-followup",
+          "same-hub"
+        ],
+        "reinforces": [
+          "sustainability",
+          "satisfaction"
+        ],
+        "commonPitfalls": [
+          "single-exit-routing"
+        ],
+        "difficulty": "medium"
+      },
+      "prerequisites": {
+        "minDecisions": 0
+      },
+      "exploration": {
+        "brief": "You need a dispersal plan that protects nearby neighborhoods and downtown throughput.",
+        "mediaLabel": "Cruise arrival forecast + corridor travel-time map",
+        "bullets": [
+          "Two ships overlap on 14 days next month.",
+          "Coach idle times exceed target by 19%.",
+          "Neighborhood board requested quieter rerouting."
+        ],
+        "visualEvidence": {
+          "type": "image",
+          "imagePath": "assets/images/missions/port-cruise-dispersal.svg",
+          "srcset": "assets/images/missions/port-cruise-dispersal.svg 1x",
+          "alt": "Cruise dispersal route diagram showing timed coach releases and neighborhood protection buffers.",
+          "caption": "Overlapping disembarkation windows create localized curb and coach idling pressure.",
+          "sourceLabel": "Source: Port Tampa Mobility Coordination Unit"
+        },
+        "image": "assets/images/missions/port-cruise-dispersal.svg",
+        "alt": "Cruise dispersal route diagram showing timed coach releases and neighborhood protection buffers.",
+        "caption": "Overlapping disembarkation windows create localized curb and coach idling pressure.",
+        "source": "Source: Port Tampa Mobility Coordination Unit",
+        "srcset": "assets/images/missions/port-cruise-dispersal.svg 1x"
+>>>>>>> ea033dd51f9a8cbdb8d01403efc3877c6b86f04c
       },
       "options": [
         {
           "id": "A",
+<<<<<<< HEAD
           "title": "Timed release windows with multi-zone downtown drop-offs",
           "description": "Stage departures in timed waves, use neighborhood protection buffers, and distribute arrivals across multiple downtown drop zones.",
           "cost": 41,
@@ -343,34 +744,1549 @@
         }
       ],
       "correctOptionId": "A",
+=======
+          "title": "A) Prioritize rapid coach dispatch lanes",
+          "description": "Allocate most curb space to outbound coaches.",
+          "cost": 40,
+          "deltas": {
+            "economic": 2,
+            "sustainability": -1,
+            "culture": 0,
+            "hospitality": 1,
+            "satisfaction": 0
+          },
+          "feedback": "Turnover improves, but street-level friction increases.",
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
+        },
+        {
+          "id": "B",
+          "title": "B) Balanced systems package",
+          "description": "Fund a cross-agency package that prioritizes weakest indicators first.",
+          "cost": 32,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 2,
+            "culture": 0,
+            "hospitality": 1,
+            "satisfaction": 2
+          },
+          "feedback": "Performance improves across the board, though headline growth is moderate.",
+          "learningNote": "This package reduces cruise-area congestion and improves arrivals flow, with moderate upside for local businesses."
+        },
+        {
+          "id": "C",
+          "title": "C) Add premium direct-transfer product",
+          "description": "Sell direct transfers with dedicated loading zones.",
+          "cost": 35,
+          "deltas": {
+            "economic": 2,
+            "sustainability": -1,
+            "culture": -1,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "Premium users benefit, but local impacts remain uneven.",
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
+        }
+      ],
+      "correctOptionId": "B",
+>>>>>>> ea033dd51f9a8cbdb8d01403efc3877c6b86f04c
       "media": {
         "hero": {
           "imagePath": "assets/images/missions/port-cruise-dispersal.svg",
           "srcset": "assets/images/missions/port-cruise-dispersal.svg 1x",
+<<<<<<< HEAD
           "alt": "Cruise dispersal route plan showing staged coach releases and neighborhood buffers.",
           "caption": "Cruise arrivals are shaping both visitor first impressions and neighborhood impact.",
           "sourceLabel": "Source: Port Tampa classroom briefing"
+=======
+          "alt": "Cruise dispersal route diagram showing timed coach releases and neighborhood protection buffers.",
+          "caption": "Overlapping disembarkation windows create localized curb and coach idling pressure.",
+          "sourceLabel": "Source: Port Tampa Mobility Coordination Unit"
+>>>>>>> ea033dd51f9a8cbdb8d01403efc3877c6b86f04c
         },
         "thumbnail": {
           "imagePath": "assets/images/missions/port-cruise-dispersal.svg",
           "srcset": "assets/images/missions/port-cruise-dispersal.svg 1x",
+<<<<<<< HEAD
           "alt": "Thumbnail of cruise dispersal route and release timing plan.",
           "caption": "Port Tampa dispersal snapshot.",
           "sourceLabel": "Source: Port Tampa classroom briefing"
+=======
+          "alt": "Thumbnail preview: Cruise dispersal route diagram showing timed coach releases and neighborhood protection buffers.",
+          "caption": "Thumbnail: Overlapping disembarkation windows create localized curb and coach idling pressure.",
+          "sourceLabel": "Source: Port Tampa Mobility Coordination Unit"
+>>>>>>> ea033dd51f9a8cbdb8d01403efc3877c6b86f04c
         },
         "evidenceChart": {
           "imagePath": "assets/images/missions/port-cruise-dispersal.svg",
           "srcset": "assets/images/missions/port-cruise-dispersal.svg 1x",
+<<<<<<< HEAD
           "alt": "Evidence chart showing cruise overlap windows and dispersal pressure points.",
           "caption": "Arrival overlap creates localized idling and route pressure.",
           "sourceLabel": "Source: Port Tampa classroom briefing",
           "type": "chart"
+=======
+          "alt": "Cruise dispersal route diagram showing timed coach releases and neighborhood protection buffers.",
+          "caption": "Overlapping disembarkation windows create localized curb and coach idling pressure.",
+          "sourceLabel": "Source: Port Tampa Mobility Coordination Unit",
+          "type": "image"
+>>>>>>> ea033dd51f9a8cbdb8d01403efc3877c6b86f04c
         },
         "fallbackDistrictArt": {
           "imagePath": "assets/images/missions/district-downtown-waterfront-category.svg",
           "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x",
+<<<<<<< HEAD
           "alt": "Downtown waterfront fallback art for the port mission.",
           "caption": "Downtown waterfront fallback art.",
+=======
+          "alt": "downtown waterfront district category art fallback.",
+          "caption": "Fallback district visual for Port Tampa Cruise Dispersal Planning.",
+          "sourceLabel": "Source: Tampa District Storyboard"
+        }
+      }
+    },
+    {
+      "id": "convention-pricing-pressure",
+      "name": "Convention District Pricing Pressure",
+      "hub": "ConventionDistrict",
+      "issueType": "Pricing",
+      "description": "Large events are driving hotel and dining spikes, straining resident and worker sentiment.",
+      "pedagogy": {
+        "tags": [
+          "pricing",
+          "remediation",
+          "variety"
+        ],
+        "reinforces": [
+          "economic",
+          "culture"
+        ],
+        "commonPitfalls": [
+          "unbounded-surge-pricing"
+        ],
+        "difficulty": "medium"
+      },
+      "prerequisites": {
+        "minDecisions": 0
+      },
+      "exploration": {
+        "brief": "You need a demand strategy that protects reputation while preserving event revenue.",
+        "mediaLabel": "ADR trendline + local sentiment pulse",
+        "bullets": [
+          "Event-week ADR up 27%.",
+          "Worker lunch affordability index fell 11%.",
+          "Delegate satisfaction stable but resident sentiment declined."
+        ],
+        "image": "assets/images/missions/district-downtown-waterfront-category.svg",
+        "alt": "Convention District Pricing Pressure visual anchor for downtown waterfront district.",
+        "caption": "ADR trendline + local sentiment pulse.",
+        "source": "Source: District field brief",
+        "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x"
+      },
+      "options": [
+        {
+          "id": "A",
+          "title": "A) Allow unrestricted surge pricing",
+          "description": "Leave pricing fully market-driven during event peaks.",
+          "cost": 40,
+          "deltas": {
+            "economic": 2,
+            "sustainability": -1,
+            "culture": -1,
+            "hospitality": 1,
+            "satisfaction": 0
+          },
+          "feedback": "Revenue grows, but social license weakens.",
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
+        },
+        {
+          "id": "B",
+          "title": "B) Balanced systems package",
+          "description": "Fund a cross-agency package that prioritizes weakest indicators first.",
+          "cost": 30,
+          "deltas": {
+            "economic": 0,
+            "sustainability": 0,
+            "culture": 1,
+            "hospitality": 1,
+            "satisfaction": 2
+          },
+          "feedback": "Performance improves across the board, though headline growth is moderate.",
+          "learningNote": "This pricing package improves fairness perception and attendee trust, but does not maximize short-term revenue."
+        },
+        {
+          "id": "C",
+          "title": "C) Bundle premium concierge district passes",
+          "description": "Launch paid district convenience bundles.",
+          "cost": 35,
+          "deltas": {
+            "economic": 1,
+            "sustainability": -1,
+            "culture": 0,
+            "hospitality": 2,
+            "satisfaction": 1
+          },
+          "feedback": "Guest convenience improves while affordability concerns remain.",
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
+        }
+      ],
+      "correctOptionId": "B",
+      "media": {
+        "hero": {
+          "imagePath": "assets/images/missions/district-downtown-waterfront-category.svg",
+          "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x",
+          "alt": "Convention District Pricing Pressure visual anchor for downtown waterfront district.",
+          "caption": "ADR trendline + local sentiment pulse.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "thumbnail": {
+          "imagePath": "assets/images/missions/district-downtown-waterfront-category.svg",
+          "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x",
+          "alt": "Thumbnail preview: Convention District Pricing Pressure visual anchor for downtown waterfront district.",
+          "caption": "Thumbnail: ADR trendline + local sentiment pulse.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "evidenceChart": null,
+        "fallbackDistrictArt": {
+          "imagePath": "assets/images/missions/district-downtown-waterfront-category.svg",
+          "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x",
+          "alt": "downtown waterfront district category art fallback.",
+          "caption": "Fallback district visual for Convention District Pricing Pressure.",
+          "sourceLabel": "Source: Tampa District Storyboard"
+        }
+      }
+    },
+    {
+      "id": "channelside-cruise-retail-mix",
+      "name": "Channelside Cruise-Day Retail Mix",
+      "hub": "Channelside",
+      "issueType": "Hospitality",
+      "description": "Cruise-day demand is high, but local operators say spend bypasses neighborhood businesses.",
+      "pedagogy": {
+        "tags": [
+          "hospitality",
+          "consequence-followup",
+          "same-hub"
+        ],
+        "reinforces": [
+          "economic",
+          "culture"
+        ],
+        "commonPitfalls": [
+          "chain-overreliance"
+        ],
+        "difficulty": "easy"
+      },
+      "prerequisites": {
+        "minDecisions": 0
+      },
+      "exploration": {
+        "brief": "You are designing a mix strategy that improves guest convenience and local capture.",
+        "mediaLabel": "Point-of-sale mix + footfall distribution map",
+        "bullets": [
+          "Chain operators captured 72% of cruise-day sales.",
+          "Local eateries saw short dwell times.",
+          "Guest ratings request clearer local recommendations."
+        ],
+        "image": "assets/images/missions/district-beachfront-zone-category.svg",
+        "alt": "Channelside Cruise-Day Retail Mix visual anchor for beachfront zone district.",
+        "caption": "Point-of-sale mix + footfall distribution map.",
+        "source": "Source: District field brief",
+        "srcset": "assets/images/missions/district-beachfront-zone-category.svg 1x"
+      },
+      "options": [
+        {
+          "id": "A",
+          "title": "A) Incentivize national chain expansion",
+          "description": "Prioritize national operators for rapid scale.",
+          "cost": 40,
+          "deltas": {
+            "economic": 2,
+            "sustainability": -1,
+            "culture": -2,
+            "hospitality": 1,
+            "satisfaction": 0
+          },
+          "feedback": "Sales rise, but neighborhood authenticity weakens.",
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
+        },
+        {
+          "id": "B",
+          "title": "B) Launch local-first concierge routing",
+          "description": "Use digital routing and staffing to steer guests to local clusters.",
+          "cost": 30,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 1,
+            "culture": 2,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "Local capture and guest discovery both improve.",
+          "learningNote": "Use this when your weakest category needs quick support without a major downside."
+        },
+        {
+          "id": "C",
+          "title": "C) Create premium express dining corridor",
+          "description": "Focus on high-speed premium dining near terminals.",
+          "cost": 35,
+          "deltas": {
+            "economic": 2,
+            "sustainability": -1,
+            "culture": -1,
+            "hospitality": 2,
+            "satisfaction": 1
+          },
+          "feedback": "Convenience improves, but inclusion outcomes remain uneven.",
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
+        }
+      ],
+      "correctOptionId": "B",
+      "media": {
+        "hero": {
+          "imagePath": "assets/images/missions/district-beachfront-zone-category.svg",
+          "srcset": "assets/images/missions/district-beachfront-zone-category.svg 1x",
+          "alt": "Channelside Cruise-Day Retail Mix visual anchor for beachfront zone district.",
+          "caption": "Point-of-sale mix + footfall distribution map.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "thumbnail": {
+          "imagePath": "assets/images/missions/district-beachfront-zone-category.svg",
+          "srcset": "assets/images/missions/district-beachfront-zone-category.svg 1x",
+          "alt": "Thumbnail preview: Channelside Cruise-Day Retail Mix visual anchor for beachfront zone district.",
+          "caption": "Thumbnail: Point-of-sale mix + footfall distribution map.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "evidenceChart": null,
+        "fallbackDistrictArt": {
+          "imagePath": "assets/images/missions/district-beachfront-zone-category.svg",
+          "srcset": "assets/images/missions/district-beachfront-zone-category.svg 1x",
+          "alt": "beachfront zone district category art fallback.",
+          "caption": "Fallback district visual for Channelside Cruise-Day Retail Mix.",
+          "sourceLabel": "Source: Tampa District Storyboard"
+        }
+      }
+    },
+    {
+      "id": "airport-corridor-wayfinding",
+      "name": "Airport Corridor First-Impression Wayfinding",
+      "hub": "AirportCorridor",
+      "issueType": "VisitorSatisfaction",
+      "description": "Visitors entering from the airport report confusion about transfer options and district links.",
+      "pedagogy": {
+        "tags": [
+          "visitor-satisfaction",
+          "remediation",
+          "variety"
+        ],
+        "reinforces": [
+          "satisfaction",
+          "hospitality"
+        ],
+        "commonPitfalls": [
+          "one-language-design"
+        ],
+        "difficulty": "easy"
+      },
+      "prerequisites": {
+        "minDecisions": 0
+      },
+      "exploration": {
+        "brief": "A quick-win package is needed before a major convention weekend.",
+        "mediaLabel": "Arrival survey panel + transfer conversion funnel",
+        "bullets": [
+          "First-hour dissatisfaction rose to 19%.",
+          "Transfer uptake to downtown attractions is below target.",
+          "Multilingual signage requests increased."
+        ],
+        "image": "assets/images/missions/district-cultural-corridor-category.svg",
+        "alt": "Airport Corridor First-Impression Wayfinding visual anchor for cultural corridor district.",
+        "caption": "Arrival survey panel + transfer conversion funnel.",
+        "source": "Source: District field brief",
+        "srcset": "assets/images/missions/district-cultural-corridor-category.svg 1x"
+      },
+      "options": [
+        {
+          "id": "A",
+          "title": "A) Prioritize ad inventory over wayfinding",
+          "description": "Use arrivals space primarily for sponsorship placements.",
+          "cost": 30,
+          "deltas": {
+            "economic": 2,
+            "sustainability": 0,
+            "culture": -1,
+            "hospitality": 0,
+            "satisfaction": -1
+          },
+          "feedback": "Ad revenue improves but wayfinding friction rises.",
+          "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
+        },
+        {
+          "id": "B",
+          "title": "B) Balanced systems package",
+          "description": "Fund a cross-agency package that prioritizes weakest indicators first.",
+          "cost": 31,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 1,
+            "culture": 0,
+            "hospitality": 2,
+            "satisfaction": 2
+          },
+          "feedback": "Performance improves across the board, though headline growth is moderate.",
+          "learningNote": "This package improves first-impression navigation and service quality, supporting smoother arrivals over pure volume gains."
+        },
+        {
+          "id": "C",
+          "title": "C) Launch premium meet-and-greet service",
+          "description": "Expand concierge arrivals service for paid tiers.",
+          "cost": 35,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 0,
+            "culture": -1,
+            "hospitality": 2,
+            "satisfaction": 1
+          },
+          "feedback": "Premium experience improves while broad usability gaps remain.",
+          "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
+        }
+      ],
+      "correctOptionId": "B",
+      "media": {
+        "hero": {
+          "imagePath": "assets/images/missions/district-cultural-corridor-category.svg",
+          "srcset": "assets/images/missions/district-cultural-corridor-category.svg 1x",
+          "alt": "Airport Corridor First-Impression Wayfinding visual anchor for cultural corridor district.",
+          "caption": "Arrival survey panel + transfer conversion funnel.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "thumbnail": {
+          "imagePath": "assets/images/missions/district-cultural-corridor-category.svg",
+          "srcset": "assets/images/missions/district-cultural-corridor-category.svg 1x",
+          "alt": "Thumbnail preview: Airport Corridor First-Impression Wayfinding visual anchor for cultural corridor district.",
+          "caption": "Thumbnail: Arrival survey panel + transfer conversion funnel.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "evidenceChart": null,
+        "fallbackDistrictArt": {
+          "imagePath": "assets/images/missions/district-cultural-corridor-category.svg",
+          "srcset": "assets/images/missions/district-cultural-corridor-category.svg 1x",
+          "alt": "cultural corridor district category art fallback.",
+          "caption": "Fallback district visual for Airport Corridor First-Impression Wayfinding.",
+          "sourceLabel": "Source: Tampa District Storyboard"
+        }
+      }
+    },
+    {
+      "id": "southshore-eco-access",
+      "name": "South Shore Eco-Access Capacity",
+      "hub": "SouthShore",
+      "issueType": "Sustainability",
+      "description": "Nature-forward tourism demand is rising faster than trail and shoreline carrying capacity.",
+      "pedagogy": {
+        "tags": [
+          "sustainability",
+          "remediation",
+          "high-impact"
+        ],
+        "reinforces": [
+          "sustainability",
+          "culture"
+        ],
+        "commonPitfalls": [
+          "capacity-overrun"
+        ],
+        "difficulty": "hard"
+      },
+      "prerequisites": {
+        "minDecisions": 0
+      },
+      "exploration": {
+        "brief": "Parks and tourism teams need a joint access policy for the next season.",
+        "mediaLabel": "Trail erosion monitor + booking demand forecast",
+        "bullets": [
+          "Sensitive trail segments exceed use thresholds on weekends.",
+          "Guided eco-tour bookings are up 31%.",
+          "Community groups request stronger stewardship messaging."
+        ],
+        "image": "assets/images/missions/district-eco-park-category.svg",
+        "alt": "South Shore Eco-Access Capacity visual anchor for eco park district.",
+        "caption": "Trail erosion monitor + booking demand forecast.",
+        "source": "Source: District field brief",
+        "srcset": "assets/images/missions/district-eco-park-category.svg 1x"
+      },
+      "options": [
+        {
+          "id": "A",
+          "title": "A) Expand open-access marketing immediately",
+          "description": "Drive additional demand without new safeguards.",
+          "cost": 35,
+          "deltas": {
+            "economic": 2,
+            "sustainability": -2,
+            "culture": 0,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "Bookings rise, but ecological degradation risk increases.",
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
+        },
+        {
+          "id": "B",
+          "title": "B) Introduce timed entry + local stewardship guides",
+          "description": "Control flows with timed entry and certified local guide rotations.",
+          "cost": 30,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 3,
+            "culture": 1,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "Use pressure stabilizes while destination quality improves.",
+          "learningNote": "Use this when your weakest category needs quick support without a major downside."
+        },
+        {
+          "id": "C",
+          "title": "C) Sell premium unrestricted eco-passes",
+          "description": "Offer paid unrestricted access with add-on amenities.",
+          "cost": 40,
+          "deltas": {
+            "economic": 2,
+            "sustainability": -1,
+            "culture": -1,
+            "hospitality": 2,
+            "satisfaction": 1
+          },
+          "feedback": "Revenue improves, but equity and carrying-capacity concerns persist.",
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
+        }
+      ],
+      "correctOptionId": "B",
+      "media": {
+        "hero": {
+          "imagePath": "assets/images/missions/district-eco-park-category.svg",
+          "srcset": "assets/images/missions/district-eco-park-category.svg 1x",
+          "alt": "South Shore Eco-Access Capacity visual anchor for eco park district.",
+          "caption": "Trail erosion monitor + booking demand forecast.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "thumbnail": {
+          "imagePath": "assets/images/missions/district-eco-park-category.svg",
+          "srcset": "assets/images/missions/district-eco-park-category.svg 1x",
+          "alt": "Thumbnail preview: South Shore Eco-Access Capacity visual anchor for eco park district.",
+          "caption": "Thumbnail: Trail erosion monitor + booking demand forecast.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "evidenceChart": null,
+        "fallbackDistrictArt": {
+          "imagePath": "assets/images/missions/district-eco-park-category.svg",
+          "srcset": "assets/images/missions/district-eco-park-category.svg 1x",
+          "alt": "eco park district category art fallback.",
+          "caption": "Fallback district visual for South Shore Eco-Access Capacity.",
+          "sourceLabel": "Source: Tampa District Storyboard"
+        }
+      }
+    },
+    {
+      "id": "riverwalk-vendor-equity",
+      "name": "Riverwalk Vendor Equity Friction",
+      "hub": "Riverwalk",
+      "issueType": "CulturalInclusion",
+      "description": "Longtime local vendors report being pushed into low-traffic zones during event weekends.",
+      "pedagogy": {
+        "tags": [
+          "consequence-followup",
+          "same-hub",
+          "equity"
+        ],
+        "reinforces": [
+          "culture",
+          "economic"
+        ],
+        "commonPitfalls": [
+          "premiumization"
+        ],
+        "difficulty": "medium"
+      },
+      "prerequisites": {
+        "minDecisions": 1
+      },
+      "exploration": {
+        "brief": "The district office wants a policy that protects local identity without collapsing concession revenue.",
+        "mediaLabel": "Vendor placement map + permit revenue trend",
+        "bullets": [
+          "Independent vendors lost 12% average weekend sales.",
+          "Two national pop-ups requested premium frontage.",
+          "Visitor surveys request “more local flavor.”"
+        ],
+        "image": "assets/images/missions/district-downtown-waterfront-category.svg",
+        "alt": "Riverwalk Vendor Equity Friction visual anchor for downtown waterfront district.",
+        "caption": "Vendor placement map + permit revenue trend.",
+        "source": "Source: District field brief",
+        "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x"
+      },
+      "options": [
+        {
+          "id": "A",
+          "title": "A) Auction frontage to highest bidder",
+          "description": "Use dynamic pricing for all high-traffic stalls.",
+          "cost": 45,
+          "deltas": {
+            "economic": 2,
+            "sustainability": -1,
+            "culture": -2,
+            "hospitality": 1,
+            "satisfaction": 0
+          },
+          "feedback": "Revenue rises quickly but local trust drops.",
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
+        },
+        {
+          "id": "B",
+          "title": "B) Create protected local-vendor blocks",
+          "description": "Reserve anchor frontage for certified local businesses and rotate co-ops.",
+          "cost": 30,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 1,
+            "culture": 2,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "Footfall stabilizes and district identity strengthens.",
+          "learningNote": "Use this when your weakest category needs quick support without a major downside."
+        },
+        {
+          "id": "C",
+          "title": "C) Introduce mixed premium + lottery permits",
+          "description": "Blend premium permits with a limited local lottery.",
+          "cost": 35,
+          "deltas": {
+            "economic": 2,
+            "sustainability": -1,
+            "culture": -1,
+            "hospitality": 2,
+            "satisfaction": 1
+          },
+          "feedback": "Visitors see more options, but equity outcomes stay uneven.",
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
+        }
+      ],
+      "correctOptionId": "B",
+      "media": {
+        "hero": {
+          "imagePath": "assets/images/missions/district-downtown-waterfront-category.svg",
+          "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x",
+          "alt": "Riverwalk Vendor Equity Friction visual anchor for downtown waterfront district.",
+          "caption": "Vendor placement map + permit revenue trend.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "thumbnail": {
+          "imagePath": "assets/images/missions/district-downtown-waterfront-category.svg",
+          "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x",
+          "alt": "Thumbnail preview: Riverwalk Vendor Equity Friction visual anchor for downtown waterfront district.",
+          "caption": "Thumbnail: Vendor placement map + permit revenue trend.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "evidenceChart": null,
+        "fallbackDistrictArt": {
+          "imagePath": "assets/images/missions/district-downtown-waterfront-category.svg",
+          "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x",
+          "alt": "downtown waterfront district category art fallback.",
+          "caption": "Fallback district visual for Riverwalk Vendor Equity Friction.",
+          "sourceLabel": "Source: Tampa District Storyboard"
+        }
+      }
+    },
+    {
+      "id": "ybor-late-night-mobility",
+      "name": "Ybor Late-Night Mobility Spillover",
+      "hub": "Ybor",
+      "issueType": "Mobility",
+      "description": "Ride-share queues and parking spillover are creating block-by-block gridlock after midnight.",
+      "pedagogy": {
+        "tags": [
+          "remediation",
+          "mobility",
+          "variance-control"
+        ],
+        "reinforces": [
+          "sustainability",
+          "satisfaction"
+        ],
+        "commonPitfalls": [
+          "single-mode-fix"
+        ],
+        "difficulty": "easy"
+      },
+      "prerequisites": {
+        "minDecisions": 1
+      },
+      "exploration": {
+        "brief": "You are selecting a mobility intervention for weekends over the next quarter.",
+        "mediaLabel": "Curb occupancy chart + transit reliability panel",
+        "bullets": [
+          "Ride-share dwell violations up 29%.",
+          "Transit headways are inconsistent after 11pm.",
+          "Residents report circling traffic on side streets."
+        ],
+        "image": "assets/images/missions/district-historic-ybor-category.svg",
+        "alt": "Ybor Late-Night Mobility Spillover visual anchor for historic ybor district.",
+        "caption": "Curb occupancy chart + transit reliability panel.",
+        "source": "Source: District field brief",
+        "srcset": "assets/images/missions/district-historic-ybor-category.svg 1x"
+      },
+      "options": [
+        {
+          "id": "A",
+          "title": "A) Expand paid parking inventory",
+          "description": "Convert public curb space into dynamic paid parking.",
+          "cost": 40,
+          "deltas": {
+            "economic": 2,
+            "sustainability": -1,
+            "culture": -1,
+            "hospitality": 1,
+            "satisfaction": 0
+          },
+          "feedback": "Parking turnover improves but neighborhood traffic worsens.",
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
+        },
+        {
+          "id": "B",
+          "title": "B) Balanced systems package",
+          "description": "Fund a cross-agency package that prioritizes weakest indicators first.",
+          "cost": 32,
+          "deltas": {
+            "economic": 0,
+            "sustainability": 2,
+            "culture": 1,
+            "hospitality": 1,
+            "satisfaction": 2
+          },
+          "feedback": "Performance improves across the board, though headline growth is moderate.",
+          "learningNote": "This late-night mobility mix reduces street pressure and improves guest safety sentiment, with balanced district economics."
+        },
+        {
+          "id": "C",
+          "title": "C) Subsidize premium shuttle-only service",
+          "description": "Offer high-frequency shuttles targeted to premium ticket holders.",
+          "cost": 35,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 0,
+            "culture": -1,
+            "hospitality": 2,
+            "satisfaction": 1
+          },
+          "feedback": "Queueing improves for some guests, but equity concerns remain.",
+          "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
+        }
+      ],
+      "correctOptionId": "B",
+      "media": {
+        "hero": {
+          "imagePath": "assets/images/missions/district-historic-ybor-category.svg",
+          "srcset": "assets/images/missions/district-historic-ybor-category.svg 1x",
+          "alt": "Ybor Late-Night Mobility Spillover visual anchor for historic ybor district.",
+          "caption": "Curb occupancy chart + transit reliability panel.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "thumbnail": {
+          "imagePath": "assets/images/missions/district-historic-ybor-category.svg",
+          "srcset": "assets/images/missions/district-historic-ybor-category.svg 1x",
+          "alt": "Thumbnail preview: Ybor Late-Night Mobility Spillover visual anchor for historic ybor district.",
+          "caption": "Thumbnail: Curb occupancy chart + transit reliability panel.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "evidenceChart": null,
+        "fallbackDistrictArt": {
+          "imagePath": "assets/images/missions/district-historic-ybor-category.svg",
+          "srcset": "assets/images/missions/district-historic-ybor-category.svg 1x",
+          "alt": "historic ybor district category art fallback.",
+          "caption": "Fallback district visual for Ybor Late-Night Mobility Spillover.",
+          "sourceLabel": "Source: Tampa District Storyboard"
+        }
+      }
+    },
+    {
+      "id": "busch-workforce-inclusion",
+      "name": "Busch Workforce Inclusion Capacity",
+      "hub": "BuschGardens",
+      "issueType": "CulturalInclusion",
+      "description": "Seasonal hiring is rising but local workforce partners say advancement pathways are weak.",
+      "pedagogy": {
+        "tags": [
+          "consequence-followup",
+          "culture",
+          "hospitality"
+        ],
+        "reinforces": [
+          "culture",
+          "hospitality"
+        ],
+        "commonPitfalls": [
+          "short-term-staffing"
+        ],
+        "difficulty": "medium"
+      },
+      "prerequisites": {
+        "minDecisions": 2
+      },
+      "exploration": {
+        "brief": "Your recommendation should improve guest operations and local inclusion outcomes.",
+        "mediaLabel": "Staff retention dashboard + partner org feedback",
+        "bullets": [
+          "Seasonal turnover rose to 33%.",
+          "Partner orgs want apprenticeship slots.",
+          "Guest ratings highlight inconsistent service warmth."
+        ],
+        "image": "assets/images/missions/district-eco-park-category.svg",
+        "alt": "Busch Workforce Inclusion Capacity visual anchor for eco park district.",
+        "caption": "Staff retention dashboard + partner org feedback.",
+        "source": "Source: District field brief",
+        "srcset": "assets/images/missions/district-eco-park-category.svg 1x"
+      },
+      "options": [
+        {
+          "id": "A",
+          "title": "A) Outsource surge staffing to national vendor",
+          "description": "Fill gaps rapidly with a national contractor.",
+          "cost": 45,
+          "deltas": {
+            "economic": 2,
+            "sustainability": -1,
+            "culture": -1,
+            "hospitality": 1,
+            "satisfaction": 0
+          },
+          "feedback": "Coverage improves but community equity signals weaken.",
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
+        },
+        {
+          "id": "B",
+          "title": "B) Launch local apprenticeship + mentor tracks",
+          "description": "Create paid local apprenticeships with frontline mentor incentives.",
+          "cost": 30,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 1,
+            "culture": 2,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "Service consistency and local trust improve together.",
+          "learningNote": "Use this when your weakest category needs quick support without a major downside."
+        },
+        {
+          "id": "C",
+          "title": "C) Add guest-facing incentive bonuses only",
+          "description": "Focus incentives only on guest throughput metrics.",
+          "cost": 35,
+          "deltas": {
+            "economic": 2,
+            "sustainability": 0,
+            "culture": -1,
+            "hospitality": 2,
+            "satisfaction": 1
+          },
+          "feedback": "Speed improves, but workforce inclusion remains shallow.",
+          "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
+        }
+      ],
+      "correctOptionId": "B",
+      "media": {
+        "hero": {
+          "imagePath": "assets/images/missions/district-eco-park-category.svg",
+          "srcset": "assets/images/missions/district-eco-park-category.svg 1x",
+          "alt": "Busch Workforce Inclusion Capacity visual anchor for eco park district.",
+          "caption": "Staff retention dashboard + partner org feedback.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "thumbnail": {
+          "imagePath": "assets/images/missions/district-eco-park-category.svg",
+          "srcset": "assets/images/missions/district-eco-park-category.svg 1x",
+          "alt": "Thumbnail preview: Busch Workforce Inclusion Capacity visual anchor for eco park district.",
+          "caption": "Thumbnail: Staff retention dashboard + partner org feedback.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "evidenceChart": null,
+        "fallbackDistrictArt": {
+          "imagePath": "assets/images/missions/district-eco-park-category.svg",
+          "srcset": "assets/images/missions/district-eco-park-category.svg 1x",
+          "alt": "eco park district category art fallback.",
+          "caption": "Fallback district visual for Busch Workforce Inclusion Capacity.",
+          "sourceLabel": "Source: Tampa District Storyboard"
+        }
+      }
+    },
+    {
+      "id": "port-waterfront-resilience",
+      "name": "Port Waterfront Heat + Resilience Retrofit",
+      "hub": "PortTampa",
+      "issueType": "Sustainability",
+      "description": "Heat exposure and stormwater pooling are reducing comfort and operating reliability.",
+      "pedagogy": {
+        "tags": [
+          "remediation",
+          "sustainability",
+          "variance-control"
+        ],
+        "reinforces": [
+          "sustainability",
+          "hospitality"
+        ],
+        "commonPitfalls": [
+          "defer-resilience"
+        ],
+        "difficulty": "hard"
+      },
+      "prerequisites": {
+        "minDecisions": 2
+      },
+      "exploration": {
+        "brief": "Capital planning asks for an intervention that supports both visitors and workers.",
+        "mediaLabel": "Surface temperature scan + drainage incident log",
+        "bullets": [
+          "Surface temp peaks exceed adjacent districts by 6°F.",
+          "Stormwater pooling caused three dock delays.",
+          "Workers request more shaded rest points."
+        ],
+        "image": "assets/images/missions/district-downtown-waterfront-category.svg",
+        "alt": "Port Waterfront Heat + Resilience Retrofit visual anchor for downtown waterfront district.",
+        "caption": "Surface temperature scan + drainage incident log.",
+        "source": "Source: District field brief",
+        "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x"
+      },
+      "options": [
+        {
+          "id": "A",
+          "title": "A) Delay retrofit and prioritize terminal retail",
+          "description": "Redirect funds toward short-term retail build-out.",
+          "cost": 45,
+          "deltas": {
+            "economic": 2,
+            "sustainability": -2,
+            "culture": 0,
+            "hospitality": 1,
+            "satisfaction": 0
+          },
+          "feedback": "Short-term revenue improves but climate risk worsens.",
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
+        },
+        {
+          "id": "B",
+          "title": "B) Install shade, permeable paving, and cooling hubs",
+          "description": "Phase in resilience assets with worker co-design sessions.",
+          "cost": 35,
+          "deltas": {
+            "economic": 0,
+            "sustainability": 3,
+            "culture": 1,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "Operational reliability and comfort improve across groups.",
+          "learningNote": "Use this to quickly stabilize sustainability while supporting your weakest category."
+        },
+        {
+          "id": "C",
+          "title": "C) Pilot paid climate-controlled waiting lounges",
+          "description": "Focus on premium thermal comfort offerings.",
+          "cost": 30,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 0,
+            "culture": -1,
+            "hospitality": 2,
+            "satisfaction": 1
+          },
+          "feedback": "Guest comfort rises for some segments but equity concerns persist.",
+          "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
+        }
+      ],
+      "correctOptionId": "B",
+      "media": {
+        "hero": {
+          "imagePath": "assets/images/missions/district-downtown-waterfront-category.svg",
+          "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x",
+          "alt": "Port Waterfront Heat + Resilience Retrofit visual anchor for downtown waterfront district.",
+          "caption": "Surface temperature scan + drainage incident log.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "thumbnail": {
+          "imagePath": "assets/images/missions/district-downtown-waterfront-category.svg",
+          "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x",
+          "alt": "Thumbnail preview: Port Waterfront Heat + Resilience Retrofit visual anchor for downtown waterfront district.",
+          "caption": "Thumbnail: Surface temperature scan + drainage incident log.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "evidenceChart": null,
+        "fallbackDistrictArt": {
+          "imagePath": "assets/images/missions/district-downtown-waterfront-category.svg",
+          "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x",
+          "alt": "downtown waterfront district category art fallback.",
+          "caption": "Fallback district visual for Port Waterfront Heat + Resilience Retrofit.",
+          "sourceLabel": "Source: Tampa District Storyboard"
+        }
+      }
+    },
+    {
+      "id": "convention-safety-flow",
+      "name": "Convention Crowd Safety + Wayfinding",
+      "hub": "ConventionDistrict",
+      "issueType": "Safety",
+      "description": "Concurrent events create wayfinding confusion and pinch points at exits.",
+      "pedagogy": {
+        "tags": [
+          "safety",
+          "mobility",
+          "consequence-followup"
+        ],
+        "reinforces": [
+          "hospitality",
+          "satisfaction"
+        ],
+        "commonPitfalls": [
+          "signage-only-fix"
+        ],
+        "difficulty": "medium"
+      },
+      "prerequisites": {
+        "minDecisions": 2
+      },
+      "exploration": {
+        "brief": "Operations requests a plan before two major conferences overlap next month.",
+        "mediaLabel": "Ingress/egress camera counts + incident heatmap",
+        "bullets": [
+          "Exit dwell times exceed safety target by 22%.",
+          "Contractors report signage conflicts across halls.",
+          "Attendee comments cite “unclear routes.”"
+        ],
+        "image": "assets/images/missions/district-downtown-waterfront-category.svg",
+        "alt": "Convention Crowd Safety + Wayfinding visual anchor for downtown waterfront district.",
+        "caption": "Ingress/egress camera counts + incident heatmap.",
+        "source": "Source: District field brief",
+        "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x"
+      },
+      "options": [
+        {
+          "id": "A",
+          "title": "A) Deploy temporary barriers only",
+          "description": "Add barriers to force one-way crowd movement.",
+          "cost": 30,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 0,
+            "culture": -1,
+            "hospitality": 0,
+            "satisfaction": 0
+          },
+          "feedback": "Throughput stabilizes, but attendee experience feels restrictive.",
+          "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
+        },
+        {
+          "id": "B",
+          "title": "B) Balanced systems package",
+          "description": "Fund a cross-agency package that prioritizes weakest indicators first.",
+          "cost": 30,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 0,
+            "culture": 0,
+            "hospitality": 2,
+            "satisfaction": 2
+          },
+          "feedback": "Performance improves across the board, though headline growth is moderate.",
+          "learningNote": "This safety-flow package focuses on crowd comfort and confidence, improving experience outcomes more than direct revenue."
+        },
+        {
+          "id": "C",
+          "title": "C) Premium fast-track exits for VIP badges",
+          "description": "Route premium delegates through dedicated lanes.",
+          "cost": 35,
+          "deltas": {
+            "economic": 2,
+            "sustainability": 0,
+            "culture": -1,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "Some flow gains occur, but fairness concerns grow.",
+          "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
+        }
+      ],
+      "correctOptionId": "B",
+      "media": {
+        "hero": {
+          "imagePath": "assets/images/missions/district-downtown-waterfront-category.svg",
+          "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x",
+          "alt": "Convention Crowd Safety + Wayfinding visual anchor for downtown waterfront district.",
+          "caption": "Ingress/egress camera counts + incident heatmap.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "thumbnail": {
+          "imagePath": "assets/images/missions/district-downtown-waterfront-category.svg",
+          "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x",
+          "alt": "Thumbnail preview: Convention Crowd Safety + Wayfinding visual anchor for downtown waterfront district.",
+          "caption": "Thumbnail: Ingress/egress camera counts + incident heatmap.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "evidenceChart": null,
+        "fallbackDistrictArt": {
+          "imagePath": "assets/images/missions/district-downtown-waterfront-category.svg",
+          "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x",
+          "alt": "downtown waterfront district category art fallback.",
+          "caption": "Fallback district visual for Convention Crowd Safety + Wayfinding.",
+          "sourceLabel": "Source: Tampa District Storyboard"
+        }
+      }
+    },
+    {
+      "id": "channelside-night-transit",
+      "name": "Channelside Night Transit Reliability",
+      "hub": "Channelside",
+      "issueType": "Mobility",
+      "description": "Late evening service gaps leave guests waiting and raise safety complaints.",
+      "pedagogy": {
+        "tags": [
+          "remediation",
+          "mobility",
+          "safety"
+        ],
+        "reinforces": [
+          "sustainability",
+          "satisfaction"
+        ],
+        "commonPitfalls": [
+          "ignore-worker-needs"
+        ],
+        "difficulty": "medium"
+      },
+      "prerequisites": {
+        "minDecisions": 2
+      },
+      "exploration": {
+        "brief": "Transit partners want a joint funding recommendation for the next budget cycle.",
+        "mediaLabel": "Headway variance chart + guest wait-time logs",
+        "bullets": [
+          "Post-10pm average waits exceed 18 minutes.",
+          "Missed connections are concentrated near event close times.",
+          "Service workers report unreliable return trips."
+        ],
+        "image": "assets/images/missions/district-beachfront-zone-category.svg",
+        "alt": "Channelside Night Transit Reliability visual anchor for beachfront zone district.",
+        "caption": "Headway variance chart + guest wait-time logs.",
+        "source": "Source: District field brief",
+        "srcset": "assets/images/missions/district-beachfront-zone-category.svg 1x"
+      },
+      "options": [
+        {
+          "id": "A",
+          "title": "A) Subsidize event-only premium shuttles",
+          "description": "Run high-frequency premium service only on big event nights.",
+          "cost": 35,
+          "deltas": {
+            "economic": 2,
+            "sustainability": -1,
+            "culture": 0,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "Event riders benefit, but baseline reliability remains weak.",
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
+        },
+        {
+          "id": "B",
+          "title": "B) Balanced systems package",
+          "description": "Fund a cross-agency package that prioritizes weakest indicators first.",
+          "cost": 31,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 2,
+            "culture": 0,
+            "hospitality": 1,
+            "satisfaction": 2
+          },
+          "feedback": "Performance improves across the board, though headline growth is moderate.",
+          "learningNote": "This transit reliability package strengthens low-emission nighttime movement and keeps visitor confidence high."
+        },
+        {
+          "id": "C",
+          "title": "C) Shift service to app-demand only",
+          "description": "Replace fixed routes with app-triggered dispatch.",
+          "cost": 30,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 0,
+            "culture": -1,
+            "hospitality": 1,
+            "satisfaction": 0
+          },
+          "feedback": "Operating costs drop, but access equity concerns increase.",
+          "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
+        }
+      ],
+      "correctOptionId": "B",
+      "media": {
+        "hero": {
+          "imagePath": "assets/images/missions/district-beachfront-zone-category.svg",
+          "srcset": "assets/images/missions/district-beachfront-zone-category.svg 1x",
+          "alt": "Channelside Night Transit Reliability visual anchor for beachfront zone district.",
+          "caption": "Headway variance chart + guest wait-time logs.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "thumbnail": {
+          "imagePath": "assets/images/missions/district-beachfront-zone-category.svg",
+          "srcset": "assets/images/missions/district-beachfront-zone-category.svg 1x",
+          "alt": "Thumbnail preview: Channelside Night Transit Reliability visual anchor for beachfront zone district.",
+          "caption": "Thumbnail: Headway variance chart + guest wait-time logs.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "evidenceChart": null,
+        "fallbackDistrictArt": {
+          "imagePath": "assets/images/missions/district-beachfront-zone-category.svg",
+          "srcset": "assets/images/missions/district-beachfront-zone-category.svg 1x",
+          "alt": "beachfront zone district category art fallback.",
+          "caption": "Fallback district visual for Channelside Night Transit Reliability.",
+          "sourceLabel": "Source: Tampa District Storyboard"
+        }
+      }
+    },
+    {
+      "id": "airport-corridor-pricing-transparency",
+      "name": "Airport Corridor Transfer Pricing Transparency",
+      "hub": "AirportCorridor",
+      "issueType": "Pricing",
+      "description": "Visitors complain that transfer and bundle pricing is hard to compare across providers.",
+      "pedagogy": {
+        "tags": [
+          "pricing",
+          "visitor-satisfaction",
+          "consequence-followup"
+        ],
+        "reinforces": [
+          "satisfaction",
+          "economic"
+        ],
+        "commonPitfalls": [
+          "hidden-fees"
+        ],
+        "difficulty": "hard"
+      },
+      "prerequisites": {
+        "minDecisions": 1
+      },
+      "exploration": {
+        "brief": "Your team must recommend a transparency standard that still supports operator margins.",
+        "mediaLabel": "Transfer price matrix + complaint taxonomy",
+        "bullets": [
+          "Price complaints rose 26% in one quarter.",
+          "Operators use inconsistent fee disclosures.",
+          "Repeat visitors ask for standardized comparisons."
+        ],
+        "image": "assets/images/missions/district-cultural-corridor-category.svg",
+        "alt": "Airport Corridor Transfer Pricing Transparency visual anchor for cultural corridor district.",
+        "caption": "Transfer price matrix + complaint taxonomy.",
+        "source": "Source: District field brief",
+        "srcset": "assets/images/missions/district-cultural-corridor-category.svg 1x"
+      },
+      "options": [
+        {
+          "id": "A",
+          "title": "A) Allow provider-defined fee disclosures",
+          "description": "Keep current disclosure rules flexible.",
+          "cost": 30,
+          "deltas": {
+            "economic": 2,
+            "sustainability": 0,
+            "culture": -1,
+            "hospitality": 0,
+            "satisfaction": -1
+          },
+          "feedback": "Margins stay strong but trust erodes.",
+          "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
+        },
+        {
+          "id": "B",
+          "title": "B) Balanced systems package",
+          "description": "Fund a cross-agency package that prioritizes weakest indicators first.",
+          "cost": 30,
+          "deltas": {
+            "economic": 0,
+            "sustainability": 0,
+            "culture": 1,
+            "hospitality": 1,
+            "satisfaction": 2
+          },
+          "feedback": "Performance improves across the board, though headline growth is moderate.",
+          "learningNote": "This transparent pricing package improves trust and inclusion for transfer visitors, with limited short-term revenue lift."
+        },
+        {
+          "id": "C",
+          "title": "C) Create premium “all-in” transfer products",
+          "description": "Market simplified premium bundles only.",
+          "cost": 35,
+          "deltas": {
+            "economic": 2,
+            "sustainability": 0,
+            "culture": -1,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "High-end conversion rises, but broad clarity issues persist.",
+          "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
+        }
+      ],
+      "correctOptionId": "B",
+      "media": {
+        "hero": {
+          "imagePath": "assets/images/missions/district-cultural-corridor-category.svg",
+          "srcset": "assets/images/missions/district-cultural-corridor-category.svg 1x",
+          "alt": "Airport Corridor Transfer Pricing Transparency visual anchor for cultural corridor district.",
+          "caption": "Transfer price matrix + complaint taxonomy.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "thumbnail": {
+          "imagePath": "assets/images/missions/district-cultural-corridor-category.svg",
+          "srcset": "assets/images/missions/district-cultural-corridor-category.svg 1x",
+          "alt": "Thumbnail preview: Airport Corridor Transfer Pricing Transparency visual anchor for cultural corridor district.",
+          "caption": "Thumbnail: Transfer price matrix + complaint taxonomy.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "evidenceChart": null,
+        "fallbackDistrictArt": {
+          "imagePath": "assets/images/missions/district-cultural-corridor-category.svg",
+          "srcset": "assets/images/missions/district-cultural-corridor-category.svg 1x",
+          "alt": "cultural corridor district category art fallback.",
+          "caption": "Fallback district visual for Airport Corridor Transfer Pricing Transparency.",
+          "sourceLabel": "Source: Tampa District Storyboard"
+        }
+      }
+    },
+    {
+      "id": "southshore-community-benefits",
+      "name": "South Shore Community Benefit Agreements",
+      "hub": "SouthShore",
+      "issueType": "CulturalInclusion",
+      "description": "Residents support tourism growth only if local employment and vendor benefits are explicit.",
+      "pedagogy": {
+        "tags": [
+          "culture",
+          "consequence-followup",
+          "same-hub"
+        ],
+        "reinforces": [
+          "culture",
+          "economic"
+        ],
+        "commonPitfalls": [
+          "symbolic-engagement"
+        ],
+        "difficulty": "medium"
+      },
+      "prerequisites": {
+        "minDecisions": 2
+      },
+      "exploration": {
+        "brief": "You are drafting the district’s tourism benefit agreement framework.",
+        "mediaLabel": "Community workshop notes + labor participation trends",
+        "bullets": [
+          "Local vendor participation is uneven across operators.",
+          "Youth workforce groups request paid pathways.",
+          "Resident trust improved where benefits were codified."
+        ],
+        "image": "assets/images/missions/district-eco-park-category.svg",
+        "alt": "South Shore Community Benefit Agreements visual anchor for eco park district.",
+        "caption": "Community workshop notes + labor participation trends.",
+        "source": "Source: District field brief",
+        "srcset": "assets/images/missions/district-eco-park-category.svg 1x"
+      },
+      "options": [
+        {
+          "id": "A",
+          "title": "A) Adopt voluntary benefit pledges only",
+          "description": "Allow operators to self-report community benefit actions.",
+          "cost": 30,
+          "deltas": {
+            "economic": 2,
+            "sustainability": 0,
+            "culture": -1,
+            "hospitality": 0,
+            "satisfaction": 0
+          },
+          "feedback": "Administrative burden stays low, but accountability is weak.",
+          "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
+        },
+        {
+          "id": "B",
+          "title": "B) Require measurable local benefit commitments",
+          "description": "Tie permits to local hiring, vendor share, and reporting milestones.",
+          "cost": 30,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 1,
+            "culture": 2,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "Trust and inclusion improve with manageable operational impact.",
+          "learningNote": "Use this when your weakest category needs quick support without a major downside."
+        },
+        {
+          "id": "C",
+          "title": "C) Offer premium offsets in place of commitments",
+          "description": "Allow fee-based offsets instead of local commitments.",
+          "cost": 35,
+          "deltas": {
+            "economic": 2,
+            "sustainability": 0,
+            "culture": -1,
+            "hospitality": 1,
+            "satisfaction": 0
+          },
+          "feedback": "Revenue predictability improves, but social license remains fragile.",
+          "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
+        }
+      ],
+      "correctOptionId": "B",
+      "media": {
+        "hero": {
+          "imagePath": "assets/images/missions/district-eco-park-category.svg",
+          "srcset": "assets/images/missions/district-eco-park-category.svg 1x",
+          "alt": "South Shore Community Benefit Agreements visual anchor for eco park district.",
+          "caption": "Community workshop notes + labor participation trends.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "thumbnail": {
+          "imagePath": "assets/images/missions/district-eco-park-category.svg",
+          "srcset": "assets/images/missions/district-eco-park-category.svg 1x",
+          "alt": "Thumbnail preview: South Shore Community Benefit Agreements visual anchor for eco park district.",
+          "caption": "Thumbnail: Community workshop notes + labor participation trends.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "evidenceChart": null,
+        "fallbackDistrictArt": {
+          "imagePath": "assets/images/missions/district-eco-park-category.svg",
+          "srcset": "assets/images/missions/district-eco-park-category.svg 1x",
+          "alt": "eco park district category art fallback.",
+          "caption": "Fallback district visual for South Shore Community Benefit Agreements.",
+          "sourceLabel": "Source: Tampa District Storyboard"
+        }
+      }
+    },
+    {
+      "id": "riverwalk-night-safety",
+      "name": "Riverwalk Night Safety Operations",
+      "hub": "Riverwalk",
+      "issueType": "Safety",
+      "description": "Late-night incidents increased near entertainment nodes as staffing lags demand.",
+      "pedagogy": {
+        "tags": [
+          "remediation",
+          "safety",
+          "hospitality"
+        ],
+        "reinforces": [
+          "hospitality",
+          "satisfaction"
+        ],
+        "commonPitfalls": [
+          "underfund-safety"
+        ],
+        "difficulty": "medium"
+      },
+      "prerequisites": {
+        "minDecisions": 2,
+        "requiresFlag": "riverwalk-mobility-surge"
+      },
+      "exploration": {
+        "brief": "You need to reduce incidents while preserving a welcoming nighttime experience.",
+        "mediaLabel": "Incident timeline + patrol coverage map",
+        "bullets": [
+          "Minor incidents are up 18% after 10pm.",
+          "Lighting audits flagged three underlit segments.",
+          "Operators report delayed response coordination."
+        ],
+        "image": "assets/images/missions/district-downtown-waterfront-category.svg",
+        "alt": "Riverwalk Night Safety Operations visual anchor for downtown waterfront district.",
+        "caption": "Incident timeline + patrol coverage map.",
+        "source": "Source: District field brief",
+        "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x"
+      },
+      "options": [
+        {
+          "id": "A",
+          "title": "A) Deploy private rapid-response teams",
+          "description": "Contract private teams focused on high-volume corners.",
+          "cost": 40,
+          "deltas": {
+            "economic": 1,
+            "sustainability": -1,
+            "culture": -1,
+            "hospitality": 2,
+            "satisfaction": 0
+          },
+          "feedback": "Response times improve, but community confidence is mixed.",
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
+        },
+        {
+          "id": "B",
+          "title": "B) Balanced systems package",
+          "description": "Fund a cross-agency package that prioritizes weakest indicators first.",
+          "cost": 33,
+          "deltas": {
+            "economic": 0,
+            "sustainability": 1,
+            "culture": 0,
+            "hospitality": 2,
+            "satisfaction": 2
+          },
+          "feedback": "Performance improves across the board, though headline growth is moderate.",
+          "learningNote": "This balanced safety package improves confidence and hospitality outcomes while supporting steady, durable night activity."
+        },
+        {
+          "id": "C",
+          "title": "C) Add surveillance-first enforcement",
+          "description": "Expand camera enforcement with minimal on-ground engagement.",
+          "cost": 30,
+          "deltas": {
+            "economic": 1,
+            "sustainability": 0,
+            "culture": -1,
+            "hospitality": 0,
+            "satisfaction": 1
+          },
+          "feedback": "Deterrence improves slightly, but perceived warmth declines.",
+          "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
+        }
+      ],
+      "correctOptionId": "B",
+      "media": {
+        "hero": {
+          "imagePath": "assets/images/missions/district-downtown-waterfront-category.svg",
+          "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x",
+          "alt": "Riverwalk Night Safety Operations visual anchor for downtown waterfront district.",
+          "caption": "Incident timeline + patrol coverage map.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "thumbnail": {
+          "imagePath": "assets/images/missions/district-downtown-waterfront-category.svg",
+          "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x",
+          "alt": "Thumbnail preview: Riverwalk Night Safety Operations visual anchor for downtown waterfront district.",
+          "caption": "Thumbnail: Incident timeline + patrol coverage map.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "evidenceChart": null,
+        "fallbackDistrictArt": {
+          "imagePath": "assets/images/missions/district-downtown-waterfront-category.svg",
+          "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x",
+          "alt": "downtown waterfront district category art fallback.",
+          "caption": "Fallback district visual for Riverwalk Night Safety Operations.",
+>>>>>>> ea033dd51f9a8cbdb8d01403efc3877c6b86f04c
           "sourceLabel": "Source: Tampa District Storyboard"
         }
       }
@@ -380,6 +2296,7 @@
       "name": "Busch Dynamic Pricing Fatigue",
       "hub": "BuschGardens",
       "issueType": "Pricing",
+<<<<<<< HEAD
       "tourismDomain": "Pricing transparency, value perception, and inclusive visitor experience",
       "description": "Visitors accept dynamic pricing at Busch Gardens, but frustration rises when families cannot tell whether the destination still offers fair value.",
       "pedagogy": {
@@ -422,10 +2339,45 @@
           "Family segments say value is hard to interpret.",
           "Upgrade attachment rates are slipping."
         ]
+=======
+      "description": "Visitors accept dynamic pricing, but complaints rise when perceived value is unclear.",
+      "pedagogy": {
+        "tags": [
+          "pricing",
+          "satisfaction",
+          "variety"
+        ],
+        "reinforces": [
+          "economic",
+          "satisfaction"
+        ],
+        "commonPitfalls": [
+          "opaque-pricing"
+        ],
+        "difficulty": "hard"
+      },
+      "prerequisites": {
+        "minDecisions": 3
+      },
+      "exploration": {
+        "brief": "Management is asking for a pricing strategy revision before holiday demand ramps up.",
+        "mediaLabel": "Ticket mix dashboard + value perception survey",
+        "bullets": [
+          "Bundled upgrade attachment rate fell 9%.",
+          "Refund requests increased for peak days.",
+          "Family segments report weak transparency."
+        ],
+        "image": "assets/images/missions/district-eco-park-category.svg",
+        "alt": "Busch Dynamic Pricing Fatigue visual anchor for eco park district.",
+        "caption": "Ticket mix dashboard + value perception survey.",
+        "source": "Source: District field brief",
+        "srcset": "assets/images/missions/district-eco-park-category.svg 1x"
+>>>>>>> ea033dd51f9a8cbdb8d01403efc3877c6b86f04c
       },
       "options": [
         {
           "id": "A",
+<<<<<<< HEAD
           "title": "Publish transparent pricing ladders and family value bundles",
           "description": "Keep dynamic pricing, but show clear price ladders, standardize add-on disclosure, and introduce value-focused family bundles with explanation copy.",
           "cost": 35,
@@ -468,17 +2420,71 @@
         }
       ],
       "correctOptionId": "A",
+=======
+          "title": "A) Push aggressive peak-day upsells",
+          "description": "Maximize yield with tighter surge multipliers.",
+          "cost": 45,
+          "deltas": {
+            "economic": 3,
+            "sustainability": -1,
+            "culture": -1,
+            "hospitality": 0,
+            "satisfaction": -1
+          },
+          "feedback": "Revenue rises, but sentiment and fairness scores slide.",
+          "learningNote": "Economic gains come with sustainability risk; pair this with a balancing follow-up mission."
+        },
+        {
+          "id": "B",
+          "title": "B) Balanced systems package",
+          "description": "Fund a cross-agency package that prioritizes weakest indicators first.",
+          "cost": 30,
+          "deltas": {
+            "economic": 0,
+            "sustainability": 0,
+            "culture": 1,
+            "hospitality": 1,
+            "satisfaction": 2
+          },
+          "feedback": "Performance improves across the board, though headline growth is moderate.",
+          "learningNote": "This package eases pricing fatigue and preserves guest goodwill, favoring retention and fairness over immediate yield."
+        },
+        {
+          "id": "C",
+          "title": "C) Offer premium-only “frictionless day” bundles",
+          "description": "Simplify options around premium bundles.",
+          "cost": 35,
+          "deltas": {
+            "economic": 2,
+            "sustainability": 0,
+            "culture": -1,
+            "hospitality": 1,
+            "satisfaction": 1
+          },
+          "feedback": "Conversion improves for high spenders, but broad affordability concerns persist.",
+          "learningNote": "Economic gains come with inclusion risk; pair this with a balancing follow-up mission."
+        }
+      ],
+      "correctOptionId": "B",
+>>>>>>> ea033dd51f9a8cbdb8d01403efc3877c6b86f04c
       "media": {
         "hero": {
           "imagePath": "assets/images/missions/district-eco-park-category.svg",
           "srcset": "assets/images/missions/district-eco-park-category.svg 1x",
+<<<<<<< HEAD
           "alt": "Eco-park district visual used to frame Busch pricing and family value analysis.",
           "caption": "Pricing decisions shape how visitors judge the quality and fairness of the attraction experience.",
           "sourceLabel": "Source: Tampa attractions classroom briefing"
+=======
+          "alt": "Busch Dynamic Pricing Fatigue visual anchor for eco park district.",
+          "caption": "Ticket mix dashboard + value perception survey.",
+          "sourceLabel": "Source: District field brief"
+>>>>>>> ea033dd51f9a8cbdb8d01403efc3877c6b86f04c
         },
         "thumbnail": {
           "imagePath": "assets/images/missions/district-eco-park-category.svg",
           "srcset": "assets/images/missions/district-eco-park-category.svg 1x",
+<<<<<<< HEAD
           "alt": "Thumbnail for Busch dynamic pricing fatigue mission.",
           "caption": "Busch pricing and value perception snapshot.",
           "sourceLabel": "Source: Tampa attractions classroom briefing"
@@ -496,6 +2502,18 @@
           "srcset": "assets/images/missions/district-eco-park-category.svg 1x",
           "alt": "Eco-park fallback art.",
           "caption": "Eco-park fallback art.",
+=======
+          "alt": "Thumbnail preview: Busch Dynamic Pricing Fatigue visual anchor for eco park district.",
+          "caption": "Thumbnail: Ticket mix dashboard + value perception survey.",
+          "sourceLabel": "Source: District field brief"
+        },
+        "evidenceChart": null,
+        "fallbackDistrictArt": {
+          "imagePath": "assets/images/missions/district-eco-park-category.svg",
+          "srcset": "assets/images/missions/district-eco-park-category.svg 1x",
+          "alt": "eco park district category art fallback.",
+          "caption": "Fallback district visual for Busch Dynamic Pricing Fatigue.",
+>>>>>>> ea033dd51f9a8cbdb8d01403efc3877c6b86f04c
           "sourceLabel": "Source: Tampa District Storyboard"
         }
       }
