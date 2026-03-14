@@ -813,7 +813,12 @@
     navigate,
     selectHotspot,
     selectMission,
-    startNewRun
+    startNewRun,
+    applyDecision,
+    handleReturnToMap,
+    submitReflection,
+    openPipOverlay: () => openPipOverlay(false),
+    closePipOverlay
   };
 
   start();
