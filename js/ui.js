@@ -120,6 +120,7 @@
       .map((item) => `<li>${escapeHtml(item)}</li>`)
       .join('');
     const completed = new Set(state.completedMissionIds || []);
+    const selectedRole = selectedMission ? (state.offerSetRolesById?.[selectedMission.id] || 'later') : null;
 
     return `
       ${renderTokenDashboard(state)}
@@ -128,6 +129,17 @@
         <h2>Junior Destination Strategy Analyst</h2>
         ${renderRunProgress(state, runConfig.RUN_LENGTH)}
         <p class="intro-lead">Use evidence, choose a stakeholder priority, explain the trade-off, and defend your tourism recommendation across four Tampa cases.</p>
+        ${selectedMission ? `
+          <section class="summary-card map-start-card">
+            <p class="district-label">Selected Case</p>
+            <h3>${escapeHtml(selectedMission.name)}</h3>
+            <p class="small">${escapeHtml(selectedMission.tourismDomain)}</p>
+            <div class="inline-actions">
+              <button class="btn" data-mission-id="${escapeHtml(selectedMission.id)}">${completed.has(selectedMission.id) ? 'Review Completed Case' : 'Start Selected Case'}</button>
+              <span class="tag ${selectedRole === 'current' ? 'good' : 'warn'}">${escapeHtml(ROLE_LABELS[selectedRole] || 'Case')}</span>
+            </div>
+          </section>
+        ` : ''}
         <div class="inline-actions">
           <button id="btnAskPipWhy" class="btn secondary">Ask Pip for Coaching</button>
         </div>
@@ -160,6 +172,9 @@
             <p class="district-label">${escapeHtml(DISTRICT_LABELS[getDistrictKey(selectedMission)] || 'Tampa District')}</p>
             <h3>${escapeHtml(selectedMission.name)}</h3>
             <p class="mission-objective"><strong>Tourism domain:</strong> ${escapeHtml(selectedMission.tourismDomain)}</p>
+            <div class="inline-actions">
+              <button class="btn" data-mission-id="${escapeHtml(selectedMission.id)}" ${completed.has(selectedMission.id) ? 'disabled' : ''}>${completed.has(selectedMission.id) ? 'Completed' : 'Open Briefing'}</button>
+            </div>
             <p>${escapeHtml(selectedMission.description)}</p>
             <details class="mission-detail-drawer" open>
               <summary>Priority stakeholders</summary>
@@ -173,10 +188,7 @@
               <summary>Operational constraints</summary>
               <div class="mission-detail-content"><ul class="stakeholder-list">${selectedConstraints}</ul></div>
             </details>
-            <div class="inline-actions">
-              <button class="btn" data-mission-id="${escapeHtml(selectedMission.id)}" ${completed.has(selectedMission.id) ? 'disabled' : ''}>${completed.has(selectedMission.id) ? 'Completed' : 'Open Briefing'}</button>
-              <button class="btn secondary" data-hotspot-id="${escapeHtml(selectedMission.id)}">Keep Previewing</button>
-            </div>
+            <p class="small">Select a different case from the queue at any time before opening the briefing.</p>
           ` : '<p>No cases currently available.</p>'}
         </aside>
       </section>

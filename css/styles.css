@@ -1501,6 +1501,11 @@ a:focus-visible {
   margin-bottom: 0.35rem;
 }
 
+.map-start-card {
+  margin: 0.85rem 0 0.95rem;
+  border-color: rgba(151, 211, 245, 0.42);
+}
+
 .stakeholder-list {
   margin: 0;
   padding-left: 1rem;
