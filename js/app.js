@@ -127,6 +127,31 @@
     state.diagnosis = buildDiagnosis(state, SCORING_CONSTANTS, offer);
   }
 
+  function sanitizeStateAfterMissionLoad() {
+    const validMissionIds = new Set(missions.map((mission) => mission.id));
+    const completedMissionIds = (state.completedMissionIds || []).filter((id) => validMissionIds.has(id));
+    const completedMissionSet = new Set(completedMissionIds);
+
+    state.completedMissionIds = completedMissionIds;
+    state.offerSetMissionIds = (state.offerSetMissionIds || []).filter((id) => validMissionIds.has(id) && !completedMissionSet.has(id));
+    state.offerSetRolesById = Object.fromEntries(
+      Object.entries(state.offerSetRolesById || {}).filter(([id]) => validMissionIds.has(id) && !completedMissionSet.has(id))
+    );
+    state.offerSetReasonsById = Object.fromEntries(
+      Object.entries(state.offerSetReasonsById || {}).filter(([id]) => validMissionIds.has(id) && !completedMissionSet.has(id))
+    );
+    state.suggestedMissionId = validMissionIds.has(state.suggestedMissionId) ? state.suggestedMissionId : null;
+    state.selectedMissionId = validMissionIds.has(state.selectedMissionId) ? state.selectedMissionId : null;
+    state.selectedHotspotId = validMissionIds.has(state.selectedHotspotId) ? state.selectedHotspotId : null;
+    state.lastMissionId = validMissionIds.has(state.lastMissionId) ? state.lastMissionId : null;
+    state.highlightMissionIds = (state.highlightMissionIds || []).filter((id) => validMissionIds.has(id));
+    state.casesCompletedThisRun = Math.min(completedMissionIds.length, RUN_CONFIG.RUN_LENGTH);
+
+    if ((state.currentScreen === 'explore' || state.currentScreen === 'decision') && !state.selectedMissionId) {
+      state.currentScreen = 'map';
+    }
+  }
+
   function initializeRun(forceNew = false) {
     if (!missions.length) return;
 
@@ -137,6 +162,7 @@
       state.selectedHotspotId = missions[0]?.id || null;
     }
 
+    sanitizeStateAfterMissionLoad();
     computeAndStoreMetrics();
     refreshOfferSet();
     saveState(state);
@@ -368,9 +394,7 @@
     const confirmed = window.confirm('Start a new academic prototype run? This resets all decisions and reflection notes.');
     if (!confirmed) return;
     state = clearState();
-    state.runSeed = getRunSeed(RUN_CONFIG.RANDOMNESS_SEED_MODE);
-    state.runId = createRunId(state.runSeed);
-    initializeRun(false);
+    initializeRun(true);
     navigate('map');
   }
 
