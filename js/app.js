@@ -57,6 +57,10 @@
     return missionById[state.selectedMissionId] || null;
   }
 
+  function activeMission() {
+    return currentMission() || missionById[state.selectedHotspotId] || getVisibleMissions()[0] || null;
+  }
+
   function runCompleted() {
     return state.casesCompletedThisRun >= RUN_CONFIG.RUN_LENGTH;
   }
@@ -255,6 +259,7 @@
 
     commit((draft) => {
       draft.selectedMissionId = missionId;
+      draft.selectedHotspotId = missionId;
       draft.currentScreen = 'explore';
       draft.impactPointsRemaining = SCORING_CONSTANTS.impactBudgetPerHotspot;
       draft.currentFeedback = null;
@@ -679,12 +684,18 @@
       return;
     }
 
+    const mission = activeMission();
+
     if (state.currentScreen === 'map') {
       mainEl.innerHTML = UI.renderMap(state, getVisibleMissions(), SCORING_CONSTANTS, RUN_CONFIG);
     } else if (state.currentScreen === 'explore') {
-      mainEl.innerHTML = UI.renderExploration(currentMission(), state, RUN_CONFIG);
+      mainEl.innerHTML = mission
+        ? UI.renderExploration(mission, state, RUN_CONFIG)
+        : UI.renderMap(state, getVisibleMissions(), SCORING_CONSTANTS, RUN_CONFIG);
     } else if (state.currentScreen === 'decision') {
-      mainEl.innerHTML = UI.renderDecision(currentMission(), state, RUN_CONFIG, getDecisionOptionsForMission(currentMission()));
+      mainEl.innerHTML = mission
+        ? UI.renderDecision(mission, state, RUN_CONFIG, getDecisionOptionsForMission(mission))
+        : UI.renderMap(state, getVisibleMissions(), SCORING_CONSTANTS, RUN_CONFIG);
     } else if (state.currentScreen === 'complete') {
       mainEl.innerHTML = UI.renderGameComplete(state);
     } else {
