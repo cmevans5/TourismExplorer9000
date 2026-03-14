@@ -1,0 +1,504 @@
+{
+  "missions": [
+    {
+      "id": "riverwalk-mobility-surge",
+      "name": "Riverwalk Weekend Mobility Surge",
+      "hub": "Riverwalk",
+      "issueType": "Mobility",
+      "tourismDomain": "Destination mobility and curb management",
+      "description": "Tampa's Riverwalk is absorbing more event traffic, ride-share pickups, and resident complaints than the curb network can handle on peak weekends.",
+      "pedagogy": {
+        "tags": ["situated-learning", "systems-thinking", "mobility"],
+        "reinforces": ["sustainability", "hospitality", "satisfaction"],
+        "commonPitfalls": ["over-prioritize premium visitors", "ignore resident circulation"],
+        "difficulty": "medium"
+      },
+      "learningObjectives": [
+        "Compare visitor-flow interventions using operational evidence and stakeholder trade-offs.",
+        "Defend a curb-management strategy that balances destination access, resident quality of life, and visitor satisfaction."
+      ],
+      "stakeholders": [
+        { "id": "visitors", "label": "Visitors", "perspective": "Want shorter waits, easier pickup zones, and a waterfront experience that feels welcoming." },
+        { "id": "residents", "label": "Residents", "perspective": "Need sidewalks and crossings to stay usable during peak tourism periods." },
+        { "id": "operators", "label": "Tourism operators", "perspective": "Need reliable access for tours, restaurants, and event guests without losing revenue." },
+        { "id": "city", "label": "City mobility team", "perspective": "Must reduce curb conflict, emissions, and emergency response delays." }
+      ],
+      "constraints": [
+        "The city can fund only one near-term intervention package before summer events begin.",
+        "Resident complaints are already in the mayor's weekly briefing.",
+        "Any solution that slows emergency access will be rejected."
+      ],
+      "evidence": [
+        { "id": "heatmap", "label": "Pedestrian heatmap", "detail": "Two choke points now hold visitors 24% longer than the district target during sunset arrivals." },
+        { "id": "curb-log", "label": "Curb violation log", "detail": "Ride-share dwell violations spike at the same blocks where restaurants report late table turns." },
+        { "id": "resident-voice", "label": "Resident complaints", "detail": "Residents mention blocked sidewalks and unsafe stroller access more than noise or litter." }
+      ],
+      "reflectionPrompt": "If you replayed this Riverwalk case, what would you watch first: curb throughput, resident access, or visitor wait times?",
+      "rationaleRubric": {
+        "stakeholderFocus": "Name the stakeholder group you are prioritizing most in this decision.",
+        "evidenceUse": "Cite one specific data point or community signal from the briefing.",
+        "tradeoffReasoning": "Explain what the strategy improves and what pressure it may create elsewhere."
+      },
+      "exploration": {
+        "brief": "You are advising Tampa's destination management team before a run of high-attendance weekends on the Riverwalk. The mayor wants visible improvement in visitor movement, but community groups are framing the issue as a resident access problem, not just an operations problem.",
+        "mediaLabel": "Pedestrian heatmap and curb turnover snapshot",
+        "bullets": [
+          "Pedestrian dwell time rose 24% near two choke points.",
+          "Ride-share dwell violations increased at sunset.",
+          "Resident complaints cite blocked sidewalks and unsafe crossings."
+        ]
+      },
+      "options": [
+        {
+          "id": "A",
+          "title": "Timed curb windows plus pedestrian marshals",
+          "description": "Create timed pickup windows, add temporary marshals, and hold premium curb access to fixed periods instead of open-ended use.",
+          "cost": 36,
+          "deltas": { "economic": 1, "sustainability": 2, "culture": 1, "hospitality": 1, "satisfaction": 2 },
+          "feedback": "The district moves more smoothly, and resident complaints ease because the curb becomes more predictable.",
+          "learningNote": "This option works because it uses operational evidence to reduce friction for both visitors and residents instead of only protecting high-spend access.",
+          "coachNote": "Notice how a mobility intervention also changes community trust and visitor experience.",
+          "stakeholderImpacts": {
+            "winners": ["Residents", "Visitors", "City mobility team"],
+            "losers": ["Some premium operators"]
+          }
+        },
+        {
+          "id": "B",
+          "title": "Expand valet staging for event nights",
+          "description": "Reserve more curb space for valet and premium arrivals to keep high-value guests moving quickly.",
+          "cost": 42,
+          "deltas": { "economic": 2, "sustainability": -2, "culture": -1, "hospitality": 1, "satisfaction": 0 },
+          "feedback": "Revenue pressure eases, but the public realm feels less accessible and curb conflict gets worse for everyone outside the premium lane.",
+          "learningNote": "Revenue can rise while destination legitimacy falls. In tourism planning, visible exclusion often has delayed but real costs.",
+          "coachNote": "This is a classic short-term gain that externalizes the burden onto residents and non-premium visitors.",
+          "stakeholderImpacts": {
+            "winners": ["Some premium operators"],
+            "losers": ["Residents", "Visitors", "City mobility team"]
+          }
+        },
+        {
+          "id": "C",
+          "title": "Festival detours with volunteer wayfinding",
+          "description": "Divert foot traffic through alternate paths and rely on volunteers and temporary signage during peak windows.",
+          "cost": 28,
+          "deltas": { "economic": 0, "sustainability": 1, "culture": 0, "hospitality": 0, "satisfaction": 1 },
+          "feedback": "Congestion softens somewhat, but the temporary plan is uneven and still leaves residents feeling reactive rather than protected.",
+          "learningNote": "This is defensible as a low-cost stabilizer, but it does not address the root curb-management issue strongly enough for peak-season pressure.",
+          "coachNote": "This is a moderate response: useful for quick relief, but weaker if your goal is structural improvement.",
+          "stakeholderImpacts": {
+            "winners": ["Visitors", "Tourism operators"],
+            "losers": ["Residents"]
+          }
+        }
+      ],
+      "correctOptionId": "A",
+      "media": {
+        "hero": {
+          "imagePath": "assets/images/missions/riverwalk-mobility-surge.svg",
+          "srcset": "assets/images/missions/riverwalk-mobility-surge.svg 1x",
+          "alt": "Annotated Riverwalk map showing curb conflict points and heavy pedestrian dwell zones.",
+          "caption": "Riverwalk peaks now combine visitor congestion with blocked resident access.",
+          "sourceLabel": "Source: Tampa Mobility Ops classroom briefing"
+        },
+        "thumbnail": {
+          "imagePath": "assets/images/missions/riverwalk-mobility-surge.svg",
+          "srcset": "assets/images/missions/riverwalk-mobility-surge.svg 1x",
+          "alt": "Thumbnail of Riverwalk mobility heatmap and curb conflict clusters.",
+          "caption": "Riverwalk crowd and curb pressure snapshot.",
+          "sourceLabel": "Source: Tampa Mobility Ops classroom briefing"
+        },
+        "evidenceChart": {
+          "imagePath": "assets/images/missions/riverwalk-mobility-surge.svg",
+          "srcset": "assets/images/missions/riverwalk-mobility-surge.svg 1x",
+          "alt": "Evidence chart showing Riverwalk dwell-time spikes and ride-share curb conflicts.",
+          "caption": "Heatmap evidence links curb dwell and foot-traffic slowdown.",
+          "sourceLabel": "Source: Tampa Mobility Ops classroom briefing",
+          "type": "chart"
+        },
+        "fallbackDistrictArt": {
+          "imagePath": "assets/images/missions/district-downtown-waterfront-category.svg",
+          "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x",
+          "alt": "Downtown waterfront district art used if Riverwalk mission media fails to load.",
+          "caption": "Downtown waterfront fallback art.",
+          "sourceLabel": "Source: Tampa District Storyboard"
+        }
+      }
+    },
+    {
+      "id": "ybor-nightlife-balance",
+      "name": "Ybor Nightlife Identity Balance",
+      "hub": "Ybor",
+      "issueType": "Cultural Stewardship",
+      "tourismDomain": "Nightlife governance and cultural heritage protection",
+      "description": "Nightlife growth is strengthening Ybor's visitor economy, but local artists and heritage advocates say the district is losing the identity that makes it worth visiting.",
+      "pedagogy": {
+        "tags": ["situated-learning", "constructivism", "cultural-stewardship"],
+        "reinforces": ["culture", "economic", "hospitality"],
+        "commonPitfalls": ["treat culture as marketing only", "ignore resident voice"],
+        "difficulty": "medium"
+      },
+      "learningObjectives": [
+        "Evaluate how nightlife policy changes affect destination identity and community trust.",
+        "Defend a tourism strategy that supports evening demand without hollowing out heritage value."
+      ],
+      "stakeholders": [
+        { "id": "artists", "label": "Artists and heritage venues", "perspective": "Need programming support, fair visibility, and protections against being displaced by pure nightlife demand." },
+        { "id": "residents", "label": "Residents", "perspective": "Want an active district, but not one that ignores noise, displacement, or identity loss." },
+        { "id": "nightlife-operators", "label": "Nightlife operators", "perspective": "Need reliable demand and predictable permitting to stay profitable." },
+        { "id": "destination-brand", "label": "Destination marketers", "perspective": "Need Ybor to remain distinctive enough to justify tourism promotion." }
+      ],
+      "constraints": [
+        "City council wants a policy package before festival season permitting closes.",
+        "Heritage groups have enough public support to block a license-only expansion plan.",
+        "Operators warn that sudden restrictions could reduce short-term revenue."
+      ],
+      "evidence": [
+        { "id": "permit-trend", "label": "Nightlife permit trend", "detail": "Night permits rose 21% year over year, but heritage venue bookings are flattening." },
+        { "id": "venue-usage", "label": "Heritage venue utilization", "detail": "Friday usage of heritage venues is now materially lower than comparable nightlife venues." },
+        { "id": "community-signal", "label": "Resident and artist testimony", "detail": "Community testimony emphasizes district identity, not anti-tourism sentiment." }
+      ],
+      "reflectionPrompt": "What is the risk of treating culture only as a tourism product instead of a community asset in Ybor?",
+      "rationaleRubric": {
+        "stakeholderFocus": "Identify which Ybor stakeholder you are protecting most directly.",
+        "evidenceUse": "Anchor your choice in at least one permit, booking, or testimony signal.",
+        "tradeoffReasoning": "State how your option affects both nightlife demand and heritage legitimacy."
+      },
+      "exploration": {
+        "brief": "The city needs a tourism-facing nightlife policy that can survive public scrutiny. Your recommendation must recognize that Ybor's culture is not a backdrop for tourism growth; it is part of the destination's core value.",
+        "mediaLabel": "Permit queue and heritage venue utilization",
+        "bullets": [
+          "Night permits rose 21% year over year.",
+          "Heritage venues report lower Friday bookings.",
+          "Resident and artist groups are asking for identity protections, not shutdowns."
+        ]
+      },
+      "options": [
+        {
+          "id": "A",
+          "title": "Heritage night bundles plus mobility and noise controls",
+          "description": "Co-fund heritage programming, set mobility controls, and attach noise-management expectations to peak-night permits.",
+          "cost": 38,
+          "deltas": { "economic": 1, "sustainability": 1, "culture": 3, "hospitality": 1, "satisfaction": 1 },
+          "feedback": "Ybor becomes easier to promote as a culturally distinct district, and evening demand stays active without relying only on license growth.",
+          "learningNote": "This option treats culture as core destination infrastructure, not as a decorative add-on after growth decisions are made.",
+          "coachNote": "Strong tourism strategy can protect the asset that attracts demand in the first place.",
+          "stakeholderImpacts": {
+            "winners": ["Artists and heritage venues", "Residents", "Destination marketers"],
+            "losers": ["Some nightlife operators"]
+          }
+        },
+        {
+          "id": "B",
+          "title": "Fast-track additional nightlife licenses",
+          "description": "Approve more high-volume venues quickly to maximize visitor spend before the next festival cycle.",
+          "cost": 45,
+          "deltas": { "economic": 3, "sustainability": -1, "culture": -3, "hospitality": 1, "satisfaction": 0 },
+          "feedback": "Demand rises in the short run, but the district's cultural legitimacy weakens and backlash becomes more likely.",
+          "learningNote": "Tourism growth that erodes place identity can eventually undermine the very differentiation that attracts visitors.",
+          "coachNote": "This is growth without stewardship. It works until identity loss becomes the story.",
+          "stakeholderImpacts": {
+            "winners": ["Nightlife operators"],
+            "losers": ["Artists and heritage venues", "Residents", "Destination marketers"]
+          }
+        },
+        {
+          "id": "C",
+          "title": "Premium nightlife corridor with optional heritage marketing",
+          "description": "Concentrate nightlife demand in a premium corridor and add a separate promotional campaign for heritage sites.",
+          "cost": 34,
+          "deltas": { "economic": 2, "sustainability": 0, "culture": -1, "hospitality": 1, "satisfaction": 1 },
+          "feedback": "The district feels easier to manage, but the solution still separates growth from stewardship rather than integrating them.",
+          "learningNote": "Segmenting premium demand can reduce friction, but it does not automatically protect cultural ecosystems.",
+          "coachNote": "This is a plausible compromise, but it still treats heritage as marketing support instead of policy design input.",
+          "stakeholderImpacts": {
+            "winners": ["Nightlife operators", "Visitors"],
+            "losers": ["Artists and heritage venues", "Residents"]
+          }
+        }
+      ],
+      "correctOptionId": "A",
+      "media": {
+        "hero": {
+          "imagePath": "assets/images/missions/ybor-nightlife-balance.svg",
+          "srcset": "assets/images/missions/ybor-nightlife-balance.svg 1x",
+          "alt": "Ybor district graphic comparing nightlife permit growth to heritage venue use.",
+          "caption": "Ybor demand is growing, but heritage use is not keeping pace.",
+          "sourceLabel": "Source: Ybor cultural affairs classroom briefing"
+        },
+        "thumbnail": {
+          "imagePath": "assets/images/missions/ybor-nightlife-balance.svg",
+          "srcset": "assets/images/missions/ybor-nightlife-balance.svg 1x",
+          "alt": "Thumbnail of Ybor nightlife and heritage trend comparison.",
+          "caption": "Ybor permit and heritage snapshot.",
+          "sourceLabel": "Source: Ybor cultural affairs classroom briefing"
+        },
+        "evidenceChart": {
+          "imagePath": "assets/images/missions/ybor-nightlife-balance.svg",
+          "srcset": "assets/images/missions/ybor-nightlife-balance.svg 1x",
+          "alt": "Evidence chart for Ybor nightlife permits and heritage venue utilization.",
+          "caption": "Permit growth and heritage utilization trend chart.",
+          "sourceLabel": "Source: Ybor cultural affairs classroom briefing",
+          "type": "chart"
+        },
+        "fallbackDistrictArt": {
+          "imagePath": "assets/images/missions/district-historic-ybor-category.svg",
+          "srcset": "assets/images/missions/district-historic-ybor-category.svg 1x",
+          "alt": "Historic Ybor district art fallback image.",
+          "caption": "Historic Ybor fallback art.",
+          "sourceLabel": "Source: Tampa District Storyboard"
+        }
+      }
+    },
+    {
+      "id": "port-cruise-dispersal",
+      "name": "Port Tampa Cruise Dispersal Planning",
+      "hub": "PortTampa",
+      "issueType": "Dispersal",
+      "tourismDomain": "Cruise dispersal, arrival management, and resident protection",
+      "description": "Overlapping cruise arrivals are overwhelming nearby streets and reducing the quality of the Tampa arrival experience for both visitors and local neighborhoods.",
+      "pedagogy": {
+        "tags": ["experiential-learning", "systems-thinking", "arrival-management"],
+        "reinforces": ["sustainability", "satisfaction", "economic"],
+        "commonPitfalls": ["optimize only for throughput", "ignore neighborhood effects"],
+        "difficulty": "hard"
+      },
+      "learningObjectives": [
+        "Use arrival-management evidence to compare dispersal strategies in a port tourism context.",
+        "Explain how visitor throughput decisions affect neighborhoods, downtown access, and destination quality."
+      ],
+      "stakeholders": [
+        { "id": "cruise-visitors", "label": "Cruise visitors", "perspective": "Want a smooth transition into the city with clear routing and limited idle time." },
+        { "id": "neighborhoods", "label": "Nearby neighborhoods", "perspective": "Need protection from idling coaches, spillover congestion, and sudden route surges." },
+        { "id": "transport-ops", "label": "Transport operators", "perspective": "Need predictable release timing and curb assignments to keep service on schedule." },
+        { "id": "downtown-businesses", "label": "Downtown businesses", "perspective": "Want cruise visitors to disperse into the district instead of staying stuck in transfer queues." }
+      ],
+      "constraints": [
+        "Two ships overlap on 14 days next month.",
+        "Neighborhood groups have asked for visible idling reduction.",
+        "The port wants a plan that improves dispersal without slowing overall releases dramatically."
+      ],
+      "evidence": [
+        { "id": "arrival-overlap", "label": "Arrival overlap forecast", "detail": "Two-ship overlap produces the worst neighborhood pressure and longest transfer idle times." },
+        { "id": "idle-time", "label": "Coach idle-time report", "detail": "Coach idle time exceeds target by 19%, especially when dispatch happens all at once." },
+        { "id": "downtown-flow", "label": "Downtown dispersal signal", "detail": "Businesses report better cruise conversion when visitors reach multiple arrival zones rather than one saturated transfer lane." }
+      ],
+      "reflectionPrompt": "What is the tourism cost of treating arrival throughput as the only measure of success at a cruise port?",
+      "rationaleRubric": {
+        "stakeholderFocus": "Choose the stakeholder whose experience or protection your plan most directly serves.",
+        "evidenceUse": "Use one forecast, idle-time, or downtown conversion signal to justify the choice.",
+        "tradeoffReasoning": "Explain what your dispersal plan improves and what complexity it adds."
+      },
+      "exploration": {
+        "brief": "The port authority wants a visible improvement before the next cruise cycle. You need a plan that protects neighborhood conditions while still moving large arrival waves into Tampa's visitor economy.",
+        "mediaLabel": "Cruise arrival forecast and corridor travel-time map",
+        "bullets": [
+          "Two ships overlap on 14 days next month.",
+          "Coach idle time exceeds target by 19%.",
+          "Downtown businesses perform better when dispersal reaches multiple entry zones."
+        ]
+      },
+      "options": [
+        {
+          "id": "A",
+          "title": "Timed release windows with multi-zone downtown drop-offs",
+          "description": "Stage departures in timed waves, use neighborhood protection buffers, and distribute arrivals across multiple downtown drop zones.",
+          "cost": 41,
+          "deltas": { "economic": 2, "sustainability": 2, "culture": 1, "hospitality": 1, "satisfaction": 2 },
+          "feedback": "The city absorbs arrivals more evenly, idling drops, and the cruise arrival feels more like a destination welcome than a logistics bottleneck.",
+          "learningNote": "A strong dispersal plan does more than move people fast. It shapes first impressions, neighborhood trust, and visitor conversion into the destination.",
+          "coachNote": "This option balances throughput with place-based stewardship and better arrival design.",
+          "stakeholderImpacts": {
+            "winners": ["Cruise visitors", "Nearby neighborhoods", "Downtown businesses"],
+            "losers": ["Transport operators"]
+          }
+        },
+        {
+          "id": "B",
+          "title": "Priority coach dispatch through a single rapid lane",
+          "description": "Use one dominant dispatch lane to maximize release speed and reduce dwell on port property.",
+          "cost": 33,
+          "deltas": { "economic": 1, "sustainability": -2, "culture": -1, "hospitality": 0, "satisfaction": 1 },
+          "feedback": "The port clears quickly, but congestion and idling shift into surrounding neighborhoods and downtown choke points.",
+          "learningNote": "This strategy improves one operational metric by displacing the burden elsewhere in the destination system.",
+          "coachNote": "Throughput alone is not the same as destination performance.",
+          "stakeholderImpacts": {
+            "winners": ["Transport operators"],
+            "losers": ["Nearby neighborhoods", "Downtown businesses", "City mobility team"]
+          }
+        },
+        {
+          "id": "C",
+          "title": "Premium pre-booked transfers with limited staggered releases",
+          "description": "Offer premium reserved transfers first, then release the remaining passengers in smaller waves.",
+          "cost": 37,
+          "deltas": { "economic": 2, "sustainability": 0, "culture": -1, "hospitality": 1, "satisfaction": 0 },
+          "feedback": "Some visitors enjoy a smoother arrival, but equity concerns grow and the broader neighborhood problem is only partly reduced.",
+          "learningNote": "Segmenting the best arrival experience into a premium product can raise spend while weakening fairness and destination legitimacy.",
+          "coachNote": "This option is defensible if revenue is under pressure, but it is weaker on social license and broad destination quality.",
+          "stakeholderImpacts": {
+            "winners": ["Some cruise visitors", "Transport operators"],
+            "losers": ["Nearby neighborhoods", "General visitors"]
+          }
+        }
+      ],
+      "correctOptionId": "A",
+      "media": {
+        "hero": {
+          "imagePath": "assets/images/missions/port-cruise-dispersal.svg",
+          "srcset": "assets/images/missions/port-cruise-dispersal.svg 1x",
+          "alt": "Cruise dispersal route plan showing staged coach releases and neighborhood buffers.",
+          "caption": "Cruise arrivals are shaping both visitor first impressions and neighborhood impact.",
+          "sourceLabel": "Source: Port Tampa classroom briefing"
+        },
+        "thumbnail": {
+          "imagePath": "assets/images/missions/port-cruise-dispersal.svg",
+          "srcset": "assets/images/missions/port-cruise-dispersal.svg 1x",
+          "alt": "Thumbnail of cruise dispersal route and release timing plan.",
+          "caption": "Port Tampa dispersal snapshot.",
+          "sourceLabel": "Source: Port Tampa classroom briefing"
+        },
+        "evidenceChart": {
+          "imagePath": "assets/images/missions/port-cruise-dispersal.svg",
+          "srcset": "assets/images/missions/port-cruise-dispersal.svg 1x",
+          "alt": "Evidence chart showing cruise overlap windows and dispersal pressure points.",
+          "caption": "Arrival overlap creates localized idling and route pressure.",
+          "sourceLabel": "Source: Port Tampa classroom briefing",
+          "type": "chart"
+        },
+        "fallbackDistrictArt": {
+          "imagePath": "assets/images/missions/district-downtown-waterfront-category.svg",
+          "srcset": "assets/images/missions/district-downtown-waterfront-category.svg 1x",
+          "alt": "Downtown waterfront fallback art for the port mission.",
+          "caption": "Downtown waterfront fallback art.",
+          "sourceLabel": "Source: Tampa District Storyboard"
+        }
+      }
+    },
+    {
+      "id": "busch-pricing-fatigue",
+      "name": "Busch Dynamic Pricing Fatigue",
+      "hub": "BuschGardens",
+      "issueType": "Pricing",
+      "tourismDomain": "Pricing transparency, value perception, and inclusive visitor experience",
+      "description": "Visitors accept dynamic pricing at Busch Gardens, but frustration rises when families cannot tell whether the destination still offers fair value.",
+      "pedagogy": {
+        "tags": ["constructivism", "pricing-strategy", "visitor-experience"],
+        "reinforces": ["economic", "satisfaction", "hospitality"],
+        "commonPitfalls": ["confuse yield with trust", "hide fees behind bundles"],
+        "difficulty": "hard"
+      },
+      "learningObjectives": [
+        "Evaluate pricing strategies using both revenue logic and visitor trust signals.",
+        "Recommend a pricing approach that protects long-term destination value perception."
+      ],
+      "stakeholders": [
+        { "id": "families", "label": "Family visitors", "perspective": "Need transparent value and fewer surprise charges when planning a park day." },
+        { "id": "park-operators", "label": "Park operators", "perspective": "Need pricing tools that preserve yield during high-demand periods." },
+        { "id": "repeat-visitors", "label": "Repeat visitors", "perspective": "Compare the current experience against past value and fairness expectations." },
+        { "id": "destination-brand", "label": "Destination brand team", "perspective": "Need pricing to support Tampa's reputation for a worthwhile family attraction experience." }
+      ],
+      "constraints": [
+        "Holiday demand is approaching and management does not want to remove dynamic pricing entirely.",
+        "Refund requests are increasing among family segments.",
+        "Any proposal has to preserve some premium pricing flexibility."
+      ],
+      "evidence": [
+        { "id": "refunds", "label": "Refund trend", "detail": "Refund requests increased on peak days where pricing and bundled fees changed most sharply." },
+        { "id": "survey", "label": "Value perception survey", "detail": "Family visitors report that the biggest frustration is not price alone, but lack of clear value explanation." },
+        { "id": "attachment-rate", "label": "Bundle attachment rate", "detail": "Upgrade bundle attachment is falling, suggesting some guests no longer trust the add-on structure." }
+      ],
+      "reflectionPrompt": "How should tourism managers distinguish between yield optimization and value transparency when pricing for families?",
+      "rationaleRubric": {
+        "stakeholderFocus": "Choose the stakeholder whose trust or margin you are prioritizing most directly.",
+        "evidenceUse": "Reference at least one survey, refund, or attachment-rate signal.",
+        "tradeoffReasoning": "Explain how your option changes both short-term revenue and long-term trust."
+      },
+      "exploration": {
+        "brief": "Management needs a pricing revision before holiday demand ramps up. Students should treat pricing as part of the visitor experience, not just a back-end revenue lever.",
+        "mediaLabel": "Ticket mix dashboard and value perception survey",
+        "bullets": [
+          "Refund requests increased on peak days.",
+          "Family segments say value is hard to interpret.",
+          "Upgrade attachment rates are slipping."
+        ]
+      },
+      "options": [
+        {
+          "id": "A",
+          "title": "Publish transparent pricing ladders and family value bundles",
+          "description": "Keep dynamic pricing, but show clear price ladders, standardize add-on disclosure, and introduce value-focused family bundles with explanation copy.",
+          "cost": 35,
+          "deltas": { "economic": 1, "sustainability": 0, "culture": 1, "hospitality": 1, "satisfaction": 3 },
+          "feedback": "Guests understand what they are paying for, and value trust improves even without eliminating dynamic pricing.",
+          "learningNote": "Transparent pricing can support both revenue and reputation when visitors understand the value logic behind the offer.",
+          "coachNote": "This is pricing as service design: the explanation layer matters as much as the price point.",
+          "stakeholderImpacts": {
+            "winners": ["Family visitors", "Repeat visitors", "Destination brand team"],
+            "losers": ["Park operators"]
+          }
+        },
+        {
+          "id": "B",
+          "title": "Increase peak-day surge and simplify only premium options",
+          "description": "Lean into higher peak pricing and narrow visible options so high-spend guests convert faster.",
+          "cost": 40,
+          "deltas": { "economic": 3, "sustainability": 0, "culture": -1, "hospitality": -1, "satisfaction": -2 },
+          "feedback": "Yield rises quickly, but fairness and trust decline, especially among families comparing the trip against previous visits.",
+          "learningNote": "A pricing strategy that feels opaque or extractive can damage repeat intent even when it performs well in the short run.",
+          "coachNote": "This is a strong revenue move and a weak destination relationship move.",
+          "stakeholderImpacts": {
+            "winners": ["Park operators"],
+            "losers": ["Family visitors", "Repeat visitors", "Destination brand team"]
+          }
+        },
+        {
+          "id": "C",
+          "title": "Freeze visible pricing but keep hidden add-on variability",
+          "description": "Hold the headline ticket price steady while shifting more value recovery into optional extras and service bundles.",
+          "cost": 30,
+          "deltas": { "economic": 2, "sustainability": 0, "culture": -1, "hospitality": 0, "satisfaction": -1 },
+          "feedback": "The headline price looks calmer, but guests still feel uncertainty when the full-day cost becomes visible later in the journey.",
+          "learningNote": "Stabilizing the headline price is not enough if the total trip cost remains hard to understand.",
+          "coachNote": "This is a partial fix that treats perception at the front end without fully repairing trust.",
+          "stakeholderImpacts": {
+            "winners": ["Park operators"],
+            "losers": ["Family visitors", "Repeat visitors"]
+          }
+        }
+      ],
+      "correctOptionId": "A",
+      "media": {
+        "hero": {
+          "imagePath": "assets/images/missions/district-eco-park-category.svg",
+          "srcset": "assets/images/missions/district-eco-park-category.svg 1x",
+          "alt": "Eco-park district visual used to frame Busch pricing and family value analysis.",
+          "caption": "Pricing decisions shape how visitors judge the quality and fairness of the attraction experience.",
+          "sourceLabel": "Source: Tampa attractions classroom briefing"
+        },
+        "thumbnail": {
+          "imagePath": "assets/images/missions/district-eco-park-category.svg",
+          "srcset": "assets/images/missions/district-eco-park-category.svg 1x",
+          "alt": "Thumbnail for Busch dynamic pricing fatigue mission.",
+          "caption": "Busch pricing and value perception snapshot.",
+          "sourceLabel": "Source: Tampa attractions classroom briefing"
+        },
+        "evidenceChart": {
+          "imagePath": "assets/images/missions/district-eco-park-category.svg",
+          "srcset": "assets/images/missions/district-eco-park-category.svg 1x",
+          "alt": "Pricing dashboard placeholder for Busch Gardens family value analysis.",
+          "caption": "Pricing evidence combines refunds, surveys, and bundle conversion signals.",
+          "sourceLabel": "Source: Tampa attractions classroom briefing",
+          "type": "chart"
+        },
+        "fallbackDistrictArt": {
+          "imagePath": "assets/images/missions/district-eco-park-category.svg",
+          "srcset": "assets/images/missions/district-eco-park-category.svg 1x",
+          "alt": "Eco-park fallback art.",
+          "caption": "Eco-park fallback art.",
+          "sourceLabel": "Source: Tampa District Storyboard"
+        }
+      }
+    }
+  ]
+}
