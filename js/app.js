@@ -46,11 +46,19 @@
   let lastFocusedEl = null;
   let systemModalState = null;
 
+  function persistState() {
+    try {
+      saveState(state);
+    } catch (error) {
+      console.warn('State persistence failed after a scene update.', error);
+    }
+  }
+
   function commit(mutator, { renderAfter = true, recomputeMetrics = false } = {}) {
     mutator(state);
     if (recomputeMetrics) computeAndStoreMetrics();
-    saveState(state);
     if (renderAfter) render();
+    persistState();
   }
 
   function currentMission() {
@@ -194,7 +202,7 @@
     state.diagnosis = buildDiagnosis(state, SCORING_CONSTANTS, {
       offerMissionIds: fallbackMissionIds
     });
-    saveState(state);
+    persistState();
   }
 
   function sanitizeStateAfterMissionLoad() {
@@ -236,7 +244,7 @@
     computeAndStoreMetrics();
     refreshOfferSet();
     ensurePlayableQueue();
-    saveState(state);
+    persistState();
   }
 
   function navigate(screen) {
@@ -252,26 +260,34 @@
     });
   }
 
-  function selectMission(missionId) {
-    if (!getVisibleMissions().some((mission) => mission.id === missionId)) return;
+  function ensureMissionDraft(draftState, missionId) {
+    draftState.rationaleDraftsByMissionId = draftState.rationaleDraftsByMissionId || {};
+    draftState.rationaleDraftsByMissionId[missionId] = draftState.rationaleDraftsByMissionId[missionId] || {
+      stakeholderId: '',
+      evidenceId: '',
+      tradeoff: ''
+    };
+  }
+
+  function enterMission(missionId, screen = 'explore') {
     const mission = missionById[missionId];
     if (!mission) return;
+    if ((state.completedMissionIds || []).includes(missionId)) return;
 
     commit((draft) => {
       draft.selectedMissionId = missionId;
       draft.selectedHotspotId = missionId;
-      draft.currentScreen = 'explore';
+      draft.currentScreen = screen;
       draft.impactPointsRemaining = SCORING_CONSTANTS.impactBudgetPerHotspot;
       draft.currentFeedback = null;
       draft.lastDecisionDeltas = null;
       draft.lastDecisionOutcomeText = '';
-      draft.rationaleDraftsByMissionId = draft.rationaleDraftsByMissionId || {};
-      draft.rationaleDraftsByMissionId[missionId] = draft.rationaleDraftsByMissionId[missionId] || {
-        stakeholderId: '',
-        evidenceId: '',
-        tradeoff: ''
-      };
+      ensureMissionDraft(draft, missionId);
     });
+  }
+
+  function selectMission(missionId) {
+    enterMission(missionId, 'explore');
   }
 
   function openFirstMissionInQueue() {
@@ -280,7 +296,7 @@
       navigate('map');
       return;
     }
-    selectMission(nextMission.id);
+    enterMission(nextMission.id, 'explore');
   }
 
   function getDecisionOptionsForMission(mission) {
@@ -354,7 +370,7 @@
   }
 
   function applyDecision(displayLabel) {
-    const mission = currentMission();
+    const mission = activeMission();
     if (!mission) return;
 
     const draft = getRationaleDraft(mission.id);
@@ -416,7 +432,7 @@
   }
 
   function handleReturnToMap() {
-    const missionId = pendingReturnMissionId || state.selectedMissionId;
+    const missionId = pendingReturnMissionId || state.selectedMissionId || state.selectedHotspotId;
     const mission = missionById[missionId];
     if (!mission) return;
 
@@ -442,7 +458,7 @@
   }
 
   function updateRationaleField(field, value) {
-    const mission = currentMission();
+    const mission = activeMission();
     if (!mission) return;
     commit((draft) => {
       draft.rationaleDraftsByMissionId = draft.rationaleDraftsByMissionId || {};
@@ -595,6 +611,68 @@
   }
 
   function bindMainEvents() {
+    mainEl.addEventListener('click', (event) => {
+      const actionTarget = event.target.closest('button, a');
+      if (!actionTarget || !mainEl.contains(actionTarget)) return;
+
+      const hotspotId = actionTarget.getAttribute('data-hotspot-id');
+      const missionId = actionTarget.getAttribute('data-mission-id');
+      const optionId = actionTarget.getAttribute('data-option-id');
+      const isSceneAction = Boolean(
+        hotspotId ||
+        missionId ||
+        optionId ||
+        actionTarget.matches('#btnToDecision, #btnBackMap, #btnAskPipWhy, #btnReturnMap, #btnSubmitReflection, #btnPrintReport')
+      );
+
+      if (!isSceneAction) return;
+      event.preventDefault();
+
+      if (hotspotId) {
+        selectHotspot(hotspotId);
+        return;
+      }
+
+      if (missionId) {
+        selectMission(missionId);
+        return;
+      }
+
+      if (optionId) {
+        applyDecision(optionId);
+        return;
+      }
+
+      if (actionTarget.matches('#btnToDecision')) {
+        navigate('decision');
+        return;
+      }
+
+      if (actionTarget.matches('#btnBackMap')) {
+        navigate('map');
+        return;
+      }
+
+      if (actionTarget.matches('#btnAskPipWhy')) {
+        openPipOverlay(false);
+        return;
+      }
+
+      if (actionTarget.matches('#btnReturnMap')) {
+        handleReturnToMap();
+        return;
+      }
+
+      if (actionTarget.matches('#btnSubmitReflection')) {
+        submitReflection();
+        return;
+      }
+
+      if (actionTarget.matches('#btnPrintReport')) {
+        window.print();
+      }
+    });
+
     mainEl.addEventListener('input', (event) => {
       const rationaleField = event.target.getAttribute('data-rationale-field');
       if (rationaleField) {
@@ -630,55 +708,10 @@
   }
 
   function bindRenderedScreenEvents() {
-    mainEl.querySelectorAll('[data-hotspot-id]').forEach((button) => {
-      button.addEventListener('click', () => {
-        selectHotspot(button.getAttribute('data-hotspot-id'));
-      });
-    });
-
-    mainEl.querySelectorAll('[data-mission-id]').forEach((button) => {
-      button.addEventListener('click', () => {
-        selectMission(button.getAttribute('data-mission-id'));
-      });
-    });
-
-    mainEl.querySelectorAll('[data-option-id]').forEach((button) => {
-      button.addEventListener('click', () => {
-        applyDecision(button.getAttribute('data-option-id'));
-      });
-    });
-
-    const toDecisionButton = mainEl.querySelector('#btnToDecision');
-    if (toDecisionButton) {
-      toDecisionButton.addEventListener('click', () => navigate('decision'));
-    }
-
-    mainEl.querySelectorAll('#btnBackMap').forEach((button) => {
-      button.addEventListener('click', () => navigate('map'));
-    });
-
-    const askPipButton = mainEl.querySelector('#btnAskPipWhy');
-    if (askPipButton) {
-      askPipButton.addEventListener('click', () => openPipOverlay(false));
-    }
-
-    const returnMapButton = mainEl.querySelector('#btnReturnMap');
-    if (returnMapButton) {
-      returnMapButton.addEventListener('click', handleReturnToMap);
-    }
-
-    const submitReflectionButton = mainEl.querySelector('#btnSubmitReflection');
-    if (submitReflectionButton) {
-      submitReflectionButton.addEventListener('click', submitReflection);
-    }
-
-    const printButton = mainEl.querySelector('#btnPrintReport');
-    if (printButton) {
-      printButton.addEventListener('click', () => window.print());
-    }
+    // Screen actions are handled by one delegated click listener on mainEl.
   }
 
-  function render() {
+  function renderScreen() {
     if (!missions.length) {
       mainEl.innerHTML = '<section class="card"><h2>Loading…</h2></section>';
       return;
@@ -703,9 +736,37 @@
       mainEl.innerHTML = UI.renderMap(state, getVisibleMissions(), SCORING_CONSTANTS, RUN_CONFIG);
     }
 
+  }
+
+  function render() {
+    try {
+      renderScreen();
+    } catch (error) {
+      console.error('Scene render failed.', error);
+      state.currentScreen = 'map';
+      mainEl.innerHTML = `
+        <section class="console-shell card">
+          <p class="district-label">Tourism Learning Studio</p>
+          <h2>Scene Transition Error</h2>
+          <p>The app hit a render problem while trying to open the next scene.</p>
+          <p class="small"><strong>Screen:</strong> ${UI.escapeHtml(state.currentScreen)}</p>
+          <p class="small"><strong>Details:</strong> ${UI.escapeHtml(error?.message || 'Unknown render error')}</p>
+          <div class="inline-actions">
+            <button type="button" id="btnBackMap" class="btn secondary">Return to Map</button>
+          </div>
+        </section>
+      `;
+    }
+
     bindRenderedScreenEvents();
     mainEl.scrollTop = 0;
-    mainEl.focus();
+    if (typeof mainEl.focus === 'function') {
+      try {
+        mainEl.focus({ preventScroll: true });
+      } catch (_error) {
+        mainEl.focus();
+      }
+    }
   }
 
   function buildLookups(items) {
@@ -747,6 +808,13 @@
     if (runCompleted()) state.currentScreen = 'complete';
     render();
   }
+
+  window.TE9000App = {
+    navigate,
+    selectHotspot,
+    selectMission,
+    startNewRun
+  };
 
   start();
 })();

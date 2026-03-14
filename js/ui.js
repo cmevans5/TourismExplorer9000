@@ -90,6 +90,7 @@
       const summaryEvidence = mission.evidence?.[0]?.detail || mission.description;
       return `
         <button
+          type="button"
           class="mission-queue-card ${isSelected ? 'is-selected' : ''} ${highlightIds.has(mission.id) ? 'highlighted' : ''}"
           data-hotspot-id="${escapeHtml(mission.id)}"
           aria-pressed="${isSelected ? 'true' : 'false'}"
@@ -135,13 +136,13 @@
             <h3>${escapeHtml(selectedMission.name)}</h3>
             <p class="small">${escapeHtml(selectedMission.tourismDomain)}</p>
             <div class="inline-actions">
-              <button class="btn" data-mission-id="${escapeHtml(selectedMission.id)}">${completed.has(selectedMission.id) ? 'Review Completed Case' : 'Start Selected Case'}</button>
+              <button type="button" class="btn" data-mission-id="${escapeHtml(selectedMission.id)}">${completed.has(selectedMission.id) ? 'Review Completed Case' : 'Start Selected Case'}</button>
               <span class="tag ${selectedRole === 'current' ? 'good' : 'warn'}">${escapeHtml(ROLE_LABELS[selectedRole] || 'Case')}</span>
             </div>
           </section>
         ` : ''}
         <div class="inline-actions">
-          <button id="btnAskPipWhy" class="btn secondary">Ask Pip for Coaching</button>
+          <button type="button" id="btnAskPipWhy" class="btn secondary">Ask Pip for Coaching</button>
         </div>
       </section>
       <section class="map-stage">
@@ -173,7 +174,7 @@
             <h3>${escapeHtml(selectedMission.name)}</h3>
             <p class="mission-objective"><strong>Tourism domain:</strong> ${escapeHtml(selectedMission.tourismDomain)}</p>
             <div class="inline-actions">
-              <button class="btn" data-mission-id="${escapeHtml(selectedMission.id)}" ${completed.has(selectedMission.id) ? 'disabled' : ''}>${completed.has(selectedMission.id) ? 'Completed' : 'Open Briefing'}</button>
+              <button type="button" class="btn" data-mission-id="${escapeHtml(selectedMission.id)}" ${completed.has(selectedMission.id) ? 'disabled' : ''}>${completed.has(selectedMission.id) ? 'Completed' : 'Open Briefing'}</button>
             </div>
             <p>${escapeHtml(selectedMission.description)}</p>
             <details class="mission-detail-drawer" open>
@@ -225,8 +226,8 @@
         <h3>Constraints</h3>
         <ul class="stakeholder-list">${constraints}</ul>
         <div class="inline-actions">
-          <button id="btnBackMap" class="btn secondary">Back to Map</button>
-          <button id="btnToDecision" class="btn">Move to Decision and Rationale</button>
+          <button type="button" id="btnBackMap" class="btn secondary">Back to Map</button>
+          <button type="button" id="btnToDecision" class="btn">Move to Decision and Rationale</button>
         </div>
       </section>
     `;
@@ -240,7 +241,7 @@
         .map(([key, value]) => `<span class="impact-pill ${value >= 0 ? 'plus' : 'minus'}">${CATEGORY_ICONS[key]} ${value > 0 ? '+' : ''}${escapeHtml(value)}</span>`)
         .join('');
       return `
-        <button class="btn choice ${disabled ? 'blocked' : ''}" data-option-id="${escapeHtml(option.displayLabel)}" ${disabled ? 'disabled' : ''}>
+        <button type="button" class="btn choice ${disabled ? 'blocked' : ''}" data-option-id="${escapeHtml(option.displayLabel)}" ${disabled ? 'disabled' : ''}>
           <span class="choice-head">
             <strong>${escapeHtml(option.displayLabel)}) ${escapeHtml(stripOptionKeyPrefix(option.title))}</strong>
             <span class="choice-cost">Cost ${escapeHtml(cost)}</span>
@@ -360,7 +361,7 @@
         </details>
         ${state.topGateLockReason ? `<p class="small">Top Analyst currently blocked because: ${escapeHtml(state.topGateLockReason)}.</p>` : ''}
         <div class="inline-actions">
-          <button id="btnReturnMap" class="btn">Return to Map</button>
+          <button type="button" id="btnReturnMap" class="btn">Return to Map</button>
         </div>
       </section>
     `;
@@ -388,7 +389,7 @@
       <ul class="stakeholder-list">${summaryBullets}</ul>
       <div class="summary-grid">${focusCards}</div>
       <div class="inline-actions">
-        <button id="btnPipClose" class="btn">Continue</button>
+        <button type="button" id="btnPipClose" class="btn">Continue</button>
       </div>
     `;
   }
@@ -432,7 +433,7 @@
           <textarea data-reflection-field="revisitTradeoff" rows="4">${escapeHtml(responses.revisitTradeoff || '')}</textarea>
         </label>
         <div class="inline-actions">
-          <button id="btnSubmitReflection" class="btn">${state.reflectionSubmitted ? 'Update Reflection' : 'Finalize Reflection'}</button>
+          <button type="button" id="btnSubmitReflection" class="btn">${state.reflectionSubmitted ? 'Update Reflection' : 'Finalize Reflection'}</button>
         </div>
       </section>
     `;
@@ -478,8 +479,8 @@
           <p><strong>Trade-off to revisit:</strong> ${escapeHtml(state.reflectionResponses?.revisitTradeoff || 'Not provided yet')}</p>
         </section>
         <div class="inline-actions">
-          <button id="btnBackMap" class="btn secondary">Review Map</button>
-          <button id="btnPrintReport" class="btn">Print Summary</button>
+          <button type="button" id="btnBackMap" class="btn secondary">Review Map</button>
+          <button type="button" id="btnPrintReport" class="btn">Print Summary</button>
         </div>
       </section>
     `;

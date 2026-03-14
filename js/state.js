@@ -1,5 +1,6 @@
 (function () {
   const STORAGE_KEY = 'tourismExplorer9000AcademicState';
+  let memoryStateRaw = null;
 
   const initialState = {
     categories: {
@@ -66,11 +67,25 @@
   }
 
   function saveState(state) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    const raw = JSON.stringify(state);
+    memoryStateRaw = raw;
+
+    try {
+      localStorage.setItem(STORAGE_KEY, raw);
+    } catch (error) {
+      console.warn('State save failed, using in-memory fallback.', error);
+    }
   }
 
   function loadState() {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    let raw = memoryStateRaw;
+
+    try {
+      raw = localStorage.getItem(STORAGE_KEY) || memoryStateRaw;
+    } catch (error) {
+      console.warn('State storage unavailable, using in-memory fallback.', error);
+    }
+
     if (!raw) return clone(initialState);
 
     try {
@@ -91,13 +106,21 @@
         }
       };
     } catch (error) {
+      memoryStateRaw = null;
       console.warn('State load failed, resetting.', error);
       return clone(initialState);
     }
   }
 
   function clearState() {
-    localStorage.removeItem(STORAGE_KEY);
+    memoryStateRaw = null;
+
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch (error) {
+      console.warn('State clear failed, clearing in-memory fallback only.', error);
+    }
+
     return clone(initialState);
   }
 
