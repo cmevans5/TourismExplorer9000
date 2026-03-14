@@ -82,20 +82,29 @@
   function renderMap(state, missions, _constants, runConfig) {
     const selectedMission = missions.find((mission) => mission.id === state.selectedHotspotId) || missions[0] || null;
     const highlightIds = new Set(state.highlightMissionIds || []);
-    const markers = missions.map((mission, index) => {
+    const queueCards = missions.map((mission, index) => {
       const role = state.offerSetRolesById?.[mission.id] || 'later';
       const districtKey = getDistrictKey(mission);
       const isSelected = selectedMission?.id === mission.id;
+      const isCompleted = (state.completedMissionIds || []).includes(mission.id);
+      const summaryEvidence = mission.evidence?.[0]?.detail || mission.description;
       return `
         <button
-          class="map-hotspot-marker district-${districtKey} district-${districtKey}-slot-${Math.min(index, 1)} ${isSelected ? 'is-selected' : ''} ${highlightIds.has(mission.id) ? 'highlighted' : ''}"
+          class="mission-queue-card ${isSelected ? 'is-selected' : ''} ${highlightIds.has(mission.id) ? 'highlighted' : ''}"
           data-hotspot-id="${escapeHtml(mission.id)}"
-          data-district-key="${escapeHtml(districtKey)}"
           aria-pressed="${isSelected ? 'true' : 'false'}"
         >
-          <span class="district-marker district-${districtKey}" aria-hidden="true"></span>
-          <span class="marker-name">${escapeHtml(mission.name)}</span>
-          <span class="tag ${role === 'current' ? 'good' : 'warn'} marker-role">${escapeHtml(ROLE_LABELS[role] || 'Case')}</span>
+          <div class="mission-queue-head">
+            <span class="district-label">${escapeHtml(DISTRICT_LABELS[districtKey] || 'Tampa District')}</span>
+            <span class="tag ${role === 'current' ? 'good' : 'warn'} marker-role">${escapeHtml(ROLE_LABELS[role] || 'Case')}</span>
+          </div>
+          <strong class="mission-queue-title">${escapeHtml(mission.name)}</strong>
+          <p class="mission-queue-domain">${escapeHtml(mission.tourismDomain)}</p>
+          <p class="mission-queue-summary">${escapeHtml(summaryEvidence)}</p>
+          <div class="mission-queue-footer">
+            <span class="district-marker district-${districtKey}" aria-hidden="true"></span>
+            <span>${isCompleted ? 'Completed' : `Case ${index + 1} of ${runConfig.RUN_LENGTH}`}</span>
+          </div>
         </button>
       `;
     }).join('');
@@ -134,8 +143,17 @@
           <p class="small"><strong>Completed cases:</strong> ${escapeHtml(state.casesCompletedThisRun)}/${escapeHtml(runConfig.RUN_LENGTH)}</p>
           <p class="small"><strong>Learning evidence logged:</strong> ${escapeHtml(state.learningEvidenceUsedCount)}</p>
         </aside>
-        <section class="city-map-board card map-zone-play">
-          ${markers || '<p>No cases remaining.</p>'}
+        <section class="card mission-queue-panel map-zone-play">
+          <div class="mission-queue-header">
+            <div>
+              <p class="district-label">Case Queue</p>
+              <h3>Choose the next destination case</h3>
+            </div>
+            <p class="small">Select a case to preview it, then open the briefing to start play.</p>
+          </div>
+          <div class="mission-queue-grid">
+            ${queueCards || '<p>No cases remaining.</p>'}
+          </div>
         </section>
         <aside class="card map-mission-detail map-zone-selected">
           ${selectedMission ? `
@@ -157,6 +175,7 @@
             </details>
             <div class="inline-actions">
               <button class="btn" data-mission-id="${escapeHtml(selectedMission.id)}" ${completed.has(selectedMission.id) ? 'disabled' : ''}>${completed.has(selectedMission.id) ? 'Completed' : 'Open Briefing'}</button>
+              <button class="btn secondary" data-hotspot-id="${escapeHtml(selectedMission.id)}">Keep Previewing</button>
             </div>
           ` : '<p>No cases currently available.</p>'}
         </aside>

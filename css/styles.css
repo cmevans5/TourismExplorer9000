@@ -316,6 +316,93 @@ h4 {
 .map-zone-play { grid-area: play; position: relative; }
 .map-zone-selected { grid-area: selected; }
 
+.mission-queue-panel {
+  min-height: 520px;
+  background:
+    linear-gradient(145deg, rgba(11, 47, 74, 0.54), rgba(6, 23, 37, 0.74)),
+    repeating-linear-gradient(0deg, rgba(102, 161, 194, 0.08), rgba(102, 161, 194, 0.08) 1px, transparent 1px, transparent 44px),
+    repeating-linear-gradient(90deg, rgba(102, 161, 194, 0.08), rgba(102, 161, 194, 0.08) 1px, transparent 1px, transparent 44px);
+}
+
+.mission-queue-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: end;
+  margin-bottom: 1rem;
+}
+
+.mission-queue-header h3 {
+  margin: 0.15rem 0 0;
+}
+
+.mission-queue-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.9rem;
+  align-items: start;
+}
+
+.mission-queue-card {
+  text-align: left;
+  border: 1px solid var(--border);
+  background: rgba(10, 33, 51, 0.84);
+  border-radius: var(--radius-md);
+  padding: 0.9rem;
+  display: grid;
+  gap: 0.55rem;
+  min-height: 220px;
+  box-shadow: var(--shadow-soft);
+}
+
+.mission-queue-card:hover,
+.mission-queue-card.highlighted,
+.mission-queue-card.is-selected {
+  border-color: var(--border-strong);
+  box-shadow: 0 0 0 1px rgba(160, 228, 255, 0.45), 0 10px 20px rgba(4, 18, 31, 0.45);
+}
+
+.mission-queue-card.is-selected {
+  background: linear-gradient(180deg, rgba(19, 72, 104, 0.94), rgba(9, 38, 58, 0.95));
+}
+
+.mission-queue-card:focus-visible {
+  border-color: var(--focus);
+  box-shadow: 0 0 0 2px rgba(255, 229, 138, 0.45), 0 10px 20px rgba(4, 18, 31, 0.45);
+}
+
+.mission-queue-head,
+.mission-queue-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.mission-queue-title {
+  font-size: 1.05rem;
+  color: #f4fbff;
+}
+
+.mission-queue-domain {
+  margin: 0;
+  color: #c5ddec;
+  font-size: 0.92rem;
+}
+
+.mission-queue-summary {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.mission-queue-footer {
+  margin-top: auto;
+  color: #d7eefc;
+  font-size: 0.8rem;
+}
+
 .map-overview-stack {
   display: grid;
   gap: 1rem;
@@ -1299,6 +1386,11 @@ a:focus-visible {
   .topbar-actions {
     width: 100%;
     flex-wrap: wrap;
+  }
+
+  .mission-queue-header {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 
