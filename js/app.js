@@ -581,21 +581,6 @@
   }
 
   function bindMainEvents() {
-    mainEl.addEventListener('click', (event) => {
-      const target = event.target.closest('button, [data-hotspot-id], [data-mission-id], [data-option-id]');
-      if (!target) return;
-
-      if (target.matches('[data-hotspot-id]')) return selectHotspot(target.getAttribute('data-hotspot-id'));
-      if (target.matches('[data-mission-id]')) return selectMission(target.getAttribute('data-mission-id'));
-      if (target.matches('#btnToDecision')) return navigate('decision');
-      if (target.matches('#btnBackMap')) return navigate('map');
-      if (target.matches('#btnAskPipWhy')) return openPipOverlay(false);
-      if (target.matches('#btnReturnMap')) return handleReturnToMap();
-      if (target.matches('[data-option-id]')) return applyDecision(target.getAttribute('data-option-id'));
-      if (target.matches('#btnSubmitReflection')) return submitReflection();
-      if (target.matches('#btnPrintReport')) return window.print();
-    });
-
     mainEl.addEventListener('input', (event) => {
       const rationaleField = event.target.getAttribute('data-rationale-field');
       if (rationaleField) {
@@ -630,6 +615,55 @@
     });
   }
 
+  function bindRenderedScreenEvents() {
+    mainEl.querySelectorAll('[data-hotspot-id]').forEach((button) => {
+      button.addEventListener('click', () => {
+        selectHotspot(button.getAttribute('data-hotspot-id'));
+      });
+    });
+
+    mainEl.querySelectorAll('[data-mission-id]').forEach((button) => {
+      button.addEventListener('click', () => {
+        selectMission(button.getAttribute('data-mission-id'));
+      });
+    });
+
+    mainEl.querySelectorAll('[data-option-id]').forEach((button) => {
+      button.addEventListener('click', () => {
+        applyDecision(button.getAttribute('data-option-id'));
+      });
+    });
+
+    const toDecisionButton = mainEl.querySelector('#btnToDecision');
+    if (toDecisionButton) {
+      toDecisionButton.addEventListener('click', () => navigate('decision'));
+    }
+
+    mainEl.querySelectorAll('#btnBackMap').forEach((button) => {
+      button.addEventListener('click', () => navigate('map'));
+    });
+
+    const askPipButton = mainEl.querySelector('#btnAskPipWhy');
+    if (askPipButton) {
+      askPipButton.addEventListener('click', () => openPipOverlay(false));
+    }
+
+    const returnMapButton = mainEl.querySelector('#btnReturnMap');
+    if (returnMapButton) {
+      returnMapButton.addEventListener('click', handleReturnToMap);
+    }
+
+    const submitReflectionButton = mainEl.querySelector('#btnSubmitReflection');
+    if (submitReflectionButton) {
+      submitReflectionButton.addEventListener('click', submitReflection);
+    }
+
+    const printButton = mainEl.querySelector('#btnPrintReport');
+    if (printButton) {
+      printButton.addEventListener('click', () => window.print());
+    }
+  }
+
   function render() {
     if (!missions.length) {
       mainEl.innerHTML = '<section class="card"><h2>Loading…</h2></section>';
@@ -649,6 +683,8 @@
       mainEl.innerHTML = UI.renderMap(state, getVisibleMissions(), SCORING_CONSTANTS, RUN_CONFIG);
     }
 
+    bindRenderedScreenEvents();
+    mainEl.scrollTop = 0;
     mainEl.focus();
   }
 
