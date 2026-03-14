@@ -116,7 +116,26 @@
   }
 
   function refreshOfferSet() {
-    const offer = generateOfferSet(missions, state, SCORING_CONSTANTS, RUN_CONFIG);
+    let offer = generateOfferSet(missions, state, SCORING_CONSTANTS, RUN_CONFIG);
+    const hasProgress = (state.decisionCount || 0) > 0 || (state.completedMissionIds || []).length > 0;
+
+    if (!offer.offerMissionIds.length && missions.length && !runCompleted() && !hasProgress) {
+      offer = {
+        offerMissionIds: missions.slice(0, RUN_CONFIG.RUN_LENGTH).map((mission) => mission.id),
+        rolesById: {},
+        reasonsById: {}
+      };
+      offer.offerMissionIds.forEach((missionId, index) => {
+        const mission = missionById[missionId];
+        offer.rolesById[missionId] = index === 0 ? 'current' : (index === 1 ? 'next' : 'later');
+        offer.reasonsById[missionId] = [
+          mission?.tourismDomain,
+          mission?.learningObjectives?.[0] || 'Practice tourism systems reasoning.',
+          mission?.constraints?.[0] || 'Balance destination outcomes and stakeholder needs.'
+        ].filter(Boolean);
+      });
+    }
+
     state.offerSetMissionIds = offer.offerMissionIds;
     state.offerSetRolesById = offer.rolesById;
     state.offerSetReasonsById = offer.reasonsById;
